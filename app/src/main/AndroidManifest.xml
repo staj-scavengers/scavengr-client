@@ -26,9 +26,5 @@
 
     <activity android:name=".controller.LoginActivity">
     </activity>
-
-
   </application>
-
-
 </manifest>
