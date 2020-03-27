@@ -1,3 +1,5 @@
 <resources>
   <string name="app_name">Scavengr Client</string>
+  <string name="login_failure">Unable to sign in with provided credentials.</string>
+  <string name="sign_out">Sign out</string>
 </resources>
