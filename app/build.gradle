@@ -11,7 +11,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "BASE_URL", "\"http://192.168.0.2:8080/server/\""
-        buildConfigField "String", "GOOGLE_CLIENT_ID", "\"752197038707-8s4j30a69g0on7ajr2ukt48apsn056mf.apps.googleusercontent.com\""
+        buildConfigField "String", "GOOGLE_CLIENT_ID", "\"336293875266-6o9jroie55nvf3sfvtj76pljapoi8oap.apps.googleusercontent.com\""
 
     }
     buildTypes {
