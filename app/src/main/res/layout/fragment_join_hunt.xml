@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:padding="4dp"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  tools:context=".JoinHuntFragment">
+
+  <TextView
+    android:id="@+id/hunt_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="75dp"
+    android:padding="5dp"
+    android:textSize="12pt"
+    android:textStyle="bold"
+    android:gravity="center"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
+  <TextView
+    android:id="@+id/creator_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:textSize="10pt"
+    android:gravity="center"
+    app:layout_constraintTop_toBottomOf="@id/hunt_name"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
+  <TextView
+    android:id="@+id/date_created"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:textSize="10pt"
+    app:layout_constraintTop_toBottomOf="@id/creator_name"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
+  <TextView
+    android:id="@+id/number_of_clues"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="10pt"
+    android:padding="5dp"
+    app:layout_constraintTop_toBottomOf="@id/date_created"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
+  <ImageView
+    android:id="@+id/join_hunt_clue_image"
+    android:layout_width="100dp"
+    android:layout_height="125dp"
+    app:layout_constraintTop_toBottomOf="@id/number_of_clues"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
+  <TextView
+    android:id="@+id/hunt_description"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="8pt"
+    app:layout_constraintTop_toBottomOf="@id/join_hunt_clue_image"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
+  <Button
+    android:id="@+id/join_hunt_button"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:text="@string/join_hunt"
+    app:layout_constraintTop_toBottomOf="@id/hunt_description"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
