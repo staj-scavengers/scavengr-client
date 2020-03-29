@@ -42,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
     return handled;
   }
 
-
-
   private void signOut() {
     GoogleSignInService.getInstance().signOut()
         .addOnCompleteListener((task) -> {
@@ -51,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
           startActivity(intent);
         });
-
-
   }
 
 
