@@ -7,6 +7,15 @@
   android:padding="4dp"
   tools:context=".CurrentClueFragment">
 
+  <TextureView
+    android:id="@+id/camera_frame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    />
+
 <!--  Text is place holder for input from database-->
   <TextView
     android:id="@+id/clue_number"
