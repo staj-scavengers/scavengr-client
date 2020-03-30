@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.scavengrclient.model.entity;
 
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
@@ -18,15 +19,18 @@ import javax.annotation.Nonnull;
 )
 public class HuntActivity {
 
+  @NonNull
   @ColumnInfo(name = "hunt_activity_id")
   @PrimaryKey()
-  private UUID id;
+  private String id = (UUID.randomUUID().toString());
 
-  @Nonnull
-  private UUID huntId;
+  @NonNull
+  @ColumnInfo(name = "hunt_id")
+  private String huntId;
 
-  @Nonnull
-  private UUID userId;
+  @NonNull
+  @ColumnInfo(name = "user_id")
+  private String userId;
 
   @ColumnInfo(name = "date_started")
   private Date started;
@@ -34,29 +38,33 @@ public class HuntActivity {
   @ColumnInfo(name = "date_completed")
   private Date completed;
 
+  @ColumnInfo(name = "clues_completed")
   private Integer cluesCompleted;
 
-
-  public UUID getId() {
+  @NonNull
+  public String getId() {
     return id;
   }
 
+  public void setId(@NonNull String id) {
+    this.id = id;
+  }
 
-  @Nonnull
-  public UUID getHuntId() {
+  @NonNull
+  public String getHuntId() {
     return huntId;
   }
 
-  public void setHuntId(@Nonnull UUID huntId) {
+  public void setHuntId(@NonNull String huntId) {
     this.huntId = huntId;
   }
 
-  @Nonnull
-  public UUID getUserId() {
+  @NonNull
+  public String getUserId() {
     return userId;
   }
 
-  public void setUserId(@Nonnull UUID userId) {
+  public void setUserId(@NonNull String userId) {
     this.userId = userId;
   }
 

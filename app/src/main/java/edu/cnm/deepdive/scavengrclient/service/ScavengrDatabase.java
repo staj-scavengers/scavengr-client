@@ -6,12 +6,17 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
+import edu.cnm.deepdive.scavengrclient.model.entity.Clue;
+import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
+import edu.cnm.deepdive.scavengrclient.model.entity.HuntActivity;
+import edu.cnm.deepdive.scavengrclient.model.entity.Organizer;
+import edu.cnm.deepdive.scavengrclient.model.entity.User;
 import edu.cnm.deepdive.scavengrclient.service.ScavengrDatabase.Converters;
 import java.util.Date;
 
 
 @Database(
-    entities = {},
+    entities = {Clue.class, Hunt.class, HuntActivity.class, Organizer.class, User.class},
     version = 1,
     exportSchema = true
 )

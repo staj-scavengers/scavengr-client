@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.scavengrclient.model.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -24,59 +25,71 @@ import javax.annotation.Nonnull;
 )
 public class Clue {
 
+  @NonNull
   @ColumnInfo(name = "clue_id")
-  @PrimaryKey
-  private UUID id;
+  @PrimaryKey()
+  private String id = (UUID.randomUUID().toString());
 
-  @Nonnull
-  @ColumnInfo(collate = ColumnInfo.NOCASE)
+  @NonNull
+  @ColumnInfo(name = "clue_name", collate = ColumnInfo.NOCASE)
   private String clueName;
 
-  @Nonnull
-  private UUID huntId;
+  @NonNull
+  @ColumnInfo(name = "hunt_id", index = true)
+  private String huntId;
 
-  @Nonnull
+  @NonNull
   private String media;
 
-  @Nonnull
+  @NonNull
+  @ColumnInfo(name = "media_tag")
   private String mediaTag;
 
   // Nullable for non-sequential hunts
+  @ColumnInfo(name = "hunt_order")
   private Integer huntOrder;
 
-  public UUID getId() {
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public String getId() {
     return id;
   }
 
-  @Nonnull
+  @NonNull
   public String getClueName() {
     return clueName;
   }
 
-  public void setClueName(@Nonnull String clueName) {
+  public void setClueName(@NonNull String clueName) {
     this.clueName = clueName;
   }
 
-  @Nonnull
-  public UUID getHuntId() {
+  public void setHuntId(@NonNull String huntId) {
+    this.huntId = huntId;
+  }
+
+  @NonNull
+  public String getHuntId() {
     return huntId;
   }
 
-  @Nonnull
+  @NonNull
   public String getMedia() {
     return media;
   }
 
-  public void setMedia(@Nonnull String media) {
+  public void setMedia(@NonNull String media) {
     this.media = media;
   }
 
-  @Nonnull
+  @NonNull
   public String getMediaTag() {
     return mediaTag;
   }
 
-  public void setMediaTag(@Nonnull String mediaTag) {
+  public void setMediaTag(@NonNull String mediaTag) {
     this.mediaTag = mediaTag;
   }
 

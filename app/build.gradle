@@ -13,6 +13,11 @@ android {
         buildConfigField "String", "BASE_URL", "\"http://192.168.0.2:8080/server/\""
         buildConfigField "String", "GOOGLE_CLIENT_ID", "\"336293875266-6o9jroie55nvf3sfvtj76pljapoi8oap.apps.googleusercontent.com\""
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         release {
