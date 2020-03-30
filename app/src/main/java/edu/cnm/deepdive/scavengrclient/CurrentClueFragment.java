@@ -192,9 +192,8 @@ public class CurrentClueFragment extends Fragment {
   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
     if (requestCode == REQUEST_CAMERA_PERMISSION) {
       if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-        // close the app
-        Toast.makeText(getContext(), "Sorry, you can't use the camera without granting permission", Toast.LENGTH_LONG).show();
-//        finish();
+        ((MainActivity)getActivity()).showToast(getString(R.string.camera_permission_denied));
+        // go home
       }
     }
   }

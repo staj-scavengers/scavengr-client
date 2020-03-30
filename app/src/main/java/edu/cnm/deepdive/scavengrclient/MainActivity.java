@@ -8,6 +8,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.gms.vision.barcode.BarcodeDetector;
 import edu.cnm.deepdive.scavengrclient.controller.LoginActivity;
 import edu.cnm.deepdive.scavengrclient.service.GoogleSignInService;
 import edu.cnm.deepdive.scavengrclient.ui.main.MainFragment;
@@ -51,6 +53,28 @@ public class MainActivity extends AppCompatActivity {
         });
   }
 
+  // Google's sample code for dummies:
+  public void setupDetector() {
+    BarcodeDetector detector = new BarcodeDetector.Builder(getApplicationContext())
+        .setBarcodeFormats(Barcode.QR_CODE)
+        .build();
+    if (!detector.isOperational()) {
+      showToast("Could not set up the detector!");
+      return;
+    }
+  }
+
+  /**
+   * Useful for displaying error messages.
+   *
+   * @param message will be displayed in the Toast.
+   */
+  public void showToast(String message) {
+    Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+    toast.setGravity(Gravity.BOTTOM, 0,
+        getResources().getDimensionPixelOffset(R.dimen.toast_vertical_margin));
+    toast.show();
+  }
 
 }
 

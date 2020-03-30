@@ -12,5 +12,6 @@
   <string name="back_button">Back</string>
   <string name="join_hunt">JOIN THE HUNT!</string>
   <string name="find_a_hunt_prompt">Great! Now find a hunt you want to join! If you are an organizer you can create one!</string>
+  <string name="camera_permission_denied">Sorry, you can\'t use the camera without granting permission</string>
 
 </resources>
