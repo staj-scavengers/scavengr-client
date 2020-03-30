@@ -32,6 +32,7 @@ import retrofit2.http.Query;
  */
 public interface ScavengrService {
 
+
 //  Hunt CRUD methods
 
   //Single Hunt Returns
@@ -135,6 +136,11 @@ public interface ScavengrService {
   @PUT("users/{userId}/organizer/{organizerId}")
   Single<User> elevateUser(@Header("Authorization") String oauthHeader, @Path("userId") UUID userId,
       @Path("organizerId") UUID organizerId);
+
+
+  static ScavengrService getInstance() {
+    return InstanceHolder.INSTANCE;
+  }
 
   class InstanceHolder {
 
