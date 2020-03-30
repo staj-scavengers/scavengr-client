@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  tools:context=".FindAHuntFragment">
+
+  <!-- TODO: Update blank fragment layout -->
+  <TextView
+    android:id="@+id/find_a_hunt_prompt"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:text="@string/find_a_hunt_prompt"
+    android:textSize="10pt"
+    android:gravity="center"
+    app:layout_constraintTop_toTopOf="parent"/>
+
+  <SearchView
+    android:id="@+id/search_for_hunt"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@id/find_a_hunt_prompt"
+    app:layout_constraintBottom_toTopOf="@id/create_hunt"/>
+
+  <Button
+    android:id="@+id/create_hunt"
+    android:layout_width="225dp"
+    android:layout_height="wrap_content"
+    android:text="CREATE A NEW HUNT"
+    app:layout_constraintTop_toBottomOf="@id/search_for_hunt"
+    app:layout_constraintBottom_toTopOf="@id/popular_hunts_prompt"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
+  <TextView
+    android:id="@+id/popular_hunts_prompt"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Popular Hunts"
+    android:textSize="10pt"
+    android:gravity="center"
+    app:layout_constraintBottom_toTopOf="@id/popular_hunts_list"/>
+
+  <ListView
+    android:id="@+id/popular_hunts_list"
+    android:layout_width="match_parent"
+    android:layout_height="275dp"
+    app:layout_constraintBottom_toTopOf="@id/find_a_hunt_next_button"/>
+
+  <Button
+    android:id="@+id/find_a_hunt_next_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="NEXT"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_margin="40dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
