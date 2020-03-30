@@ -10,4 +10,7 @@
   <string name="new_hunt_button">New Hunt</string>
   <string name="next_button">Next</string>
   <string name="back_button">Back</string>
+  <string name="join_hunt">JOIN THE HUNT!</string>
+  <string name="find_a_hunt_prompt">Great! Now find a hunt you want to join! If you are an organizer you can create one!</string>
+
 </resources>
