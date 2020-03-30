@@ -1,7 +1,6 @@
 package edu.cnm.deepdive.scavengrclient.model.entity;
 
 import androidx.room.ColumnInfo;
-import androidx.room.ColumnInfo.SQLiteTypeAffinity;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.Index;
@@ -48,6 +47,10 @@ public class Hunt {
   @Nonnull
   public UUID getOrganizerId() {
     return organizerId;
+  }
+
+  public void setOrganizerId(@Nonnull UUID organizerId) {
+    this.organizerId = organizerId;
   }
 
   public List<Clue> getClues() {

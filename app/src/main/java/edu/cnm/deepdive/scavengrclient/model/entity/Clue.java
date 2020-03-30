@@ -43,4 +43,49 @@ public class Clue {
 
   // Nullable for non-sequential hunts
   private Integer huntOrder;
+
+  public UUID getId() {
+    return id;
+  }
+
+
+  @Nonnull
+  public String getClueName() {
+    return clueName;
+  }
+
+  public void setClueName(@Nonnull String clueName) {
+    this.clueName = clueName;
+  }
+
+  @Nonnull
+  public UUID getHuntId() {
+    return huntId;
+  }
+
+  @Nonnull
+  public String getMedia() {
+    return media;
+  }
+
+  public void setMedia(@Nonnull String media) {
+    this.media = media;
+  }
+
+  @Nonnull
+  public String getMediaTag() {
+    return mediaTag;
+  }
+
+  public void setMediaTag(@Nonnull String mediaTag) {
+    this.mediaTag = mediaTag;
+  }
+
+  public Integer getHuntOrder() {
+    return huntOrder;
+  }
+
+  public void setHuntOrder(Integer huntOrder) {
+    this.huntOrder = huntOrder;
+  }
 }
