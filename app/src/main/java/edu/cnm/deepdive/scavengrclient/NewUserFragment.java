@@ -33,6 +33,9 @@ public class NewUserFragment extends Fragment implements OnClickListener {
   @Override
   public void onClick(View view) {
     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-    fragmentManager.beginTransaction();
+    fragmentManager.beginTransaction()
+    .add(R.id.main, new FindAHuntFragment(), null)
+    .addToBackStack(NewUserFragment.class.getName())
+    .commit();
   }
 }
