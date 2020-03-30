@@ -48,7 +48,6 @@ public class Clue {
     return id;
   }
 
-
   @Nonnull
   public String getClueName() {
     return clueName;

@@ -2,7 +2,7 @@ package edu.cnm.deepdive.scavengrclient.repository;
 
 import android.content.SharedPreferences;
 
-public class Hunt implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class HuntRepository implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
   @Override
