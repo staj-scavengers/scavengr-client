@@ -13,5 +13,6 @@
   <string name="join_hunt">JOIN THE HUNT!</string>
   <string name="find_a_hunt_prompt">Great! Now find a hunt you want to join! If you are an organizer you can create one!</string>
   <string name="camera_permission_denied">Sorry, you can\'t use the camera without granting permission</string>
+  <string name="qr_dependencies_downloading">QR Detector dependencies have not finished downloading yet.</string>
 
 </resources>

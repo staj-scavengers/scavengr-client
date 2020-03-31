@@ -29,6 +29,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.util.Arrays;
 
 public class CurrentClueFragment extends Fragment {
@@ -37,6 +39,7 @@ public class CurrentClueFragment extends Fragment {
   private String cameraId;
   private CameraManager cameraManager;
   private Size imageDimension;
+
   private static final int REQUEST_CAMERA_PERMISSION = 200;
   protected CaptureRequest captureRequest;
   protected CaptureRequest.Builder captureRequestBuilder;
@@ -64,9 +67,7 @@ public class CurrentClueFragment extends Fragment {
     cameraFrame.setSurfaceTextureListener(textureListener);
   }
 
-
-// Camera methods below
-
+  //region Camera methods
   SurfaceTextureListener textureListener = new SurfaceTextureListener() {
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
@@ -88,7 +89,6 @@ public class CurrentClueFragment extends Fragment {
       // handle event
     }
   };
-
   private final CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
     @Override
     public void onOpened(CameraDevice camera) {
@@ -96,10 +96,12 @@ public class CurrentClueFragment extends Fragment {
       cameraDevice = camera;
       createCameraPreview();
     }
+
     @Override
     public void onDisconnected(CameraDevice camera) {
       cameraDevice.close();
     }
+
     @Override
     public void onError(CameraDevice camera, int error) {
       cameraDevice.close();
@@ -135,37 +137,46 @@ public class CurrentClueFragment extends Fragment {
       captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
       captureRequestBuilder.addTarget(surface);
 
-      cameraDevice.createCaptureSession(Arrays.asList(surface), new CameraCaptureSession.StateCallback(){
-        @Override
-        public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
-          //The camera is already closed
-          if (null == cameraDevice) {
-            return;
-          }
-          // When the session is ready, we start displaying the preview.
-          cameraCaptureSessions = cameraCaptureSession;
-          updatePreview();
-        }
-        @Override
-        public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
-          Toast.makeText(getActivity(), "Configuration change", Toast.LENGTH_SHORT).show();
-        }
-      }, null);
+      cameraDevice
+          .createCaptureSession(Arrays.asList(surface), new CameraCaptureSession.StateCallback() {
+            @Override
+            public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
+              //The camera is already closed
+              if (null == cameraDevice) {
+                return;
+              }
+              // When the session is ready, we start displaying the preview.
+              cameraCaptureSessions = cameraCaptureSession;
+              updatePreview();
+            }
+
+            @Override
+            public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
+              Toast.makeText(getActivity(), "Configuration change", Toast.LENGTH_SHORT).show();
+            }
+          }, null);
     } catch (CameraAccessException e) {
       e.printStackTrace();
     }
   }
+
   private void openCamera() {
     cameraManager = (CameraManager) getActivity().getSystemService(Context.CAMERA_SERVICE);
     try {
       cameraId = cameraManager.getCameraIdList()[0];
       CameraCharacteristics characteristics = cameraManager.getCameraCharacteristics(cameraId);
-      StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+      StreamConfigurationMap map = characteristics
+          .get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
       assert map != null;
       imageDimension = map.getOutputSizes(SurfaceTexture.class)[0];
       // Add permission check for camera
-      if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CAMERA_PERMISSION);
+      if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA)
+          != PackageManager.PERMISSION_GRANTED && ActivityCompat
+          .checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+          != PackageManager.PERMISSION_GRANTED) {
+        ActivityCompat.requestPermissions(getActivity(),
+            new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+            REQUEST_CAMERA_PERMISSION);
         return;
       }
       cameraManager.openCamera(cameraId, stateCallback, null);
@@ -173,14 +184,17 @@ public class CurrentClueFragment extends Fragment {
       e.printStackTrace();
     }
   }
+
   protected void updatePreview() {
     captureRequestBuilder.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO);
     try {
-      cameraCaptureSessions.setRepeatingRequest(captureRequestBuilder.build(), null, backgroundHandler);
+      cameraCaptureSessions
+          .setRepeatingRequest(captureRequestBuilder.build(), null, backgroundHandler);
     } catch (CameraAccessException e) {
       e.printStackTrace();
     }
   }
+
   private void closeCamera() {
     if (cameraDevice != null) {
       cameraDevice.close();
@@ -189,10 +203,11 @@ public class CurrentClueFragment extends Fragment {
   }
 
   @Override
-  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+      @NonNull int[] grantResults) {
     if (requestCode == REQUEST_CAMERA_PERMISSION) {
       if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-        ((MainActivity)getActivity()).showToast(getString(R.string.camera_permission_denied));
+        ((MainActivity) getActivity()).showToast(getString(R.string.camera_permission_denied));
         // go home
       }
     }
@@ -209,11 +224,23 @@ public class CurrentClueFragment extends Fragment {
       cameraFrame.setSurfaceTextureListener(textureListener);
     }
   }
+
   @Override
   public void onPause() {
     Log.e("ClueCam", "onPause");
     closeCamera();
     stopBackgroundThread();
     super.onPause();
+  }
+  //endregion
+
+  private void createBarcodeDetector() {
+    BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(getContext())
+        .setBarcodeFormats(Barcode.QR_CODE)
+        .build();
+
+    if (!barcodeDetector.isOperational()) {
+      ((MainActivity) getActivity()).showToast(getString(R.string.qr_dependencies_downloading));
+    }
   }
 }
