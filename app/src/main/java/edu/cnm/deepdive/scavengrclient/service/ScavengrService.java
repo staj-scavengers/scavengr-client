@@ -33,8 +33,8 @@ import retrofit2.http.Query;
 public interface ScavengrService {
 
 
-//  Hunt CRUD methods
 
+//region Hunt CRUD methods
   //Single Hunt Returns
 
   @GET("hunts/{id}")
@@ -50,7 +50,7 @@ public interface ScavengrService {
   @DELETE("hunts/{id}")
   Completable deleteHunt(@Header("Authorization") String oauthHeader, @Path("id") UUID uuid);
 
-  //Multipe Hunt Returns
+  //Multiple Hunt Returns
 
   @GET("hunts/")
   Iterable<Hunt> getHuntsByOrganizer(@Header("Authorization") String oauthHeader,
@@ -59,9 +59,10 @@ public interface ScavengrService {
   @GET("hunts/search")
   Iterable<Hunt> searchHuntsByName(@Header("Authorization") String oauthHeader,
       @Query("name") String huntName);
+//endregion
 
-// Clue CRUD methods
 
+//region Clue CRUD methods
   //Single Clue Returns
 
   @GET("clues/{id}")
@@ -83,12 +84,13 @@ public interface ScavengrService {
 
   // Multiple Clue Returns
 
-  @GET("clues/search")
+  @GET("/hunts/{id}/clues")
   Iterable<Clue> getCluesByHunt(@Header("Authorization") String oauthHeader,
-      @Query("hunt") Hunt hunt);
+      @Path("id") UUID id);
+  //endregion
 
-// HuntActivity CRUD methods
 
+//region HuntActivity CRUD methods
   // Single HuntActivity Returns
 
   @POST("hunt-activities/")
@@ -114,9 +116,10 @@ public interface ScavengrService {
   @GET("hunt-activities/search/{hunt}")
   Iterable<HuntActivity> getHuntActivityByHunt(@Header("Authorization") String oauthHeader,
       @Path("hunt") Hunt hunt);
+//endregion
 
-// Organizer CRUD methods
 
+//region Organizer CRUD methods
   @GET("organizers/{id}")
   Single<Organizer> getOrganizer(@Header("Authorization") String oauthHeader, @Path("id") UUID id);
 
@@ -127,8 +130,9 @@ public interface ScavengrService {
   @DELETE("organizers/{id}")
   Single<Organizer> deleteOrganizer(@Header("Authorization") String oauthHeader,
       @Path("id") UUID id);
+//endregion
 
-// User CRUD methods
+// region User CRUD methods
 
   @POST("users/")
   Single<User> postUser(@Header("Authorization") String oauthHeader, @Body Organizer organizer);
@@ -136,7 +140,7 @@ public interface ScavengrService {
   @PUT("users/{userId}/organizer/{organizerId}")
   Single<User> elevateUser(@Header("Authorization") String oauthHeader, @Path("userId") UUID userId,
       @Path("organizerId") UUID organizerId);
-
+// endregion
 
   static ScavengrService getInstance() {
     return InstanceHolder.INSTANCE;

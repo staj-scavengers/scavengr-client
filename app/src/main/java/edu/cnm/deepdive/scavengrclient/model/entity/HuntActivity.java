@@ -4,49 +4,107 @@ package edu.cnm.deepdive.scavengrclient.model.entity;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import com.google.gson.annotations.Expose;
 import java.util.Date;
 import java.util.UUID;
-import javax.annotation.Nonnull;
 
 @Entity(
     indices = {
         @Index(value = "date_started"),
         @Index(value = "date_completed"),
         @Index(value = "clues_completed")
+    },
+    foreignKeys = {
+        @ForeignKey(
+            entity = Hunt.class,
+            parentColumns = "local_hunt_id",
+            childColumns = "local_hunt_id",
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
+        ),
+        @ForeignKey(
+            entity = User.class,
+            parentColumns = "local_user_id",
+            childColumns = "local_user_id",
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
+        )
     }
 )
 public class HuntActivity {
 
-  @NonNull
-  @ColumnInfo(name = "hunt_activity_id")
-  @PrimaryKey()
-  private String id = (UUID.randomUUID().toString());
+  @PrimaryKey(autoGenerate = true)
+  @ColumnInfo(name = "local_hunt_activity_id")
+  private long localId;
 
   @NonNull
+  @Expose
+  @ColumnInfo(name = "hunt_activity_id")
+  private UUID id;
+
+  @NonNull
+  @ColumnInfo(name = "local_hunt_id", index = true)
+  private long huntLocalId;
+
+  @NonNull
+  @ColumnInfo(name = "local_user_id", index = true)
+  private long userLocalId;
+
+  @NonNull
+  @Expose
   @ColumnInfo(name = "hunt_id")
   private String huntId;
 
   @NonNull
+  @Expose
   @ColumnInfo(name = "user_id")
   private String userId;
 
+  @Expose
   @ColumnInfo(name = "date_started")
   private Date started;
 
+  @Expose
   @ColumnInfo(name = "date_completed")
   private Date completed;
 
+  @Expose
   @ColumnInfo(name = "clues_completed")
   private Integer cluesCompleted;
 
+  public long getLocalId() {
+    return localId;
+  }
+
+  public void setLocalId(long localId) {
+    this.localId = localId;
+  }
+
+  public long getHuntLocalId() {
+    return huntLocalId;
+  }
+
+  public void setHuntLocalId(long huntLocalId) {
+    this.huntLocalId = huntLocalId;
+  }
+
+  public long getUserLocalId() {
+    return userLocalId;
+  }
+
+  public void setUserLocalId(long userLocalId) {
+    this.userLocalId = userLocalId;
+  }
+
   @NonNull
-  public String getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(@NonNull String id) {
+  public void setId(@NonNull UUID id) {
     this.id = id;
   }
 
@@ -90,5 +148,11 @@ public class HuntActivity {
 
   public void setCluesCompleted(Integer cluesCompleted) {
     this.cluesCompleted = cluesCompleted;
+  }
+
+  @NonNull
+  @Override
+  public String toString() {
+    return ("User Id: " + userLocalId + " | Hunt Id:" + huntLocalId);
   }
 }

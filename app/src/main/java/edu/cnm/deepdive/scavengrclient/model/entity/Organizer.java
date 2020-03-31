@@ -2,56 +2,58 @@ package edu.cnm.deepdive.scavengrclient.model.entity;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import com.google.gson.annotations.Expose;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
-import javax.annotation.Nonnull;
 
-@Entity(
-    foreignKeys = {
-        @ForeignKey(
-            entity = User.class,
-            parentColumns = "user_id",
-            childColumns = "user_id",
-            onDelete = ForeignKey.CASCADE
-        )
-    }
-
-)
+// not an Entity.  Does not need to be saved locally - Organizer().getUser().getName()
+// is retrieved & attached to Hunts as they are downloaded.
 public class Organizer {
 
-  @NonNull
-  @ColumnInfo(name = "organizer_id")
-  @PrimaryKey()
-  private String id = (UUID.randomUUID().toString());
+  @PrimaryKey(autoGenerate = true)
+  @ColumnInfo(name = "local_organizer_id")
+  private long localId;
 
   @NonNull
-  @ColumnInfo(name = "user_id", index = true)
-  private String userId;
+  @Expose
+  @ColumnInfo(name = "organizer_id")
+  private UUID id;
+
+  @NonNull
+  @Expose
+  private User user;
 
   @Ignore
+  @Expose
   private Set<Hunt> hunts = new LinkedHashSet<>();
 
+  public long getLocalId() {
+    return localId;
+  }
+
+  public void setLocalId(long localId) {
+    this.localId = localId;
+  }
+
   @NonNull
-  public String getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(@NonNull String id) {
+  public void setId(@NonNull UUID id) {
     this.id = id;
   }
 
   @NonNull
-  public String getUserId() {
-    return userId;
+  public User getUser() {
+    return user;
   }
 
-  public void setUserId(@NonNull String userId) {
-    this.userId = userId;
+  public void setUser(@NonNull User user) {
+    this.user = user;
   }
 
   public Set<Hunt> getHunts() {
@@ -60,5 +62,11 @@ public class Organizer {
 
   public void setHunts(Set<Hunt> hunts) {
     this.hunts = hunts;
+  }
+
+  @NonNull
+  @Override
+  public String toString() {
+    return (user.getUserName() + "(organizer)");
   }
 }
