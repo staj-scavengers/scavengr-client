@@ -67,6 +67,7 @@ public class CurrentClueFragment extends Fragment {
     super.onViewCreated(view, savedInstanceState);
     cameraFrame = view.findViewById(R.id.camera_frame);
     cameraFrame.setSurfaceTextureListener(textureListener);
+    openCamera();
   }
 
   //region Camera methods
