@@ -46,11 +46,11 @@ public class HuntActivity {
   private UUID id;
 
   @NonNull
-  @ColumnInfo(name = "local_hunt_id")
+  @ColumnInfo(name = "local_hunt_id", index = true)
   private long huntLocalId;
 
   @NonNull
-  @ColumnInfo(name = "local_user_id")
+  @ColumnInfo(name = "local_user_id", index = true)
   private long userLocalId;
 
   @NonNull

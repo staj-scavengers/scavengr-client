@@ -27,14 +27,14 @@ public interface HuntActivityDao {
   @Delete
   Single<Integer> delete(HuntActivity... huntActivities);
 
-  @Query("SELECT * FROM HuntActivity WHERE hunt_activity_id = :id")
+  @Query("SELECT * FROM HuntActivity WHERE local_hunt_activity_id = :id")
   Single<HuntActivity> getOne(long id);
 
-  @Query("SELECT * FROM HuntActivity WHERE hunt_id = :id")
-  LiveData<List<Hunt>> getByHunt(String id);
+  @Query("SELECT * FROM HuntActivity WHERE local_hunt_id = :id")
+  LiveData<List<Hunt>> getByHunt(long id);
 
-  @Query("SELECT * FROM HuntActivity WHERE user_id = :id")
-  LiveData<List<Hunt>> getByUser(String id);
+  @Query("SELECT * FROM HuntActivity WHERE local_user_id = :id")
+  LiveData<List<Hunt>> getByUser(long id);
 
   @Query("SELECT * FROM HuntActivity")
   LiveData<List<HuntActivity>> list();

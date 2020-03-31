@@ -18,7 +18,7 @@ public interface ClueDao {
   Single<Long> insert(Clue clue);
 
   @Insert
- Single<List<Long>> insert(Collection<Clue> clues);
+  Single<List<Long>> insert(Collection<Clue> clues);
 
 
   // TODO change other update & deletes to Singles
@@ -28,11 +28,11 @@ public interface ClueDao {
   @Delete
   Single<Integer> delete(Clue... clues);
 
-  @Query("SELECT * FROM Clue WHERE clue_id = :id")
-  Single<Clue> getOne(String id);
+  @Query("SELECT * FROM Clue WHERE local_clue_id = :id")
+  Single<Clue> getOne(long id);
 
-  @Query("SELECT * FROM Clue WHERE hunt_id = :id")
-  LiveData<List<Clue>> getByHunt(String id);
+  @Query("SELECT * FROM Clue WHERE local_hunt_id = :id")
+  LiveData<List<Clue>> getByHunt(long id);
 
   @Query("SELECT * FROM Clue")
   LiveData<List<Clue>> list();

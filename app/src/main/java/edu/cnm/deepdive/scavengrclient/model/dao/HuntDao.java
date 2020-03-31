@@ -26,8 +26,8 @@ public interface HuntDao {
   @Delete
   Single<Integer> delete(Hunt... hunts);
 
-  @Query("SELECT * FROM Hunt WHERE hunt_id = :id")
-  Single<Hunt> getOne(String id);
+  @Query("SELECT * FROM Hunt WHERE local_hunt_id = :id")
+  Single<Hunt> getOne(long id);
 
   @Query("SELECT * FROM Hunt WHERE hunt_name LIKE :search")
   LiveData<List<Hunt>> searchByName(String search);

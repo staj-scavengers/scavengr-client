@@ -50,7 +50,7 @@ public interface ScavengrService {
   @DELETE("hunts/{id}")
   Completable deleteHunt(@Header("Authorization") String oauthHeader, @Path("id") UUID uuid);
 
-  //Multipe Hunt Returns
+  //Multiple Hunt Returns
 
   @GET("hunts/")
   Iterable<Hunt> getHuntsByOrganizer(@Header("Authorization") String oauthHeader,
@@ -84,10 +84,10 @@ public interface ScavengrService {
 
   // Multiple Clue Returns
 
-  @GET("clues/search")
+  @GET("/hunts/{id}/clues")
   Iterable<Clue> getCluesByHunt(@Header("Authorization") String oauthHeader,
-      @Query("hunt") Hunt hunt);
-//endregion
+      @Path("id") UUID id);
+  //endregion
 
 
 //region HuntActivity CRUD methods

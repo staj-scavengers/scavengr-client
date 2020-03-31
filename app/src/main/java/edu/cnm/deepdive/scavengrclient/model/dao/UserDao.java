@@ -29,6 +29,6 @@ public interface UserDao {
   @Query("SELECT * FROM User")
   LiveData<List<User>> list();
 
-  @Query("SELECT * FROM User WHERE user_id = :id")
-  Single<User> select(String id);
+  @Query("SELECT * FROM User WHERE local_user_id = :id")
+  Single<User> select(long id);
 }
