@@ -6,10 +6,10 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import com.google.gson.annotations.Expose;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
-import javax.annotation.Nonnull;
 
 @Entity(
     indices = {
@@ -18,27 +18,45 @@ import javax.annotation.Nonnull;
 )
 public class Hunt {
 
-  @NonNull
-  @ColumnInfo(name = "hunt_id")
-  @PrimaryKey()
-  private String id = (UUID.randomUUID().toString());
+  @PrimaryKey(autoGenerate = true)
+  @ColumnInfo(name = "local_hunt_id")
+  private long localId;
 
   @NonNull
+  @Expose
+  @ColumnInfo(name = "hunt_id")
+  private UUID id;
+
+  @NonNull
+  @Expose
   @ColumnInfo(name = "hunt_name", defaultValue = "New Hunt", collate = ColumnInfo.NOCASE)
   private String huntName;
 
+  @Ignore
+  @Expose
+  private Organizer organizer;
+
   @NonNull
-  @ColumnInfo(name = "organizer_id")
-  private String organizerId; // organizer name might be more useful for the client
+  @ColumnInfo(name = "organizer_name", collate = ColumnInfo.NOCASE)
+  private String organizerName;
 
   @Ignore
+  @Expose
   private List<Clue> clues = new LinkedList<>();
 
-  public String getId() {
+  public long getLocalId() {
+    return localId;
+  }
+
+  public void setLocalId(long localId) {
+    this.localId = localId;
+  }
+
+  public UUID getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 
@@ -51,13 +69,20 @@ public class Hunt {
     this.huntName = huntName;
   }
 
-  @NonNull
-  public String getOrganizerId() {
-    return organizerId;
+  public Organizer getOrganizer() {
+    return organizer;
   }
 
-  public void setOrganizerId(@NonNull String organizerId) {
-    this.organizerId = organizerId;
+  public void setOrganizer(Organizer organizer) {
+    this.organizer = organizer;
+  }
+
+  public String getOrganizerName() {
+    return organizerName;
+  }
+
+  public void setOrganizerName(String organizerName) {
+    this.organizerName = organizerName;
   }
 
   public List<Clue> getClues() {
@@ -66,5 +91,11 @@ public class Hunt {
 
   public void setClues(List<Clue> clues) {
     this.clues = clues;
+  }
+
+  @NonNull
+  @Override
+  public String toString() {
+    return (huntName + "by: " + organizerName);
   }
 }

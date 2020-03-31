@@ -3,12 +3,14 @@ package edu.cnm.deepdive.scavengrclient.repository;
 import android.app.Application;
 import android.content.SharedPreferences;
 import androidx.preference.PreferenceManager;
+import edu.cnm.deepdive.scavengrclient.model.entity.Clue;
 import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
+import edu.cnm.deepdive.scavengrclient.model.entity.User;
 import edu.cnm.deepdive.scavengrclient.service.ScavengrDatabase;
 import edu.cnm.deepdive.scavengrclient.service.ScavengrService;
-import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
+import java.util.Iterator;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -43,13 +45,50 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
     return InstanceHolder.INSTANCE;
   }
 
-
   //region server operations
+
+  /**
+   * This method chains multiple operations to add a {@link Hunt} record to the local database:
+   *
+   * 1. A Hunt is requested by {@link ScavengrService}.
+   * 2. The name of the {@link User} who created the hunt is added to the Hunt object.
+   * 3. The Hunt is saved to the {@link ScavengrDatabase}, which generates a local {@link Long} id
+   *    that replaces the server's {@link UUID} as the Primary Key.
+   * 4. That id is attached to the Hunt and each of its {@link Clue}s.
+   * 5. The list of Clues is saved to the Database, and each has its unique local Long id attached.
+   *
+   * @param token from Oauth service, used to check User privileges
+   * @param huntId identifies the Hunt to be downloaded.
+   * @return the Hunt, modified from the server for the local database.
+   */
   public Single<Hunt> downloadHunt(String token, UUID huntId) {
     return scavengr.getHunt(token, huntId)
-        .subscribeOn(Schedulers.from(networkPool));
-//        .doOnSuccess( save hunt locally );
-  }
+        .subscribeOn(Schedulers.from(networkPool))
+        .flatMap((Hunt hunt) -> { // add organizer name
+              hunt.setOrganizerName(hunt.getOrganizer().getUser().getUserName());
+              return database.getHuntDao().insert(hunt) // save hunt, get id
+                  .map((id) -> {
+                    hunt.setLocalId(id); // write new id from database into Clues
+                    for (Clue clue : hunt.getClues()) {
+                      clue.setLocalHuntId(id);
+                    }
+                    return hunt;
+                  });
+            }
+        )
+        .flatMap((hunt) -> // save all the clues
+            database.getClueDao().insert(hunt.getClues())
+                .subscribeOn(Schedulers.io())
+                .map((ids) -> { // take the list of ids
+                  Iterator<Long> idIterator = ids.iterator();
+                  Iterator<Clue> clueIterator = hunt.getClues().iterator();
+                  while (idIterator.hasNext()) { // add ids to clues in order
+                    clueIterator.next().setLocalId(idIterator.next());
+                  }
+                  return hunt;
+                })
+        );
+  }//        .subscribe in ViewModel will return a Hunt with Clues;
 
   public Single<Hunt> uploadHunt(String token, Hunt hunt) {
     return scavengr.postHunt(token, hunt).subscribeOn(Schedulers.from(networkPool));

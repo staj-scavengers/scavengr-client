@@ -21,16 +21,13 @@ public interface HuntDao {
   List<Long> insert(Collection<Hunt> hunts);
 
   @Update
-  int update(Hunt hunt);
+  Single<Integer> update(Hunt hunt);
 
   @Delete
-  int delete(Hunt... hunts);
+  Single<Integer> delete(Hunt... hunts);
 
   @Query("SELECT * FROM Hunt WHERE hunt_id = :id")
   Single<Hunt> getOne(String id);
-
-  @Query("SELECT * FROM Hunt WHERE organizer_id = :id")
-  LiveData<List<Hunt>> getByOrganizer(String id);
 
   @Query("SELECT * FROM Hunt WHERE hunt_name LIKE :search")
   LiveData<List<Hunt>> searchByName(String search);

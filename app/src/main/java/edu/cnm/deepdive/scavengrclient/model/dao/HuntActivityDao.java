@@ -22,10 +22,10 @@ public interface HuntActivityDao {
   List<Long> insert(Collection<HuntActivity> huntActivities);
 
   @Update
-  int update(HuntActivity huntActivity);
+  Single<Integer> update(HuntActivity huntActivity);
 
   @Delete
-  int delete(HuntActivity... huntActivities);
+  Single<Integer> delete(HuntActivity... huntActivities);
 
   @Query("SELECT * FROM HuntActivity WHERE hunt_activity_id = :id")
   Single<HuntActivity> getOne(long id);

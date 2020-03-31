@@ -11,6 +11,7 @@ import io.reactivex.Single;
 import java.util.Collection;
 import java.util.List;
 
+// TODO Organizer is no longer a database entity.  Do we need this Dao?
 @Dao
 public interface OrganizerDao {
 
@@ -21,14 +22,15 @@ public interface OrganizerDao {
   List<Long> insert(Collection<Organizer> organizers);
 
   @Update
-  int update(Organizer organizer);
+  Single<Integer> update(Organizer organizer);
 
   @Delete
-  int delete(Organizer... organizers);
+  Single<Integer> delete(Organizer... organizers);
 
-  @Query("SELECT * FROM Organizer")
-  LiveData<List<Organizer>> list();
 
-  @Query("SELECT * FROM Organizer WHERE organizer_id = :id")
-  Single<Organizer> select(String id);
+//  @Query("SELECT * FROM Organizer")
+//  LiveData<List<Organizer>> list();
+//
+//  @Query("SELECT * FROM Organizer WHERE organizer_id = :id")
+//  Single<Organizer> select(String id);
 }

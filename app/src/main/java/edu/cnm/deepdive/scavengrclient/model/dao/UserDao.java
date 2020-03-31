@@ -21,10 +21,10 @@ public interface UserDao {
   List<Long> insert(Collection<User> users);
 
   @Update
-  int update(User user);
+  Single<Integer> update(User user);
 
   @Delete
-  int delete(User... users);
+  Single<Integer> delete(User... users);
 
   @Query("SELECT * FROM User")
   LiveData<List<User>> list();

@@ -5,8 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import com.google.gson.annotations.Expose;
 import java.util.UUID;
-import javax.annotation.Nonnull;
 
 @Entity(
     indices = {
@@ -15,28 +15,43 @@ import javax.annotation.Nonnull;
 )
 public class User {
 
-  @NonNull
-  @ColumnInfo(name = "user_id")
-  @PrimaryKey()
-  private String id = (UUID.randomUUID().toString());
+  @PrimaryKey(autoGenerate = true)
+  @ColumnInfo(name = "local_user_id")
+  private long localId;
 
   @NonNull
+  @Expose
+  @ColumnInfo(name = "user_id")
+  private UUID id;
+
+  @NonNull
+  @Expose
   @ColumnInfo(name = "oauth_token")
   private String oauthToken;
 
   @NonNull
+  @Expose
   @ColumnInfo(name = "user_name", collate = ColumnInfo.NOCASE)
   private String userName;
 
+  @Expose
   @ColumnInfo(name = "organizer_id")
   private String organizerId;
 
+  public long getLocalId() {
+    return localId;
+  }
+
+  public void setLocalId(long localId) {
+    this.localId = localId;
+  }
+
   @NonNull
-  public String getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(@NonNull String id) {
+  public void setId(@NonNull UUID id) {
     this.id = id;
   }
 
@@ -64,5 +79,11 @@ public class User {
 
   public void setOrganizerId(String organizerId) {
     this.organizerId = organizerId;
+  }
+
+  @NonNull
+  @Override
+  public String toString() {
+    return userName;
   }
 }

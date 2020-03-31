@@ -19,11 +19,11 @@ public class HuntActivityWithStats {
 
   private User user;
 
+  private String organizerName;
+
   private Date started;
 
   private Date completed;
-
-  private Long totalTime;
 
   private Integer cluesCompleted;
 
@@ -42,6 +42,14 @@ public class HuntActivityWithStats {
 
   public void setUser(User user) {
     this.user = user;
+  }
+
+  public String getOrganizerName() {
+    return organizerName;
+  }
+
+  public void setOrganizerName(String organizerName) {
+    this.organizerName = organizerName;
   }
 
   public Hunt getHunt() {
@@ -68,16 +76,22 @@ public class HuntActivityWithStats {
     this.completed = completed;
   }
 
-  public Long getTotalTime() {
+  public String getTotalTime() {
     if(started == null || completed == null) {
       return null;
     }
-    return started.getTime() - completed.getTime();
+    long minTotal = started.getTime() - completed.getTime();
+    long seconds = minTotal / 1000;
+    long minutes = seconds / 60;
+    long hours = minutes / 60;
+    long days = hours / 24;
+
+    String time = days + ":" + hours % 24 + ":" + minutes % 60 + ":" + seconds % 60;
+
+
+    return time;
   }
 
-  public void setTotalTime(Long totalTime) {
-    this.totalTime = totalTime;
-  }
 
   public Integer getCluesCompleted() {
     return cluesCompleted;

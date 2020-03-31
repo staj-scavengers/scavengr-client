@@ -18,13 +18,15 @@ public interface ClueDao {
   Single<Long> insert(Clue clue);
 
   @Insert
-  List<Long> insert(Collection<Clue> clues);
+ Single<List<Long>> insert(Collection<Clue> clues);
 
+
+  // TODO change other update & deletes to Singles
   @Update
-  int update(Clue clue);
+  Single<Integer> update(Clue clue);
 
   @Delete
-  int delete(Clue... clues);
+  Single<Integer> delete(Clue... clues);
 
   @Query("SELECT * FROM Clue WHERE clue_id = :id")
   Single<Clue> getOne(String id);
