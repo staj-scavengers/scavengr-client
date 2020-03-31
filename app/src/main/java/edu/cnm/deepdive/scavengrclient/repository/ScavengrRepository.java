@@ -43,6 +43,8 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
     return InstanceHolder.INSTANCE;
   }
 
+
+  //region server operations
   public Single<Hunt> downloadHunt(String token, UUID huntId) {
     return scavengr.getHunt(token, huntId)
         .subscribeOn(Schedulers.from(networkPool));
@@ -52,6 +54,7 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
   public Single<Hunt> uploadHunt(String token, Hunt hunt) {
     return scavengr.postHunt(token, hunt).subscribeOn(Schedulers.from(networkPool));
   }
+  //endregion
 
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
