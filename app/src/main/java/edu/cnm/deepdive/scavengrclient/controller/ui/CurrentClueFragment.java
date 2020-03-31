@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.scavengrclient;
+package edu.cnm.deepdive.scavengrclient.controller.ui;
 
 
 import android.Manifest;
@@ -31,6 +31,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import edu.cnm.deepdive.scavengrclient.R;
+import edu.cnm.deepdive.scavengrclient.controller.MainActivity;
 import java.util.Arrays;
 
 public class CurrentClueFragment extends Fragment {

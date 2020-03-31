@@ -5,7 +5,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:padding="4dp"
-  tools:context=".CurrentClueFragment">
+  tools:context=".controller.ui.CurrentClueFragment">
 
   <TextureView
     android:id="@+id/camera_frame"

@@ -1,16 +1,15 @@
-package edu.cnm.deepdive.scavengrclient;
+package edu.cnm.deepdive.scavengrclient.controller.ui;
 
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.FragmentManager;
+import edu.cnm.deepdive.scavengrclient.R;
 
 public class NewUserFragment extends Fragment implements OnClickListener {
 

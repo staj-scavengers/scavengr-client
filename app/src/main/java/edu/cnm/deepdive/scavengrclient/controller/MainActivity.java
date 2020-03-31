@@ -1,31 +1,35 @@
-package edu.cnm.deepdive.scavengrclient;
+package edu.cnm.deepdive.scavengrclient.controller;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
-import edu.cnm.deepdive.scavengrclient.controller.LoginActivity;
+import edu.cnm.deepdive.scavengrclient.R;
 import edu.cnm.deepdive.scavengrclient.service.GoogleSignInService;
-import edu.cnm.deepdive.scavengrclient.ui.main.MainFragment;
+import edu.cnm.deepdive.scavengrclient.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
+
+  private NavController navController;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main_activity);
-    if (savedInstanceState == null) {
-      getSupportFragmentManager().beginTransaction()
-          .replace(R.id.container, MainFragment.newInstance())
-          .commitNow();
-    }
+    setupNavigation();
+    setupViewModel();
   }
+
+
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -42,6 +46,15 @@ public class MainActivity extends AppCompatActivity {
       handled = super.onOptionsItemSelected(item);
     }
     return handled;
+  }
+
+  private void setupNavigation() {
+    navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+  }
+
+  private void setupViewModel() {
+    MainViewModel viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+    getLifecycle().addObserver(viewModel);
   }
 
   private void signOut() {

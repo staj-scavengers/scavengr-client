@@ -1,14 +1,10 @@
 package edu.cnm.deepdive.scavengrclient.controller;
 
 import android.content.Intent;
-import android.view.View;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.fragment.app.FragmentManager;
-import edu.cnm.deepdive.scavengrclient.MainActivity;
-import edu.cnm.deepdive.scavengrclient.NewUserFragment;
 import edu.cnm.deepdive.scavengrclient.R;
 import edu.cnm.deepdive.scavengrclient.service.GoogleSignInService;
 
