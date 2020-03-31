@@ -8,7 +8,6 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import java.util.Date;
 import java.util.UUID;
-import javax.annotation.Nonnull;
 
 @Entity(
     indices = {
