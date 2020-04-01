@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.FragmentManager;
 
-public class NewUserFragment extends Fragment implements OnClickListener {
+public class NewUserFragment extends Fragment implements OnClickListener{
 
   public NewUserFragment() {
     // Required empty public constructor
@@ -25,17 +25,18 @@ public class NewUserFragment extends Fragment implements OnClickListener {
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_new_user, container, false);
     ImageView imageView = view.findViewById(R.id.welcome_app_icon);
-    imageView.setImageResource(R.drawable.ic_launcher_foreground);
+    Button button = view.findViewById(R.id.new_user_done_button);
+    button.setOnClickListener(this);
+    imageView.setImageResource(R.mipmap.ic_welcome_icon);
     return view;
   }
 
-  // TODO Implement click to go to find a hunt fragment
   @Override
-  public void onClick(View view) {
+  public void onClick(View v) {
     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
     fragmentManager.beginTransaction()
-    .add(R.id.main, new FindAHuntFragment(), null)
-    .addToBackStack(NewUserFragment.class.getName())
-    .commit();
+        .add(R.id.fragment_container_view_tag, new FindAHuntFragment(), null)
+        .addToBackStack(NewUserFragment.class.getName())
+        .commit();
   }
 }

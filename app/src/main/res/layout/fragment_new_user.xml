@@ -8,7 +8,7 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   tools:context=".NewUserFragment">
 
-  <ImageView
+  <androidx.appcompat.widget.AppCompatImageView
     android:id="@+id/welcome_app_icon"
     android:layout_width="125dp"
     android:layout_height="125dp"
@@ -65,6 +65,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="50dp"
     android:text="DONE"
+    android:clickable="true"
+    android:focusable="true"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"/>
 

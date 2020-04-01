@@ -1,16 +1,21 @@
 package edu.cnm.deepdive.scavengrclient.controller;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import edu.cnm.deepdive.scavengrclient.MainActivity;
 import edu.cnm.deepdive.scavengrclient.NewUserFragment;
 import edu.cnm.deepdive.scavengrclient.R;
 import edu.cnm.deepdive.scavengrclient.service.GoogleSignInService;
+import java.util.zip.Inflater;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -44,9 +49,14 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   private void switchToMain() {
-    Intent intent = new Intent(this, MainActivity.class);
-    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-    startActivity(intent);
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    fragmentManager.beginTransaction()
+        .add(R.id.fragment_new_user, new NewUserFragment(), null)
+        .commit();
+//    Intent intent = new Intent(LoginActivity.this, NewUserFragment.class);
+//    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//    startActivity(intent);
+
   }
 
 }
