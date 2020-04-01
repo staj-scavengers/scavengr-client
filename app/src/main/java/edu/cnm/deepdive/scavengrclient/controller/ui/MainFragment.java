@@ -33,6 +33,6 @@ public class MainFragment extends Fragment {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    Navigation.findNavController(view).navigate(R.id.nav_current_clue);
+//    Navigation.findNavController(view).navigate(R.id.nav_current_clue);
   }
 }

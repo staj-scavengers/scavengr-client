@@ -37,17 +37,7 @@ import java.io.IOException;
 public class CurrentClueFragment extends Fragment {
 
   private SurfaceView cameraFrame;
-  private String cameraId;
-  private CameraManager cameraManager;
-  private Size imageDimension;
-  private static final int REQUEST_CAMERA_PERMISSION = 200;
-  protected CaptureRequest captureRequest;
-  protected CaptureRequest.Builder captureRequestBuilder;
-  protected CameraDevice cameraDevice;
-  protected CameraCaptureSession cameraCaptureSessions;
-  private Handler backgroundHandler;
-  private HandlerThread backgroundThread;
-  private BarcodeDetector qrDetector;
+   private BarcodeDetector qrDetector;
   private TextView clueDescription;
   private CameraSource cameraSource;
   private static final int RC_HANDLE_CAMERA_PERM = 2;
