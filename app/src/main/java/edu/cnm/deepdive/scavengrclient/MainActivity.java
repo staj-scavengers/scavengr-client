@@ -20,28 +20,14 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    setContentView(R.layout.main_activity);
     if (savedInstanceState == null) {
-      if (firstLaunch) {
-        getSupportFragmentManager().beginTransaction()
-            .replace(R.id.container, new NewUserFragment())
-            .commitNow();
-        firstLaunch = false;
-      } else {
-        getSupportFragmentManager().beginTransaction()
-            .replace(R.id.container, new MainFragment())
-            .commitNow();
-      }
+      getSupportFragmentManager().beginTransaction()
+          .replace(R.id.container, new NewUserFragment())
+          .commitNow();
     }
-//    count++;
-//
-//    if (count > 0) {
-//      setContentView(R.layout.main_activity);
-//      if (savedInstanceState == null) {
-//        getSupportFragmentManager().beginTransaction()
-//            .replace(R.id.container, new MainFragment())
-//            .commitNow();
-//      }
-//    }
+
   }
 
   @Override
@@ -68,6 +54,20 @@ public class MainActivity extends AppCompatActivity {
           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
           startActivity(intent);
         });
+  }
+
+  private void findCorrectView() {
+    if (firstLaunch) {
+      getSupportFragmentManager().beginTransaction()
+          .replace(R.id.container, new NewUserFragment())
+          .commitNow();
+      firstLaunch = false;
+    } else {
+      getSupportFragmentManager().beginTransaction()
+          .replace(R.id.container, new MainFragment())
+          .commitNow();
+    }
+
   }
 
 

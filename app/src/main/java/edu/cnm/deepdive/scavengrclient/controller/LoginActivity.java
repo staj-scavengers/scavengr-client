@@ -15,11 +15,13 @@ import edu.cnm.deepdive.scavengrclient.MainActivity;
 import edu.cnm.deepdive.scavengrclient.NewUserFragment;
 import edu.cnm.deepdive.scavengrclient.R;
 import edu.cnm.deepdive.scavengrclient.service.GoogleSignInService;
+import edu.cnm.deepdive.scavengrclient.ui.main.MainFragment;
 import java.util.zip.Inflater;
 
 public class LoginActivity extends AppCompatActivity {
 
   private static final int LOGIN_REQUEST_CODE = 1000;
+  private boolean firstLaunch;
 
   private GoogleSignInService repository;
 
@@ -40,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
   protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
     if (requestCode == LOGIN_REQUEST_CODE) {
       repository.completeSignIn(data)
-          .addOnSuccessListener((account) -> switchToMain())
+          .addOnSuccessListener((account) -> switchToCorrectView())
           .addOnFailureListener((ex) ->
               Toast.makeText(this, R.string.login_failure, Toast.LENGTH_LONG).show());
     } else {
@@ -54,6 +56,19 @@ public class LoginActivity extends AppCompatActivity {
     intent.putExtra("EXTRA_NEW_SIGN_IN", true);
     startActivity(intent);
 
+  }
+
+  private void switchToCorrectView() {
+    if (firstLaunch) {
+      getSupportFragmentManager().beginTransaction()
+          .replace(R.id.container, new NewUserFragment())
+          .commitNow();
+      firstLaunch = false;
+    } else {
+      getSupportFragmentManager().beginTransaction()
+          .replace(R.id.container, new MainFragment())
+          .commitNow();
+    }
   }
 
 }
