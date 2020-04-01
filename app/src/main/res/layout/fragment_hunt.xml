@@ -18,12 +18,25 @@
   app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
   <com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/calendar_fab"
+    android:id="@+id/add"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:src="@drawable/ic_add"
+    android:clickable="true"
+    android:focusable="true"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
     android:layout_margin="20dp"/>
+
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/edit"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_margin="20dp"
+    app:layout_constraintBottom_toTopOf="@id/add"
+    tools:src="@drawable/ic_edit"
+    android:focusable="true"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.fragment.app.FragmentManager;
+import edu.cnm.deepdive.scavengrclient.controller.HuntFragment;
 import edu.cnm.deepdive.scavengrclient.controller.LoginActivity;
 import edu.cnm.deepdive.scavengrclient.service.GoogleSignInService;
 import edu.cnm.deepdive.scavengrclient.ui.main.MainFragment;
@@ -23,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
           .replace(R.id.container, MainFragment.newInstance())
           .commitNow();
     }
+    HuntFragment huntFragment = new HuntFragment();
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    fragmentManager.beginTransaction().add(R.id.main, huntFragment).commit();
+
   }
 
   @Override
