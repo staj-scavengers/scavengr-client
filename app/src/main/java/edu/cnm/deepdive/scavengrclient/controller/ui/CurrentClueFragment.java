@@ -50,10 +50,7 @@ public class CurrentClueFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
-
     return inflater.inflate(R.layout.fragment_current_clue, container, false);
-
   }
 
   @Override
@@ -62,7 +59,6 @@ public class CurrentClueFragment extends Fragment {
     cameraFrame = view.findViewById(R.id.camera_frame);
     clueDescription = view.findViewById(R.id.clue_description);
     confirmCameraPermissions(view);
-//    cameraFrame.setSurfaceTextureListener(textureListener);
     Button clueButton = view.findViewById(R.id.clue_button);
     clueButton.setOnClickListener(v -> {
       if (clueDescription.getVisibility() == View.VISIBLE) {
@@ -75,6 +71,7 @@ public class CurrentClueFragment extends Fragment {
     });
   }
 
+  //region Camera Setup & Permissions
   private void confirmCameraPermissions(View view) {
     int rc = ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA);
     if (rc == PackageManager.PERMISSION_GRANTED) {
@@ -134,6 +131,7 @@ public class CurrentClueFragment extends Fragment {
         .setAction(R.string.ok, listener)
         .show();
   }
+  //endregion
 
   private void createBarcodeDetector() {
     Log.d("createBarcodeDetector", "called");

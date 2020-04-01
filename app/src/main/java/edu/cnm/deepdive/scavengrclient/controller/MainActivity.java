@@ -66,17 +66,6 @@ public class MainActivity extends AppCompatActivity {
         });
   }
 
-  // Google's sample code for dummies:
-  public void setupDetector() {
-    BarcodeDetector detector = new BarcodeDetector.Builder(getApplicationContext())
-        .setBarcodeFormats(Barcode.QR_CODE)
-        .build();
-    if (!detector.isOperational()) {
-      showToast("Could not set up the detector!");
-      return;
-    }
-  }
-
   /**
    * Useful for displaying error messages.
    *
