@@ -106,13 +106,11 @@ public interface ScavengrService {
 
   // Multiple HuntActivity Returns
 
-  //FIXME with HuntActivityController getByUser
   @GET("hunt-activities/search/{user}")
   Iterable<HuntActivity> getHuntActivityByUser(@Header("Authorization") String oauthHeader,
       @Path("user") User user);
 
 
-  //FIXME with HuntActivityController getByHunt
   @GET("hunt-activities/search/{hunt}")
   Iterable<HuntActivity> getHuntActivityByHunt(@Header("Authorization") String oauthHeader,
       @Path("hunt") Hunt hunt);

@@ -22,7 +22,7 @@
 
     <activity
       android:label="Scavenger"
-      android:name=".MainActivity">
+      android:name=".controller.MainActivity">
 
     </activity>
 

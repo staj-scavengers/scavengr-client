@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  app:startDestination="@+id/nav_home">
+
+  <fragment
+    android:id="@+id/nav_home"
+    android:label="Scavengr"
+    android:name="edu.cnm.deepdive.scavengrclient.controller.ui.MainFragment"
+    tools:layout="@layout/main_fragment">
+  </fragment>
+
+  <fragment
+    android:id="@+id/nav_new_user"
+    android:label="New User"
+    android:name="edu.cnm.deepdive.scavengrclient.controller.ui.NewUserFragment"
+    tools:layout="@layout/fragment_new_user">
+  </fragment>
+
+  <fragment
+    android:id="@+id/nav_current_clue"
+    android:label="Current Clue"
+    android:name="edu.cnm.deepdive.scavengrclient.controller.ui.CurrentClueFragment"
+    tools:layout="@layout/fragment_current_clue">
+  </fragment>
+
+</navigation>
