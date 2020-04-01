@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
 import edu.cnm.deepdive.scavengrclient.controller.LoginActivity;
 import edu.cnm.deepdive.scavengrclient.service.GoogleSignInService;
 import edu.cnm.deepdive.scavengrclient.ui.main.MainFragment;
@@ -17,10 +18,20 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    boolean newSignIn = Boolean.parseBoolean(getIntent().getStringExtra("EXTRA_NEW_SIGN_IN"));
+    Fragment fragment = null;
+
+    if (newSignIn) {
+      fragment = new NewUserFragment();
+    } else {
+      fragment = MainFragment.newInstance();
+    }
+
     setContentView(R.layout.main_activity);
     if (savedInstanceState == null) {
       getSupportFragmentManager().beginTransaction()
-          .replace(R.id.container, MainFragment.newInstance())
+          .replace(R.id.container, new NewUserFragment())
           .commitNow();
     }
   }

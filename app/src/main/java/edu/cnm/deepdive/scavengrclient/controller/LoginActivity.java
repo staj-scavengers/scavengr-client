@@ -49,13 +49,10 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   private void switchToMain() {
-    FragmentManager fragmentManager = getSupportFragmentManager();
-    fragmentManager.beginTransaction()
-        .add(R.id.fragment_new_user, new NewUserFragment(), null)
-        .commit();
-//    Intent intent = new Intent(LoginActivity.this, NewUserFragment.class);
-//    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//    startActivity(intent);
+    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+    intent.putExtra("EXTRA_NEW_SIGN_IN", true);
+    startActivity(intent);
 
   }
 
