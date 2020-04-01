@@ -1,6 +1,8 @@
 package edu.cnm.deepdive.scavengrclient.controller.ui;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
@@ -21,11 +23,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.android.material.snackbar.Snackbar;
 import edu.cnm.deepdive.scavengrclient.R;
 import edu.cnm.deepdive.scavengrclient.controller.MainActivity;
 import java.io.IOException;
@@ -46,6 +50,7 @@ public class CurrentClueFragment extends Fragment {
   private BarcodeDetector qrDetector;
   private TextView clueDescription;
   private CameraSource cameraSource;
+  private static final int RC_HANDLE_CAMERA_PERM = 2;
 
   public CurrentClueFragment() {
     // Required empty public constructor
@@ -56,23 +61,42 @@ public class CurrentClueFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     // Inflate the layout for this fragment
+
     return inflater.inflate(R.layout.fragment_current_clue, container, false);
+
   }
 
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    createBarcodeDetector();
     cameraFrame = view.findViewById(R.id.camera_frame);
     clueDescription = view.findViewById(R.id.clue_description);
-    setupCamera();
+    confirmCameraPermissions(view);
 //    cameraFrame.setSurfaceTextureListener(textureListener);
-    Button cameraButton = view.findViewById(R.id.camera_button);
-    cameraButton.setOnClickListener(v -> {
+    Button clueButton = view.findViewById(R.id.clue_button);
+    clueButton.setOnClickListener(v -> {
+      if (clueDescription.getVisibility() == View.VISIBLE) {
+       clueDescription.setVisibility(View.GONE);
+       clueButton.setText(R.string.show_clue);
+      } else {
+        clueDescription.setVisibility(View.VISIBLE);
+        clueButton.setText(R.string.hide_clue);
+      }
     });
   }
 
+  private void confirmCameraPermissions(View view) {
+    int rc = ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA);
+    if (rc == PackageManager.PERMISSION_GRANTED) {
+      setupCamera();
+    } else {
+      requestCameraPermission(view);
+    }
+  }
+
   private void setupCamera() {
+    Log.d("setupCamera", "called");
+    createBarcodeDetector();
     cameraSource = new CameraSource
         .Builder(getContext(), qrDetector)
         .build();
@@ -85,9 +109,11 @@ public class CurrentClueFragment extends Fragment {
           Log.e("CAMERA SOURCE", ie.getMessage());
         }
       }
+
       @Override
       public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
       }
+
       @Override
       public void surfaceDestroyed(SurfaceHolder holder) {
         cameraSource.stop();
@@ -95,7 +121,31 @@ public class CurrentClueFragment extends Fragment {
     });
   }
 
- /* //region Camera methods
+  private void requestCameraPermission(View view) {
+    final String[] permissions = new String[]{Manifest.permission.CAMERA};
+
+    if (!ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+        Manifest.permission.CAMERA)) {
+      ActivityCompat.requestPermissions(getActivity(), permissions, RC_HANDLE_CAMERA_PERM);
+      return;
+    }
+
+    View.OnClickListener listener = new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        ActivityCompat.requestPermissions(getActivity(), permissions,
+            RC_HANDLE_CAMERA_PERM);
+      }
+    };
+
+    view.findViewById(R.id.current_clue_layout).setOnClickListener(listener);
+    Snackbar.make(view, R.string.permission_camera_rationale,
+        Snackbar.LENGTH_INDEFINITE)
+        .setAction(R.string.ok, listener)
+        .show();
+  }
+
+ /* //region CameraPreview methods
   SurfaceTextureListener textureListener = new SurfaceTextureListener() {
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
@@ -265,6 +315,7 @@ public class CurrentClueFragment extends Fragment {
   //endregion*/
 
   private void createBarcodeDetector() {
+    Log.d("createBarcodeDetector", "called");
     qrDetector = new BarcodeDetector.Builder(getContext())
         .setBarcodeFormats(Barcode.QR_CODE)
         .build();
@@ -284,17 +335,7 @@ public class CurrentClueFragment extends Fragment {
         final SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
         if (barcodes.size() != 0) {
-          ((MainActivity) getActivity()).showToast("Scanned a QR Code");
-          clueDescription.setText(barcodes.valueAt(0).displayValue);
-          /*
-          barcodeInfo.post(new Runnable() {    // Use the post method of the TextView
-            public void run() {
-              barcodeInfo.setText(    // Update the TextView
-                  barcodes.valueAt(0).displayValue
-              );
-
-          });
-*/
+          // TODO send value to MainViewModel
         }
       }
     });

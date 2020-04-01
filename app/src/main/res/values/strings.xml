@@ -15,5 +15,9 @@
   <string name="qr_dependencies_downloading">QR Detector dependencies have not finished downloading yet.</string>
   <string name="sagan_ipsum">Dispassionate extraterrestrial observer made in the interiors of collapsing stars network of wormholes quasar light years descended from astronomers? Stirred by starlight invent the universe white dwarf globular star cluster take root and flourish trillion. A still more glorious dawn awaits with pretty stories for which there\'s little good evidence dream of the mind\'s eye courage of our questions the only home we\'ve ever known emerged into consciousness and billions upon billions upon billions upon billions upon billions upon billions upon billions.</string>
   <string name="restart_camera">Camera failed.  Restarting</string>
+  <string name="permission_camera_rationale">Access to the camera is needed for QR detection.</string>
+  <string name="ok">OK</string>
+  <string name="hide_clue">Hide clue</string>
+  <string name="show_clue">Show clue</string>
 
 </resources>
