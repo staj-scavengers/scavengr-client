@@ -1,47 +1,41 @@
 package edu.cnm.deepdive.scavengrclient.controller.ui;
 
 
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.graphics.SurfaceTexture;
-import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
-import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
-import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
-import android.hardware.camera2.params.StreamConfigurationMap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
 import android.util.Size;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
-import android.view.Surface;
-import android.view.TextureView;
-import android.view.TextureView.SurfaceTextureListener;
+import android.view.SurfaceHolder;
+import android.view.SurfaceHolder.Callback;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.Button;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import com.google.android.gms.vision.CameraSource;
+import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import edu.cnm.deepdive.scavengrclient.R;
 import edu.cnm.deepdive.scavengrclient.controller.MainActivity;
-import java.util.Arrays;
+import java.io.IOException;
 
 public class CurrentClueFragment extends Fragment {
 
-  private TextureView cameraFrame;
+  private SurfaceView cameraFrame;
   private String cameraId;
   private CameraManager cameraManager;
   private Size imageDimension;
-
   private static final int REQUEST_CAMERA_PERMISSION = 200;
   protected CaptureRequest captureRequest;
   protected CaptureRequest.Builder captureRequestBuilder;
@@ -49,6 +43,9 @@ public class CurrentClueFragment extends Fragment {
   protected CameraCaptureSession cameraCaptureSessions;
   private Handler backgroundHandler;
   private HandlerThread backgroundThread;
+  private BarcodeDetector qrDetector;
+  private TextView clueDescription;
+  private CameraSource cameraSource;
 
   public CurrentClueFragment() {
     // Required empty public constructor
@@ -65,16 +62,44 @@ public class CurrentClueFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+    createBarcodeDetector();
     cameraFrame = view.findViewById(R.id.camera_frame);
-    cameraFrame.setSurfaceTextureListener(textureListener);
-    openCamera();
+    clueDescription = view.findViewById(R.id.clue_description);
+    setupCamera();
+//    cameraFrame.setSurfaceTextureListener(textureListener);
+    Button cameraButton = view.findViewById(R.id.camera_button);
+    cameraButton.setOnClickListener(v -> {
+    });
   }
 
-  //region Camera methods
+  private void setupCamera() {
+    cameraSource = new CameraSource
+        .Builder(getContext(), qrDetector)
+        .build();
+    cameraFrame.getHolder().addCallback(new Callback() {
+      @Override
+      public void surfaceCreated(SurfaceHolder holder) {
+        try {
+          cameraSource.start(cameraFrame.getHolder());
+        } catch (IOException ie) {
+          Log.e("CAMERA SOURCE", ie.getMessage());
+        }
+      }
+      @Override
+      public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+      }
+      @Override
+      public void surfaceDestroyed(SurfaceHolder holder) {
+        cameraSource.stop();
+      }
+    });
+  }
+
+ /* //region Camera methods
   SurfaceTextureListener textureListener = new SurfaceTextureListener() {
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-      // open camera
+      openCamera();
     }
 
     @Override
@@ -163,6 +188,7 @@ public class CurrentClueFragment extends Fragment {
     }
   }
 
+
   private void openCamera() {
     cameraManager = (CameraManager) getActivity().getSystemService(Context.CAMERA_SERVICE);
     try {
@@ -183,6 +209,7 @@ public class CurrentClueFragment extends Fragment {
         return;
       }
       cameraManager.openCamera(cameraId, stateCallback, null);
+      createBarcodeDetector();
     } catch (CameraAccessException e) {
       e.printStackTrace();
     }
@@ -235,15 +262,41 @@ public class CurrentClueFragment extends Fragment {
     stopBackgroundThread();
     super.onPause();
   }
-  //endregion
+  //endregion*/
 
   private void createBarcodeDetector() {
-    BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(getContext())
+    qrDetector = new BarcodeDetector.Builder(getContext())
         .setBarcodeFormats(Barcode.QR_CODE)
         .build();
 
-    if (!barcodeDetector.isOperational()) {
+    if (!qrDetector.isOperational()) {
       ((MainActivity) getActivity()).showToast(getString(R.string.qr_dependencies_downloading));
     }
+
+    qrDetector.setProcessor(new Detector.Processor<Barcode>() {
+      @Override
+      public void release() {
+      }
+
+      @Override
+      public void receiveDetections(Detector.Detections<Barcode> detections) {
+
+        final SparseArray<Barcode> barcodes = detections.getDetectedItems();
+
+        if (barcodes.size() != 0) {
+          ((MainActivity) getActivity()).showToast("Scanned a QR Code");
+          clueDescription.setText(barcodes.valueAt(0).displayValue);
+          /*
+          barcodeInfo.post(new Runnable() {    // Use the post method of the TextView
+            public void run() {
+              barcodeInfo.setText(    // Update the TextView
+                  barcodes.valueAt(0).displayValue
+              );
+
+          });
+*/
+        }
+      }
+    });
   }
 }
