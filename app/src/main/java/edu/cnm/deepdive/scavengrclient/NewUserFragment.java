@@ -14,6 +14,9 @@ import androidx.fragment.app.FragmentManager;
 
 public class NewUserFragment extends Fragment implements OnClickListener{
 
+  private Button button;
+  private int viewCount;
+
   public NewUserFragment() {
     // Required empty public constructor
   }
@@ -25,14 +28,16 @@ public class NewUserFragment extends Fragment implements OnClickListener{
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_new_user, container, false);
     ImageView imageView = view.findViewById(R.id.welcome_app_icon);
-    Button button = view.findViewById(R.id.new_user_done_button);
-    button.setOnClickListener(this);
     imageView.setImageResource(R.mipmap.ic_welcome_icon);
+    button = view.findViewById(R.id.new_user_done_button);
+    button.setOnClickListener(this);
+    viewCount++;
     return view;
   }
 
   @Override
   public void onClick(View v) {
+    button.setVisibility(View.INVISIBLE);
     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
     fragmentManager.beginTransaction()
         .add(R.id.fragment_container, new FindAHuntFragment(), null)

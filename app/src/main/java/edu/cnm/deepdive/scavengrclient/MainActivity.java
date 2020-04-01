@@ -15,25 +15,33 @@ import edu.cnm.deepdive.scavengrclient.ui.main.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+  boolean firstLaunch;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    boolean newSignIn = Boolean.parseBoolean(getIntent().getStringExtra("EXTRA_NEW_SIGN_IN"));
-    Fragment fragment = null;
-
-    if (newSignIn) {
-      fragment = new NewUserFragment();
-    } else {
-      fragment = MainFragment.newInstance();
-    }
-
-    setContentView(R.layout.main_activity);
     if (savedInstanceState == null) {
-      getSupportFragmentManager().beginTransaction()
-          .replace(R.id.container, new NewUserFragment())
-          .commitNow();
+      if (firstLaunch) {
+        getSupportFragmentManager().beginTransaction()
+            .replace(R.id.container, new NewUserFragment())
+            .commitNow();
+        firstLaunch = false;
+      } else {
+        getSupportFragmentManager().beginTransaction()
+            .replace(R.id.container, new MainFragment())
+            .commitNow();
+      }
     }
+//    count++;
+//
+//    if (count > 0) {
+//      setContentView(R.layout.main_activity);
+//      if (savedInstanceState == null) {
+//        getSupportFragmentManager().beginTransaction()
+//            .replace(R.id.container, new MainFragment())
+//            .commitNow();
+//      }
+//    }
   }
 
   @Override
