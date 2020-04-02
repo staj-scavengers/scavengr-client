@@ -9,7 +9,7 @@
       type="edu.cnm.deepdive.scavengrclient.model.entity.Clue" />
     <variable
       name="uiFragment"
-      type="edu.cnm.deepdive.scavengrclient.ClueListFragment"/>
+      type="edu.cnm.deepdive.scavengrclient.controller.ui.ClueListFragment"/>
   </data>
 
   <LinearLayout

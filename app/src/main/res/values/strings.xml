@@ -19,5 +19,7 @@
   <string name="ok">OK</string>
   <string name="hide_clue">Hide clue</string>
   <string name="show_clue">Show clue</string>
+  <string name="clue_content">Clue content</string>
+  <string name="clue_number">Clue member</string>
 
 </resources>
