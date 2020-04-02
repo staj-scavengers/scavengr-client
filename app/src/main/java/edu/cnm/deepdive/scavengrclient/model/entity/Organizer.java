@@ -9,8 +9,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
 
-// not an Entity.  Does not need to be saved locally - Organizer().getUser().getName()
-// is retrieved & attached to Hunts as they are downloaded.
+/**
+ * Organizer is not an Entity on the client side of Scavengr.  {@link User} names are attached to {@link Hunt}s when hunts are downloaded
+ */
 public class Organizer {
 
   @PrimaryKey(autoGenerate = true)

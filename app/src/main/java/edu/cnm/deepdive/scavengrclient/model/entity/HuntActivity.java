@@ -11,6 +11,11 @@ import com.google.gson.annotations.Expose;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * HuntActivities are the join entity between {@link User}s and {@link Hunt}s, which persist the
+ * record of Hunt participation.  Each instance records start and complete times, as well as number
+ * of completed {@link Clue}s.
+ */
 @Entity(
     indices = {
         @Index(value = "date_started"),

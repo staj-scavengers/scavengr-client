@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.scavengrclient.controller.ui;
+package edu.cnm.deepdive.scavengrclient;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -93,6 +93,7 @@ public class ClueListFragment extends Fragment {
   public interface OnListFragmentInteractionListener {
 
     // TODO: Update argument type and name
+    void onListFragmentInteraction(Object item);
 
   }
 }
