@@ -1,0 +1,347 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "5e378e9a9a3768dc2cc42b2b50483af8",
+    "entities": [
+      {
+        "tableName": "Clue",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`local_clue_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `local_hunt_id` INTEGER NOT NULL, `clue_id` TEXT NOT NULL, `clue_name` TEXT NOT NULL COLLATE NOCASE, `hunt_id` TEXT NOT NULL, `media` TEXT NOT NULL, `media_tag` TEXT NOT NULL, `hunt_order` INTEGER, FOREIGN KEY(`local_hunt_id`) REFERENCES `Hunt`(`local_hunt_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "localId",
+            "columnName": "local_clue_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "localHuntId",
+            "columnName": "local_hunt_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "clue_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clueName",
+            "columnName": "clue_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "huntId",
+            "columnName": "hunt_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "media",
+            "columnName": "media",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mediaTag",
+            "columnName": "media_tag",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "huntOrder",
+            "columnName": "hunt_order",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "local_clue_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Clue_hunt_order_hunt_id",
+            "unique": true,
+            "columnNames": [
+              "hunt_order",
+              "hunt_id"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_Clue_hunt_order_hunt_id` ON `${TABLE_NAME}` (`hunt_order`, `hunt_id`)"
+          },
+          {
+            "name": "index_Clue_local_hunt_id",
+            "unique": false,
+            "columnNames": [
+              "local_hunt_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Clue_local_hunt_id` ON `${TABLE_NAME}` (`local_hunt_id`)"
+          },
+          {
+            "name": "index_Clue_hunt_id",
+            "unique": false,
+            "columnNames": [
+              "hunt_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Clue_hunt_id` ON `${TABLE_NAME}` (`hunt_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Hunt",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "local_hunt_id"
+            ],
+            "referencedColumns": [
+              "local_hunt_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "Hunt",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`local_hunt_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `hunt_id` TEXT NOT NULL, `hunt_name` TEXT NOT NULL COLLATE NOCASE DEFAULT 'New Hunt', `organizer_name` TEXT NOT NULL COLLATE NOCASE)",
+        "fields": [
+          {
+            "fieldPath": "localId",
+            "columnName": "local_hunt_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "hunt_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "huntName",
+            "columnName": "hunt_name",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'New Hunt'"
+          },
+          {
+            "fieldPath": "organizerName",
+            "columnName": "organizer_name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "local_hunt_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Hunt_hunt_name",
+            "unique": false,
+            "columnNames": [
+              "hunt_name"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Hunt_hunt_name` ON `${TABLE_NAME}` (`hunt_name`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "HuntActivity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`local_hunt_activity_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `hunt_activity_id` TEXT NOT NULL, `local_hunt_id` INTEGER NOT NULL, `local_user_id` INTEGER NOT NULL, `hunt_id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `date_started` INTEGER, `date_completed` INTEGER, `clues_completed` INTEGER, FOREIGN KEY(`local_hunt_id`) REFERENCES `Hunt`(`local_hunt_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`local_user_id`) REFERENCES `User`(`local_user_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "localId",
+            "columnName": "local_hunt_activity_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "hunt_activity_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "huntLocalId",
+            "columnName": "local_hunt_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userLocalId",
+            "columnName": "local_user_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "huntId",
+            "columnName": "hunt_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "user_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "started",
+            "columnName": "date_started",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "completed",
+            "columnName": "date_completed",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cluesCompleted",
+            "columnName": "clues_completed",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "local_hunt_activity_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_HuntActivity_date_started",
+            "unique": false,
+            "columnNames": [
+              "date_started"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_HuntActivity_date_started` ON `${TABLE_NAME}` (`date_started`)"
+          },
+          {
+            "name": "index_HuntActivity_date_completed",
+            "unique": false,
+            "columnNames": [
+              "date_completed"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_HuntActivity_date_completed` ON `${TABLE_NAME}` (`date_completed`)"
+          },
+          {
+            "name": "index_HuntActivity_clues_completed",
+            "unique": false,
+            "columnNames": [
+              "clues_completed"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_HuntActivity_clues_completed` ON `${TABLE_NAME}` (`clues_completed`)"
+          },
+          {
+            "name": "index_HuntActivity_local_hunt_id",
+            "unique": false,
+            "columnNames": [
+              "local_hunt_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_HuntActivity_local_hunt_id` ON `${TABLE_NAME}` (`local_hunt_id`)"
+          },
+          {
+            "name": "index_HuntActivity_local_user_id",
+            "unique": false,
+            "columnNames": [
+              "local_user_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_HuntActivity_local_user_id` ON `${TABLE_NAME}` (`local_user_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Hunt",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "local_hunt_id"
+            ],
+            "referencedColumns": [
+              "local_hunt_id"
+            ]
+          },
+          {
+            "table": "User",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "local_user_id"
+            ],
+            "referencedColumns": [
+              "local_user_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "User",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`local_user_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_id` TEXT NOT NULL, `oauth_token` TEXT NOT NULL, `user_name` TEXT NOT NULL COLLATE NOCASE, `organizer_id` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "localId",
+            "columnName": "local_user_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "user_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "oauthToken",
+            "columnName": "oauth_token",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userName",
+            "columnName": "user_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "organizerId",
+            "columnName": "organizer_id",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "local_user_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_User_user_name",
+            "unique": false,
+            "columnNames": [
+              "user_name"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_User_user_name` ON `${TABLE_NAME}` (`user_name`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5e378e9a9a3768dc2cc42b2b50483af8')"
+    ]
+  }
+}
