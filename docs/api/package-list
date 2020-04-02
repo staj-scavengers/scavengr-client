@@ -1,0 +1,10 @@
+edu.cnm.deepdive.scavengrclient
+edu.cnm.deepdive.scavengrclient.controller
+edu.cnm.deepdive.scavengrclient.controller.ui
+edu.cnm.deepdive.scavengrclient.model.dao
+edu.cnm.deepdive.scavengrclient.model.entity
+edu.cnm.deepdive.scavengrclient.model.pojo
+edu.cnm.deepdive.scavengrclient.repository
+edu.cnm.deepdive.scavengrclient.service
+edu.cnm.deepdive.scavengrclient.view
+edu.cnm.deepdive.scavengrclient.viewmodel

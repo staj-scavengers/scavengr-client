@@ -3,15 +3,8 @@ package edu.cnm.deepdive.scavengrclient.controller.ui;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.hardware.camera2.CameraCaptureSession;
-import android.hardware.camera2.CameraDevice;
-import android.hardware.camera2.CameraManager;
-import android.hardware.camera2.CaptureRequest;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.util.Log;
-import android.util.Size;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
@@ -37,7 +30,7 @@ import java.io.IOException;
 public class CurrentClueFragment extends Fragment {
 
   private SurfaceView cameraFrame;
-   private BarcodeDetector qrDetector;
+  private BarcodeDetector qrDetector;
   private TextView clueDescription;
   private CameraSource cameraSource;
   private static final int RC_HANDLE_CAMERA_PERM = 2;
@@ -62,8 +55,8 @@ public class CurrentClueFragment extends Fragment {
     Button clueButton = view.findViewById(R.id.clue_button);
     clueButton.setOnClickListener(v -> {
       if (clueDescription.getVisibility() == View.VISIBLE) {
-       clueDescription.setVisibility(View.GONE);
-       clueButton.setText(R.string.show_clue);
+        clueDescription.setVisibility(View.GONE);
+        clueButton.setText(R.string.show_clue);
       } else {
         clueDescription.setVisibility(View.VISIBLE);
         clueButton.setText(R.string.hide_clue);

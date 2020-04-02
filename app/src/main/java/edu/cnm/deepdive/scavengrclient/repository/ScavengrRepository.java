@@ -8,6 +8,7 @@ import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
 import edu.cnm.deepdive.scavengrclient.model.entity.User;
 import edu.cnm.deepdive.scavengrclient.service.ScavengrDatabase;
 import edu.cnm.deepdive.scavengrclient.service.ScavengrService;
+import edu.cnm.deepdive.scavengrclient.repository.ScavengrRepository;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import java.util.Iterator;

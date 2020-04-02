@@ -1,10 +1,8 @@
 package edu.cnm.deepdive.scavengrclient;
 
 import android.content.Intent;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
