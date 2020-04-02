@@ -11,6 +11,7 @@ import edu.cnm.deepdive.scavengrclient.service.ScavengrService;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -46,6 +47,11 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
   }
 
   //region server operations
+
+  public Single<List<Hunt>> searchHunts(String token, String search) {
+    return scavengr.searchHuntsByName(token, search)
+        .subscribeOn(Schedulers.from(networkPool));
+  }
 
   /**
    * This method chains multiple operations to add a {@link Hunt} record to the local database:
