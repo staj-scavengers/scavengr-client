@@ -21,11 +21,14 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
   private static final int NETWORK_THREAD_COUNT = 10;
 
   private static Application context;
-
   private final ScavengrDatabase database;
-  private final ScavengrService scavengr;
   private final Executor networkPool;
+  private final ScavengrService scavengr;
   private final SharedPreferences preferences;
+
+  public static void setContext(Application context) {
+    ScavengrRepository.context = context;
+  }
 
   public ScavengrRepository() {
     if (context == null) {
@@ -36,10 +39,6 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
     networkPool = Executors.newFixedThreadPool(NETWORK_THREAD_COUNT);
     preferences = PreferenceManager.getDefaultSharedPreferences(context);
     preferences.registerOnSharedPreferenceChangeListener(this);
-  }
-
-  public static void setContext(Application context) {
-    ScavengrRepository.context = context;
   }
 
   public static ScavengrRepository getInstance() {
