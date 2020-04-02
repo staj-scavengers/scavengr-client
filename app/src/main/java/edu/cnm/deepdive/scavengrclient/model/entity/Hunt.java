@@ -11,6 +11,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Hunt class contains two foreign keys and one index.
+ * foreign keys are organizer and clues, and there is a uuid for the hunt id which is generated Automatically
+ * and it has a huntName index.
+ */
 @Entity(
     indices = {
         @Index(value = {"hunt_name"})

@@ -51,24 +51,9 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   private void switchToMain() {
-    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+    Intent intent = new Intent(this, MainActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-    intent.putExtra("EXTRA_NEW_SIGN_IN", true);
     startActivity(intent);
-
-  }
-
-  private void switchToCorrectView() {
-    if (firstLaunch) {
-      getSupportFragmentManager().beginTransaction()
-          .replace(R.id.container, new NewUserFragment())
-          .commitNow();
-      firstLaunch = false;
-    } else {
-      getSupportFragmentManager().beginTransaction()
-          .replace(R.id.container, new MainFragment())
-          .commitNow();
-    }
   }
 
 }

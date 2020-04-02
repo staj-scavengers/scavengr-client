@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+    <variable
+      name="clue"
+      type="edu.cnm.deepdive.scavengrclient.model.entity.Clue" />
+    <variable
+      name="uiFragment"
+      type="edu.cnm.deepdive.scavengrclient.controller.ui.ClueListFragment"/>
+  </data>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="50dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="10dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+    <TextView
+      android:id="@+id/clue_number"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="@string/clue_number"
+      android:textSize="20sp"/>
+
+    <TextView
+      android:id="@+id/recipe_step_number"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="@{clue.huntOrder}"
+      app:layout_constraintEnd_toStartOf="@id/clue_number"/>
+
+    <ImageView
+      android:id="@+id/click_item"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:src="@drawable/ic_click"
+      android:scaleType="fitXY"
+      android:contentDescription="@string/clue_content"/>
+
+  </LinearLayout>
+</layout>

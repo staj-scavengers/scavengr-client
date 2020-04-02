@@ -7,6 +7,7 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   tools:context=".FindAHuntFragment"
   android:background="@color/FindAHuntBackground">
+  tools:context=".controller.ui.FindAHuntFragment">
 
   <!-- TODO: Update blank fragment layout -->
   <TextView

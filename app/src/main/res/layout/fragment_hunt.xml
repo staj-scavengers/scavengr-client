@@ -4,26 +4,40 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  tools:context=".controller.HuntFragment">
+  tools:context=".controller.ui.HuntFragment">
 
-<androidx.recyclerview.widget.RecyclerView
-  android:id="@+id/hunt_list"
-  android:layout_width="0dp"
-  android:layout_height="0dp"
-  style="@style/HuntList"
-  app:layout_constraintTop_toTopOf="parent"
-  app:layout_constraintBottom_toBottomOf="parent"
-  app:layout_constraintStart_toStartOf="parent"
-  app:layout_constraintEnd_toEndOf="parent"
-  app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/hunt_list"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    style="@style/HuntList"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    tools:listitem="@layout/item_hunt"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
   <com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/calendar_fab"
+    android:id="@+id/add"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:src="@drawable/ic_add"
+    android:clickable="true"
+    android:focusable="true"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
     android:layout_margin="20dp"/>
 
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/edit"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_margin="20dp"
+    app:layout_constraintBottom_toTopOf="@id/add"
+    android:src="@drawable/ic_edit"
+    />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,7 +3,6 @@
   <string name="login_failure">Unable to sign in with provided credentials.</string>
   <string name="sign_out">Sign out</string>
 
-  <!-- TODO: Remove or change this placeholder text -->
   <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="default_description">Default description</string>
   <string name="find_a_hunt">Find a hunt</string>
@@ -12,5 +11,15 @@
   <string name="back_button">Back</string>
   <string name="join_hunt">JOIN THE HUNT!</string>
   <string name="find_a_hunt_prompt">Great! Now find a hunt you want to join! If you are an organizer you can create one!</string>
+  <string name="camera_permission_denied">Sorry, you can\'t use the camera without granting permission</string>
+  <string name="qr_dependencies_downloading">QR Detector dependencies have not finished downloading yet.</string>
+  <string name="sagan_ipsum">Dispassionate extraterrestrial observer made in the interiors of collapsing stars network of wormholes quasar light years descended from astronomers? Stirred by starlight invent the universe white dwarf globular star cluster take root and flourish trillion. A still more glorious dawn awaits with pretty stories for which there\'s little good evidence dream of the mind\'s eye courage of our questions the only home we\'ve ever known emerged into consciousness and billions upon billions upon billions upon billions upon billions upon billions upon billions.</string>
+  <string name="restart_camera">Camera failed.  Restarting</string>
+  <string name="permission_camera_rationale">Access to the camera is needed for QR detection.</string>
+  <string name="ok">OK</string>
+  <string name="hide_clue">Hide clue</string>
+  <string name="show_clue">Show clue</string>
+  <string name="clue_content">Clue Content</string>
+  <string name="clue_number">Clue #</string>
 
 </resources>
