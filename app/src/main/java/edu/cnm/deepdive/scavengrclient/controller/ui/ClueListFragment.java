@@ -1,16 +1,9 @@
-package edu.cnm.deepdive.scavengrclient;
+package edu.cnm.deepdive.scavengrclient.controller.ui;
 
 import android.content.Context;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import edu.cnm.deepdive.scavengrclient.dummy.DummyContent;
-import edu.cnm.deepdive.scavengrclient.dummy.DummyContent.DummyItem;
 import edu.cnm.deepdive.scavengrclient.viewmodel.MainViewModel;
 
 /**
@@ -100,6 +93,6 @@ public class ClueListFragment extends Fragment {
   public interface OnListFragmentInteractionListener {
 
     // TODO: Update argument type and name
-    void onListFragmentInteraction(DummyItem item);
+    void onListFragmentInteraction(Object item);
   }
 }

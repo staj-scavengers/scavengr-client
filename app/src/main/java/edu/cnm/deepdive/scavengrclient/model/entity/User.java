@@ -8,6 +8,9 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import java.util.UUID;
 
+/**
+ * User is the basic profile for anyone who uses the app
+ */
 @Entity(
     indices = {
         @Index(value = {"user_name"})

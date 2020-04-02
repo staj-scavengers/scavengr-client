@@ -1,18 +1,14 @@
-package edu.cnm.deepdive.scavengrclient;
+package edu.cnm.deepdive.scavengrclient.view;
 
 import android.content.Context;
-import android.view.View.OnClickListener;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-import edu.cnm.deepdive.scavengrclient.ClueListFragment.OnListFragmentInteractionListener;
-import edu.cnm.deepdive.scavengrclient.dummy.DummyContent.DummyItem;
-
+import edu.cnm.deepdive.scavengrclient.R;
 import edu.cnm.deepdive.scavengrclient.model.entity.Clue;
 import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
 import java.util.List;

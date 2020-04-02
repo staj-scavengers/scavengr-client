@@ -9,6 +9,10 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import java.util.UUID;
 
+/**
+ * Clues hold a {@link #mediaTag} matching a scannable real-world object, which triggers a {@link
+ * #media} link.
+ */
 @Entity(
     indices = {
         @Index(value = {"hunt_order", "hunt_id"}, unique = true)
