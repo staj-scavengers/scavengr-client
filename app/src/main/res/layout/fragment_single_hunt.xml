@@ -86,6 +86,7 @@
     android:id="@+id/leave_hunt_button"
     android:layout_width="250dp"
     android:layout_height="wrap_content"
+    android:text="LEAVE HUNT"
     app:layout_constraintTop_toBottomOf="@id/clues_completed"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintStart_toStartOf="parent"
