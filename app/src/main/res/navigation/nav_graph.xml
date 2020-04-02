@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  app:startDestination="@+id/nav_home">
+
+  <fragment
+    android:id="@+id/nav_current_clue"
+    android:label="Current Clue"
+    android:name="edu.cnm.deepdive.scavengrclient.controller.ui.CurrentClueFragment"
+    tools:layout="@layout/fragment_current_clue">
+  </fragment>
+
+  <fragment
+    android:id="@+id/nav_edit_hunt"
+    android:label="Current Clue"
+    android:name="edu.cnm.deepdive.scavengrclient.controller.ui.EditHuntFragment"
+    tools:layout="@layout/edit_hunt_fragment">
+  </fragment>
+
+  <fragment
+    android:id="@+id/nav_find_ahunt"
+    android:label="Scavengr"
+    android:name="edu.cnm.deepdive.scavengrclient.controller.ui.FindAHuntFragment"
+    tools:layout="@layout/fragment_find_ahunt">
+  </fragment>
+
+  <fragment
+    android:id="@+id/nav_hunt"
+    android:label="Scavengr"
+    android:name="edu.cnm.deepdive.scavengrclient.controller.ui.HuntFragment"
+    tools:layout="@layout/fragment_hunt">
+  </fragment>
+
+  <fragment
+    android:id="@+id/nav_join_hunt"
+    android:label="Scavengr"
+    android:name="edu.cnm.deepdive.scavengrclient.controller.ui.JoinHuntFragment"
+    tools:layout="@layout/fragment_join_hunt">
+  </fragment>
+
+  <fragment
+    android:id="@+id/nav_home"
+    android:label="Scavengr"
+    android:name="edu.cnm.deepdive.scavengrclient.controller.ui.MainFragment"
+    tools:layout="@layout/main_fragment">
+  </fragment>
+
+  <fragment
+    android:id="@+id/nav_new_user"
+    android:label="New User"
+    android:name="edu.cnm.deepdive.scavengrclient.controller.ui.NewUserFragment"
+    tools:layout="@layout/fragment_new_user">
+  </fragment>
+
+</navigation>

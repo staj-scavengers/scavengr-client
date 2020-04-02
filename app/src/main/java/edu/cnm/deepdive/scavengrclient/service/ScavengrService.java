@@ -10,6 +10,7 @@ import edu.cnm.deepdive.scavengrclient.model.entity.Organizer;
 import edu.cnm.deepdive.scavengrclient.model.entity.User;
 import io.reactivex.Completable;
 import io.reactivex.Single;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
@@ -53,11 +54,11 @@ public interface ScavengrService {
   //Multiple Hunt Returns
 
   @GET("hunts/")
-  Iterable<Hunt> getHuntsByOrganizer(@Header("Authorization") String oauthHeader,
+  Single<List<Hunt>> getHuntsByOrganizer(@Header("Authorization") String oauthHeader,
       @Query("organizer") Organizer organizer);
 
   @GET("hunts/search")
-  Iterable<Hunt> searchHuntsByName(@Header("Authorization") String oauthHeader,
+  Single<List<Hunt>> searchHuntsByName(@Header("Authorization") String oauthHeader,
       @Query("name") String huntName);
 //endregion
 
@@ -106,13 +107,11 @@ public interface ScavengrService {
 
   // Multiple HuntActivity Returns
 
-  //FIXME with HuntActivityController getByUser
   @GET("hunt-activities/search/{user}")
   Iterable<HuntActivity> getHuntActivityByUser(@Header("Authorization") String oauthHeader,
       @Path("user") User user);
 
 
-  //FIXME with HuntActivityController getByHunt
   @GET("hunt-activities/search/{hunt}")
   Iterable<HuntActivity> getHuntActivityByHunt(@Header("Authorization") String oauthHeader,
       @Path("hunt") Hunt hunt);

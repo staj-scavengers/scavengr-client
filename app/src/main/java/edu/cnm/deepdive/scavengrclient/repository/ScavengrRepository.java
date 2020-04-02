@@ -8,9 +8,11 @@ import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
 import edu.cnm.deepdive.scavengrclient.model.entity.User;
 import edu.cnm.deepdive.scavengrclient.service.ScavengrDatabase;
 import edu.cnm.deepdive.scavengrclient.service.ScavengrService;
+import edu.cnm.deepdive.scavengrclient.repository.ScavengrRepository;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -20,11 +22,14 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
   private static final int NETWORK_THREAD_COUNT = 10;
 
   private static Application context;
-
   private final ScavengrDatabase database;
-  private final ScavengrService scavengr;
   private final Executor networkPool;
+  private final ScavengrService scavengr;
   private final SharedPreferences preferences;
+
+  public static void setContext(Application context) {
+    ScavengrRepository.context = context;
+  }
 
   public ScavengrRepository() {
     if (context == null) {
@@ -37,15 +42,16 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
     preferences.registerOnSharedPreferenceChangeListener(this);
   }
 
-  public static void setContext(Application context) {
-    ScavengrRepository.context = context;
-  }
-
   public static ScavengrRepository getInstance() {
     return InstanceHolder.INSTANCE;
   }
 
   //region server operations
+
+  public Single<List<Hunt>> searchHunts(String token, String search) {
+    return scavengr.searchHuntsByName(token, search)
+        .subscribeOn(Schedulers.from(networkPool));
+  }
 
   /**
    * This method chains multiple operations to add a {@link Hunt} record to the local database:

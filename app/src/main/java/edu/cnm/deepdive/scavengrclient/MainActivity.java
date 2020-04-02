@@ -1,16 +1,16 @@
 package edu.cnm.deepdive.scavengrclient;
 
 import android.content.Intent;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.fragment.app.FragmentManager;
+import edu.cnm.deepdive.scavengrclient.controller.ui.HuntFragment;
 import edu.cnm.deepdive.scavengrclient.controller.LoginActivity;
 import edu.cnm.deepdive.scavengrclient.service.GoogleSignInService;
-import edu.cnm.deepdive.scavengrclient.ui.main.MainFragment;
+import edu.cnm.deepdive.scavengrclient.controller.ui.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,9 +20,13 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.main_activity);
     if (savedInstanceState == null) {
       getSupportFragmentManager().beginTransaction()
-          .replace(R.id.container, MainFragment.newInstance())
+          .replace(R.id.container, new MainFragment())
           .commitNow();
     }
+    HuntFragment huntFragment = new HuntFragment();
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    fragmentManager.beginTransaction().add(R.id.main, huntFragment).commit();
+
   }
 
   @Override
@@ -50,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
           startActivity(intent);
         });
   }
-
 
 }
 
