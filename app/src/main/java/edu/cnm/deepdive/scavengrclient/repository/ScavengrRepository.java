@@ -2,11 +2,13 @@ package edu.cnm.deepdive.scavengrclient.repository;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import androidx.lifecycle.LiveData;
 import androidx.preference.PreferenceManager;
 import edu.cnm.deepdive.scavengrclient.ScavengerApplication;
 import edu.cnm.deepdive.scavengrclient.model.entity.Clue;
 import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
 import edu.cnm.deepdive.scavengrclient.model.entity.User;
+import edu.cnm.deepdive.scavengrclient.model.pojo.HuntActivityWithStats;
 import edu.cnm.deepdive.scavengrclient.service.ScavengrDatabase;
 import edu.cnm.deepdive.scavengrclient.service.ScavengrService;
 import edu.cnm.deepdive.scavengrclient.repository.ScavengrRepository;
@@ -35,6 +37,7 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
   private final ScavengrDatabase database;
   private final Executor networkPool;
   private final ScavengrService scavengr;
+
   private final SharedPreferences preferences;
 
   /**
@@ -159,6 +162,10 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
    */
   public static ScavengrRepository getInstance() {
     return InstanceHolder.INSTANCE;
+  }
+
+  public LiveData<List<HuntActivityWithStats>> get() {
+    return null;
   }
 
   /**

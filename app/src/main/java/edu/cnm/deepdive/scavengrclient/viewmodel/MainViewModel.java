@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import edu.cnm.deepdive.scavengrclient.model.entity.Clue;
 import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
 import edu.cnm.deepdive.scavengrclient.model.entity.User;
+import edu.cnm.deepdive.scavengrclient.model.pojo.HuntActivityWithStats;
 import edu.cnm.deepdive.scavengrclient.repository.ScavengrRepository;
 import edu.cnm.deepdive.scavengrclient.service.GoogleSignInService;
 import io.reactivex.Completable;
@@ -20,6 +21,9 @@ import java.util.UUID;
 
 public class MainViewModel extends AndroidViewModel implements LifecycleObserver {
 
+  public LiveData<List<HuntActivityWithStats>> getAllApodSummaries() {
+    return repository.get();
+  }
 
   private final MutableLiveData<Hunt> hunt;
   private final MutableLiveData<List<Hunt>> hunts;
@@ -109,4 +113,6 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
             }
         );
   }
+
+
 }
