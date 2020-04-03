@@ -3,7 +3,8 @@
   xmlns:tools="http://schemas.android.com/tools"
   package="edu.cnm.deepdive.scavengrclient">
 
-
+  <!--  INTERNET is considered "protection level: normal"-->
+  <uses-permission android:name="android.permission.INTERNET"/>
 <!--  CAMERA is considered "protection level: dangerous"-->
   <uses-permission android:name="android.permission.CAMERA"/>
 <!--  NFC is considered "protection level: normal"-->

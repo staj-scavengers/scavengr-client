@@ -1,5 +1,7 @@
 package edu.cnm.deepdive.scavengrclient.controller.ui;
 
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -17,7 +19,6 @@ import androidx.appcompat.app.AlertDialog.Builder;
 
 public class ClueMediaFragment extends DialogFragment {
 
-  private View dialogView;
   private WebView mediaView;
   private final String url;
 
@@ -26,18 +27,28 @@ public class ClueMediaFragment extends DialogFragment {
   }
 
 
-
   @NonNull
   @Override
   public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-    dialogView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_cluemedia, null);
-    AlertDialog alert = new Builder(getContext())
-        .setView(dialogView)
-        .setNeutralButton("OK", (dlg, which) -> {
-        })
-        .create();
-    setupWebView(alert); // TODO is this stupid?
-    return alert;
+    View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_cluemedia, null);
+    AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+    alert.setTitle("Success");
+    mediaView = new WebView(getContext());
+    mediaView.loadUrl(url);
+    mediaView.setWebViewClient(new WebViewClient() {
+      @Override
+      public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        return false;
+      }
+    });
+    alert.setView(mediaView)
+        .setNegativeButton("Close", new OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
+          }
+        });
+    return alert.show();
   }
 
   private void setupWebView(AlertDialog root) {
