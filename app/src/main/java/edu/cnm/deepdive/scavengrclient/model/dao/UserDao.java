@@ -7,9 +7,12 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 import edu.cnm.deepdive.scavengrclient.model.entity.User;
+import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Dao
 public interface UserDao {
@@ -31,4 +34,8 @@ public interface UserDao {
 
   @Query("SELECT * FROM User WHERE local_user_id = :id")
   Single<User> select(long id);
+
+  @Query("SELECT * FROM User WHERE oauth_token = :token")
+  Maybe<User> check(String token);
+
 }

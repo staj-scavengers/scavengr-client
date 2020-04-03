@@ -33,7 +33,7 @@ public class FindAHuntFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    next = next.findViewById(R.id.find_a_hunt_next_button);
+    next = view.findViewById(R.id.find_a_hunt_next_button);
     next.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {

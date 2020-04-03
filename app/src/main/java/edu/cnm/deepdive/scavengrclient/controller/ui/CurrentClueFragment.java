@@ -133,7 +133,7 @@ public class CurrentClueFragment extends Fragment {
         .build();
 
     if (!qrDetector.isOperational()) {
-      ((MainActivity) getActivity()).showToast(getString(R.string.qr_dependencies_downloading));
+      ((MainActivity) getActivity()).makeToast(getString(R.string.qr_dependencies_downloading));
     }
 
     qrDetector.setProcessor(new Detector.Processor<Barcode>() {

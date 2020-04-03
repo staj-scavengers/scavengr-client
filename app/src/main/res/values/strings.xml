@@ -21,5 +21,10 @@
   <string name="show_clue">Show clue</string>
   <string name="clue_content">Clue Content</string>
   <string name="clue_number">Clue #</string>
+  <string name="google_account_problem">There was a problem with your Google account</string>
+  <string name="welcome_hunter">Welcome hunter! What is your name?</string>
+  <string name="username">Username</string>
+  <string name="are_you_an_organizer">Are you an Organizer?</string>
+  <string name="register">REGISTER</string>
 
 </resources>

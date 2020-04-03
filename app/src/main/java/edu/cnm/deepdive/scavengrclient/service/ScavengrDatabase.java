@@ -9,6 +9,7 @@ import androidx.room.TypeConverters;
 import edu.cnm.deepdive.scavengrclient.ScavengerApplication;
 import edu.cnm.deepdive.scavengrclient.model.dao.ClueDao;
 import edu.cnm.deepdive.scavengrclient.model.dao.HuntDao;
+import edu.cnm.deepdive.scavengrclient.model.dao.UserDao;
 import edu.cnm.deepdive.scavengrclient.model.entity.Clue;
 import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
 import edu.cnm.deepdive.scavengrclient.model.entity.HuntActivity;
@@ -58,6 +59,8 @@ public abstract class ScavengrDatabase extends RoomDatabase {
    * @return a {@link HuntDao} interface
    */
   public abstract ClueDao getClueDao();
+
+  public abstract UserDao getUserDao();
 
   /**
    * This method is part of the singleton pattern that ensures there is only one ScavengrDatabase
