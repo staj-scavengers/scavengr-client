@@ -15,6 +15,10 @@ public class JoinHuntFragment extends Fragment {
     // Required empty public constructor
   }
 
+  // TODO Get a Hunt from the viewModel MutableLiveData Hunt field
+  // TODO display Hunt details
+  // TODO Join button onClick -> save hunt locally
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

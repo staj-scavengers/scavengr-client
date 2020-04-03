@@ -22,11 +22,14 @@ public class FindAHuntFragment extends Fragment {
     // Required empty public constructor
   }
 
+  // TODO complete search: get text from EditText field, call viewModel.SearchHunts(string).
+  // TODO next, get the contents of "hunts" mutable live data (List<Hunt>).
+  // TODO then send the list of hunts to a recycler adapter.
+  // TODO tap on a recycler item should call viewModel.downloadHunt with that id, and load that Hunt in the JoinHuntFragment.
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
     return inflater.inflate(R.layout.fragment_find_ahunt, container, false);
   }
 
@@ -39,7 +42,7 @@ public class FindAHuntFragment extends Fragment {
       public void onClick(View v) {
         HuntFragment huntFragment = new HuntFragment();
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.main,huntFragment);
+        transaction.replace(R.id.main, huntFragment);
         transaction.commit();
       }
     });

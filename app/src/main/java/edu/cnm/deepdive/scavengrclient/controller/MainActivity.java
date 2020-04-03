@@ -7,12 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import com.google.android.gms.vision.barcode.Barcode;
-import com.google.android.gms.vision.barcode.BarcodeDetector;
 import edu.cnm.deepdive.scavengrclient.R;
 import edu.cnm.deepdive.scavengrclient.service.GoogleSignInService;
 import edu.cnm.deepdive.scavengrclient.viewmodel.MainViewModel;
@@ -22,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
   private NavController navController;
   private GoogleSignInService signInService;
   private MainViewModel viewModel;
+  static ActionBar actionBar;
   private boolean registered;
 
   @Override
@@ -31,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
     setupViewModel();
     checkSignIn();
     setupNavigation();
+    actionBar = getSupportActionBar();
+    actionBar.setDisplayHomeAsUpEnabled(true);
   }
-
 
 
   @Override
@@ -71,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
     signInService.refresh()
         .addOnSuccessListener(
             account -> viewModel.checkUser(account.getIdToken())
-            .doOnSuccess((user) -> registered = true)
-            .subscribe()
+                .doOnSuccess((user) -> registered = true)
+                .subscribe()
         )
         .addOnFailureListener(
             account -> makeToast(getString(R.string.google_account_problem))

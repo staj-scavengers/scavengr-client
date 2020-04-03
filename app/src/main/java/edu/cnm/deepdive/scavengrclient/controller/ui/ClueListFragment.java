@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.scavengrclient;
+package edu.cnm.deepdive.scavengrclient.controller.ui;
 
 import android.content.Context;
 import android.os.Bundle;
