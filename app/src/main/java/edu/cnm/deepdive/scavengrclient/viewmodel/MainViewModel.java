@@ -20,6 +20,7 @@ import java.util.UUID;
 
 public class MainViewModel extends AndroidViewModel implements LifecycleObserver {
 
+
   private final MutableLiveData<Hunt> hunt;
   private final MutableLiveData<List<Hunt>> hunts;
   private final MutableLiveData<List<Clue>> clues;
@@ -39,6 +40,7 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
     clues = new MutableLiveData<>();
     hunts = new MutableLiveData<>();
     hunt = new MutableLiveData<>();
+
   }
 
   public LiveData<Hunt> getHunt() {
@@ -100,7 +102,8 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
     GoogleSignInService.getInstance().refresh()
         .addOnSuccessListener((account) -> {
               pending.add(
-                  repository.registerUser(account.getIdToken(), ((name.isEmpty()? account.getDisplayName() : name)))
+                  repository.registerUser(account.getIdToken(),
+                      ((name.isEmpty() ? account.getDisplayName() : name)))
                       .subscribe()
               );
             }

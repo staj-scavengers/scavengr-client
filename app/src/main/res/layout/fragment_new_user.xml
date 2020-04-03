@@ -21,7 +21,7 @@
     android:id="@+id/new_user_prompt"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Welcome hunter! What is your name?"
+    android:text="@string/welcome_hunter"
     android:textSize="10pt"
     app:layout_constraintTop_toBottomOf="@id/welcome_app_icon"
     app:layout_constraintBottom_toTopOf="@id/input_username"
@@ -33,7 +33,8 @@
     android:id="@+id/input_username"
     android:layout_width="275dp"
     android:layout_height="wrap_content"
-    android:hint="Username"
+    android:hint="@string/username"
+    android:inputType="textCapWords"
     app:layout_constraintTop_toBottomOf="@id/new_user_prompt"
     app:layout_constraintBottom_toTopOf="@id/is_organizer_prompt"
     app:layout_constraintStart_toStartOf="parent"
@@ -43,10 +44,10 @@
     android:id="@+id/is_organizer_prompt"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Are you an organizer?"
+    android:text="@string/are_you_an_organizer"
     android:textSize="8pt"
     app:layout_constraintTop_toBottomOf="@id/input_username"
-    app:layout_constraintBottom_toTopOf="@id/new_user_done_button"
+    app:layout_constraintBottom_toTopOf="@id/register_button"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="@id/is_organizer_switch"/>
 
@@ -55,16 +56,16 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:layout_constraintTop_toBottomOf="@id/input_username"
-    app:layout_constraintBottom_toTopOf="@id/new_user_done_button"
+    app:layout_constraintBottom_toTopOf="@id/register_button"
     app:layout_constraintStart_toEndOf="@id/is_organizer_prompt"
     app:layout_constraintEnd_toEndOf="parent"/>
 
   <Button
-    android:id="@+id/new_user_done_button"
+    android:id="@+id/register_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="50dp"
-    android:text="DONE"
+    android:text="@string/register"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"/>
 
