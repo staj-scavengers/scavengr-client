@@ -2,8 +2,12 @@ package edu.cnm.deepdive.scavengrclient.controller.ui;
 
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -12,10 +16,13 @@ import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import com.google.android.gms.vision.CameraSource;
@@ -139,8 +146,6 @@ public class CurrentClueFragment extends Fragment {
       ((MainActivity) getActivity()).makeToast(getString(R.string.qr_dependencies_downloading));
     }
 
-//    qrDetector.receiveFrame(??);
-
     qrDetector.setProcessor(new Processor<Barcode>() {
       @Override
       public void release() {
@@ -149,35 +154,37 @@ public class CurrentClueFragment extends Fragment {
       @Override
       public void receiveDetections(Detections<Barcode> detections) {
 
-        Log.d("SCAN metadata", detections.getFrameMetadata().toString());
         final SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
         if (barcodes.size() != 0) {
-        String url = "";
+//          cameraSource.stop();
+          String url = "";
           switch (barcodes.valueAt(0).rawValue) {
+            case "scavengr-clue-1":
+              url = "https://youtu.be/nqNqE0QiMPE";
+              break;
+            case "scavengr-clue-2":
+              url = "https://youtu.be/rEUxlwb2uFI";
+              break;
+            case "scavengr-clue-3":
+              url = "https://i.imgur.com/a5LsAgq.jpg";
+              break;
+            case "scavengr-clue-4":
+              url = "https://soundcloud.com/overwerk/afterhours-medley";
+              break;
+            case "scavengr-clue-5":
+              url = "https://en.wikipedia.org/wiki/Wikipedia:On_this_day/Today";
+              break;
+            default:
+              ((MainActivity) getActivity())
+                  .makeToast("Invalid code:" + (barcodes.valueAt(0).displayValue));
+              break;
+          }
 
-              case "scavengr-clue-1":
-                url = "https://youtu.be/nqNqE0QiMPE";
-                break;
-              case "scavengr-clue-2":
-                url = "https://youtu.be/rEUxlwb2uFI";
-                break;
-              case "scavengr-clue-3":
-                url = "https://i.imgur.com/a5LsAgq.jpg";
-                break;
-              case "scavengr-clue-4":
-                url = "https://soundcloud.com/overwerk/afterhours-medley";
-                break;
-              case "scavengr-clue-5":
-                url = "https://en.wikipedia.org/wiki/Wikipedia:On_this_day/Today";
-                break;
-              default:
-                ((MainActivity) getActivity()).makeToast("Invalid code:" + (barcodes.get(0).displayValue));
-                break;
-            }
-
-            if (!url.isEmpty()) {
-              showMedia(url);
+          if (!url.isEmpty()) {
+//              createWebView(url);
+            String finalUrl = url;
+            getActivity().runOnUiThread(() -> createWebView(finalUrl));
 
           }
           // TODO send value to MainViewModel
@@ -187,7 +194,34 @@ public class CurrentClueFragment extends Fragment {
     });
   }
 
-    private void showMedia(String url) {
+  private void createWebView(String url) {
+    AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+    alert.setTitle("Success!");
+    WebView wv = new WebView(getContext());
+    wv.loadUrl(url);
+    wv.setWebViewClient(new WebViewClient() {
+      @Override
+      public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        return false;
+      }
+    });
+
+    alert.setView(wv);
+    alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int id) {
+//        try {
+//          cameraSource.start(cameraFrame.getHolder());
+//        } catch (IOException e) {
+//          e.printStackTrace();
+//        }
+        dialog.dismiss();
+      }
+    });
+    alert.show();
+  }
+
+  private void showMedia(String url) {
     new ClueMediaFragment(url)
         .show(getChildFragmentManager(), ClueMediaFragment.class.getName());
   }
