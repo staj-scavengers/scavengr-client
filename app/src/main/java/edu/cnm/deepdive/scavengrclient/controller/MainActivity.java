@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     setupNavigation();
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
+    // TODO remove this:
+    navController.navigate(R.id.nav_current_clue);
   }
 
 

@@ -20,6 +20,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
+import com.google.android.gms.vision.Detector.Detections;
+import com.google.android.gms.vision.Detector.Processor;
+import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.android.material.snackbar.Snackbar;
@@ -136,20 +139,56 @@ public class CurrentClueFragment extends Fragment {
       ((MainActivity) getActivity()).makeToast(getString(R.string.qr_dependencies_downloading));
     }
 
-    qrDetector.setProcessor(new Detector.Processor<Barcode>() {
+//    qrDetector.receiveFrame(??);
+
+    qrDetector.setProcessor(new Processor<Barcode>() {
       @Override
       public void release() {
       }
 
       @Override
-      public void receiveDetections(Detector.Detections<Barcode> detections) {
+      public void receiveDetections(Detections<Barcode> detections) {
 
+        Log.d("SCAN metadata", detections.getFrameMetadata().toString());
         final SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
         if (barcodes.size() != 0) {
+        String url = "";
+          switch (barcodes.valueAt(0).rawValue) {
+
+              case "scavengr-clue-1":
+                url = "https://youtu.be/nqNqE0QiMPE";
+                break;
+              case "scavengr-clue-2":
+                url = "https://youtu.be/rEUxlwb2uFI";
+                break;
+              case "scavengr-clue-3":
+                url = "https://i.imgur.com/a5LsAgq.jpg";
+                break;
+              case "scavengr-clue-4":
+                url = "https://soundcloud.com/overwerk/afterhours-medley";
+                break;
+              case "scavengr-clue-5":
+                url = "https://en.wikipedia.org/wiki/Wikipedia:On_this_day/Today";
+                break;
+              default:
+                ((MainActivity) getActivity()).makeToast("Invalid code:" + (barcodes.get(0).displayValue));
+                break;
+            }
+
+            if (!url.isEmpty()) {
+              showMedia(url);
+
+          }
           // TODO send value to MainViewModel
+
         }
       }
     });
+  }
+
+    private void showMedia(String url) {
+    new ClueMediaFragment(url)
+        .show(getChildFragmentManager(), ClueMediaFragment.class.getName());
   }
 }
