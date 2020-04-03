@@ -35,6 +35,7 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
   private final ScavengrDatabase database;
   private final Executor networkPool;
   private final ScavengrService scavengr;
+
   private final SharedPreferences preferences;
 
   /**

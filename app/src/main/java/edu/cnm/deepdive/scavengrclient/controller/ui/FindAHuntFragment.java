@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 import edu.cnm.deepdive.scavengrclient.R;
 
 
@@ -37,10 +38,7 @@ public class FindAHuntFragment extends Fragment {
     next.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        HuntFragment huntFragment = new HuntFragment();
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.main,huntFragment);
-        transaction.commit();
+        Navigation.findNavController(view).navigate(R.id.nav_hunt);
       }
     });
 
