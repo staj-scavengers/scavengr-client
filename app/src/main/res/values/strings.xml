@@ -21,5 +21,6 @@
   <string name="show_clue">Show clue</string>
   <string name="clue_content">Clue Content</string>
   <string name="clue_number">Clue #</string>
+  <string name="google_account_problem">There was a problem with your Google account</string>
 
 </resources>

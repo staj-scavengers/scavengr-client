@@ -11,10 +11,13 @@ import edu.cnm.deepdive.scavengrclient.service.ScavengrDatabase;
 import edu.cnm.deepdive.scavengrclient.service.ScavengrService;
 import edu.cnm.deepdive.scavengrclient.repository.ScavengrRepository;
 import edu.cnm.deepdive.scavengrclient.viewmodel.MainViewModel;
+import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -129,7 +132,19 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
   public Single<Hunt> uploadHunt(String token, Hunt hunt) {
     return scavengr.postHunt(token, hunt).subscribeOn(Schedulers.from(networkPool));
   }
+
+  public Single<User> registerUser(String token, String name) {
+    User user = new User();
+    user.setOauthToken(token);
+    user.setUserName(name);
+    return scavengr.postUser(token, user).subscribeOn(Schedulers.from(networkPool));
+  }
+
   //endregion
+
+  public Maybe<User> checkLocalUser(String token) {
+    return database.getUserDao().check(token).subscribeOn(Schedulers.io());
+  }
 
   @Override
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

@@ -20,13 +20,17 @@ import edu.cnm.deepdive.scavengrclient.viewmodel.MainViewModel;
 public class MainActivity extends AppCompatActivity {
 
   private NavController navController;
+  private GoogleSignInService signInService;
+  private MainViewModel viewModel;
+  private boolean registered;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main_activity);
-    setupNavigation();
     setupViewModel();
+    checkSignIn();
+    setupNavigation();
   }
 
 
@@ -50,11 +54,29 @@ public class MainActivity extends AppCompatActivity {
 
   private void setupNavigation() {
     navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+    if (!registered) {
+      navController.navigate(R.id.nav_new_user);
+    } else {
+      navController.navigate(R.id.nav_find_ahunt);
+    }
   }
 
   private void setupViewModel() {
-    MainViewModel viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+    viewModel = new ViewModelProvider(this).get(MainViewModel.class);
     getLifecycle().addObserver(viewModel);
+  }
+
+  private void checkSignIn() {
+    signInService = GoogleSignInService.getInstance();
+    signInService.refresh()
+        .addOnSuccessListener(
+            account -> viewModel.checkUser(account.getIdToken())
+            .doOnSuccess((user) -> registered = true)
+            .subscribe()
+        )
+        .addOnFailureListener(
+            account -> makeToast(getString(R.string.google_account_problem))
+        );
   }
 
   private void signOut() {
@@ -71,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
    *
    * @param message will be displayed in the Toast.
    */
-  public void showToast(String message) {
+  public void makeToast(String message) {
     Toast toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
     toast.setGravity(Gravity.BOTTOM, 0,
         getResources().getDimensionPixelOffset(R.dimen.toast_vertical_margin));

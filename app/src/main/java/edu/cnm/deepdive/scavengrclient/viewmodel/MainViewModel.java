@@ -8,8 +8,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import edu.cnm.deepdive.scavengrclient.model.entity.Clue;
 import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
+import edu.cnm.deepdive.scavengrclient.model.entity.User;
 import edu.cnm.deepdive.scavengrclient.repository.ScavengrRepository;
 import edu.cnm.deepdive.scavengrclient.service.GoogleSignInService;
+import io.reactivex.Completable;
+import io.reactivex.Maybe;
+import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import java.util.List;
 import java.util.UUID;
@@ -84,7 +88,22 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
                   )
           );
         })
-    .addOnFailureListener(throwable::postValue);
+        .addOnFailureListener(throwable::postValue);
+  }
 
+  public Maybe<User> checkUser(String token) {
+    return repository.checkLocalUser(token);
+  }
+
+  public void register(String name) {
+    throwable.setValue(null);
+    GoogleSignInService.getInstance().refresh()
+        .addOnSuccessListener((account) -> {
+              pending.add(
+                  repository.registerUser(account.getIdToken(), ((name.isEmpty()? account.getDisplayName() : name)))
+                      .subscribe()
+              );
+            }
+        );
   }
 }
