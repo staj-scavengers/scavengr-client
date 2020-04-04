@@ -163,7 +163,7 @@ public class CurrentClueFragment extends Fragment {
           String url = "";
           switch (barcodes.valueAt(0).rawValue) {
             case "scavengr-clue-1":
-              url = "https://i.imgur.com/a5LsAgq.jpg";
+              url = "http://3.bp.blogspot.com/_pM1ifV7g5qs/SaIDBfjlvXI/AAAAAAAAAg8/IAx6u3tsg6w/s1600-h/turnip_murder.jpg";
               break;
             case "scavengr-clue-2":
               url = "https://youtu.be/rEUxlwb2uFI";
