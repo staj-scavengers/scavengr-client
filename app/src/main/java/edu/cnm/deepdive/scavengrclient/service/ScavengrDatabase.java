@@ -56,10 +56,16 @@ public abstract class ScavengrDatabase extends RoomDatabase {
    * Retrieves an Instance of the Data Access Object that handles queries to the local {@link Clue}
    * database
    *
-   * @return a {@link HuntDao} interface
+   * @return a {@link ClueDao} interface
    */
   public abstract ClueDao getClueDao();
 
+  /**
+   * Retrieves an Instance of the Data Access Object that handles queries to the local {@link User}
+   * database
+   *
+   * @return a {@link UserDao} interface
+   */
   public abstract UserDao getUserDao();
 
   /**

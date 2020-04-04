@@ -3,12 +3,15 @@ package edu.cnm.deepdive.scavengrclient.model.pojo;
 import androidx.annotation.NonNull;
 import androidx.room.Embedded;
 import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
+import java.util.UUID;
 
-public class HuntWithDetails {
+public class HuntDetails {
 
   @NonNull
   @Embedded
   private Hunt hunt;
+
+  private UUID huntId;
 
   private String huntName;
 
@@ -23,6 +26,14 @@ public class HuntWithDetails {
 
   public void setHunt(@NonNull Hunt hunt) {
     this.hunt = hunt;
+  }
+
+  public UUID getHuntId() {
+    return huntId;
+  }
+
+  public void setHuntId(UUID huntId) {
+    this.huntId = huntId;
   }
 
   public String getHuntName() {
@@ -49,3 +60,5 @@ public class HuntWithDetails {
     this.clueCount = clueCount;
   }
 }
+
+
