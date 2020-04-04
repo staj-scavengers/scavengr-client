@@ -1,68 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-  android:id="@+id/current_clue_layout"
+<layout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:padding="4dp"
-  tools:context=".controller.ui.CurrentClueFragment">
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <data>
+    <import type="android.view.View"/>
+<variable
+  name="clue"
+  type="edu.cnm.deepdive.scavengrclient.model.entity.Clue"/>
+    <variable
+      name="bindViewModel"
+      type="edu.cnm.deepdive.scavengrclient.viewmodel.MainViewModel"/>
+    <variable
+      name="uiController"
+      type="edu.cnm.deepdive.scavengrclient.controller.ui.CurrentClueFragment"/>
+  </data>
 
   <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/clue_info"
+    android:id="@+id/current_clue_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#D9FFFFFF"
-    android:elevation="16dp"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintBottom_toBottomOf="@id/camera_frame"
-    >
+    android:layout_height="match_parent"
+    android:padding="4dp"
+    tools:context=".controller.ui.CurrentClueFragment">
 
-    <!--  Text is place holder for input from database-->
-    <TextView
-      android:id="@+id/clue_number"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:elevation="4dp"
-      android:text="Clue Number #"
-      app:layout_constraintBottom_toTopOf="@id/clue_name"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!--  Text is place holder for input from database-->
-    <TextView
-      android:id="@+id/clue_name"
+    <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/clue_info"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:elevation="4dp"
-      android:text="CLUE NAME"
-      android:gravity="center"
-      android:textSize="10pt"
-      app:layout_constraintBottom_toTopOf="@id/clue_description"
+      android:background="#D9FFFFFF"
+      android:elevation="16dp"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"/>
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toBottomOf="@id/camera_frame"
+      >
 
-    <TextView
-      android:id="@+id/clue_description"
-      android:layout_width="match_parent"
+      <!--  Text is place holder for input from database-->
+      <TextView
+        android:id="@+id/clue_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:text="Clue Number #"
+        app:layout_constraintBottom_toTopOf="@id/clue_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+      <!--  Text is place holder for input from database-->
+      <TextView
+        android:id="@+id/clue_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:text="CLUE NAME"
+        android:gravity="center"
+        android:textSize="10pt"
+        app:layout_constraintBottom_toTopOf="@id/clue_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+      <TextView
+        android:id="@+id/clue_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:text="@string/sagan_ipsum"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+      android:id="@+id/clue_button"
+      android:layout_width="150dp"
       android:layout_height="wrap_content"
-      android:layout_margin="24dp"
-      android:text="@string/sagan_ipsum"
-      app:layout_constraintBottom_toBottomOf="parent"/>
-  </androidx.constraintlayout.widget.ConstraintLayout>
-
-  <Button
-    android:id="@+id/clue_button"
-    android:layout_width="150dp"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="24dp"
-    android:elevation="24dp"
-    android:text="@string/hide_clue"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toStartOf="@id/skip_clue_button"/>
+      android:layout_marginBottom="24dp"
+      android:elevation="24dp"
+      android:text="@string/hide_clue"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toStartOf="@id/skip_clue_button"/>
 
 
     <Button
@@ -75,15 +90,16 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintStart_toEndOf="@id/clue_button"
       app:layout_constraintEnd_toEndOf="parent"/>
-  <SurfaceView
-    android:id="@+id/camera_frame"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:elevation="8dp"
-    app:layout_constraintBottom_toTopOf="@id/clue_button"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    />
+    <SurfaceView
+      android:id="@+id/camera_frame"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:elevation="8dp"
+      app:layout_constraintBottom_toTopOf="@id/clue_button"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

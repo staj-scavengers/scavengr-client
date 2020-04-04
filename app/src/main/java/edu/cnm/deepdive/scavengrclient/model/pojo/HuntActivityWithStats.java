@@ -8,7 +8,6 @@ import edu.cnm.deepdive.scavengrclient.model.entity.HuntActivity;
 import edu.cnm.deepdive.scavengrclient.model.entity.User;
 import java.util.Date;
 
-// TODO how is totalTime displayed?
 public class HuntActivityWithStats {
 
   @NonNull
@@ -101,7 +100,6 @@ public class HuntActivityWithStats {
     this.cluesCompleted = cluesCompleted;
   }
 
-  // TODO Format dates better, calculate total completion time.
   @SuppressLint("DefaultLocale")
   @NonNull
   @Override

@@ -12,16 +12,14 @@ import edu.cnm.deepdive.scavengrclient.model.entity.User;
 import edu.cnm.deepdive.scavengrclient.model.pojo.HuntActivityWithStats;
 import edu.cnm.deepdive.scavengrclient.repository.ScavengrRepository;
 import edu.cnm.deepdive.scavengrclient.service.GoogleSignInService;
-import io.reactivex.Completable;
 import io.reactivex.Maybe;
-import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import java.util.List;
 import java.util.UUID;
 
 public class MainViewModel extends AndroidViewModel implements LifecycleObserver {
 
-  public LiveData<List<HuntActivityWithStats>> getAllApodSummaries() {
+  public LiveData<List<HuntActivityWithStats>> getAllHuntSummaries() {
     return repository.get();
   }
 
@@ -67,6 +65,8 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
     return throwable;
   }
 
+
+  // Server methods
   public void searchHunts(String search) {
     throwable.setValue(null);
     GoogleSignInService.getInstance().refresh()
@@ -96,6 +96,22 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
         })
         .addOnFailureListener(throwable::postValue);
   }
+
+  // local database methods
+
+  public void resumeHunt(long localHuntId) {
+    throwable.setValue(null);
+    pending.add(
+        repository.resumeHunt(localHuntId)
+            .subscribe(
+                hunt::postValue,
+                throwable::postValue
+            )
+    );
+  }
+
+  // user account interactions
+
 
   public Maybe<User> checkUser(String token) {
     return repository.checkLocalUser(token);
