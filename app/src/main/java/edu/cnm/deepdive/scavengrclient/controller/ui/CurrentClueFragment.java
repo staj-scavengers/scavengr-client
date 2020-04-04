@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector.Detections;
 import com.google.android.gms.vision.Detector.Processor;
@@ -30,7 +31,11 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.android.material.snackbar.Snackbar;
 import edu.cnm.deepdive.scavengrclient.R;
 import edu.cnm.deepdive.scavengrclient.controller.MainActivity;
+import edu.cnm.deepdive.scavengrclient.model.entity.Clue;
+import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
+import edu.cnm.deepdive.scavengrclient.viewmodel.MainViewModel;
 import java.io.IOException;
+import java.util.List;
 
 public class CurrentClueFragment extends Fragment {
 
@@ -38,8 +43,12 @@ public class CurrentClueFragment extends Fragment {
   private BarcodeDetector qrDetector;
   private TextView clueDescription;
   private CameraSource cameraSource;
+  private Hunt hunt;
+  private List<Clue> clues;
+  private Clue activeClue;
   private static final int RC_HANDLE_CAMERA_PERM = 2;
   private boolean scanned;
+  private MainViewModel viewModel;
 
   public CurrentClueFragment() {
     // Required empty public constructor
@@ -48,7 +57,10 @@ public class CurrentClueFragment extends Fragment {
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
+      Bundle savedInstanceState){
+    viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
+    hunt = viewModel.getHunt().getValue();
+    clues = hunt.getClues();
     return inflater.inflate(R.layout.fragment_current_clue, container, false);
   }
 
@@ -69,6 +81,23 @@ public class CurrentClueFragment extends Fragment {
         clueButton.setText(R.string.hide_clue);
       }
     });
+  }
+
+  private void setActiveClue() {
+    activeClue = clues.get(0);
+  }
+
+  private void updateActiveClue() {
+    if (clues.size() > 1) {
+      clues.remove(0);
+      setActiveClue();
+    } else {
+      finishHunt();
+    }
+  }
+
+  private void finishHunt() {
+    // TODO write this method.
   }
 
   //region Camera Setup & Permissions
