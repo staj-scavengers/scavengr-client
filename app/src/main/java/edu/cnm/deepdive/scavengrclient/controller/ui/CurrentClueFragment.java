@@ -44,6 +44,7 @@ public class CurrentClueFragment extends Fragment {
   private TextView clueDescription;
   private CameraSource cameraSource;
   private static final int RC_HANDLE_CAMERA_PERM = 2;
+  private boolean scanned;
 
   public CurrentClueFragment() {
     // Required empty public constructor
@@ -59,6 +60,7 @@ public class CurrentClueFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+    scanned = false;
     cameraFrame = view.findViewById(R.id.camera_frame);
     clueDescription = view.findViewById(R.id.clue_description);
     confirmCameraPermissions(view);
@@ -156,18 +158,18 @@ public class CurrentClueFragment extends Fragment {
 
         final SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
-        if (barcodes.size() != 0) {
+        if (barcodes.size() != 0 && !scanned) {
 //          cameraSource.stop();
           String url = "";
           switch (barcodes.valueAt(0).rawValue) {
             case "scavengr-clue-1":
-              url = "https://youtu.be/nqNqE0QiMPE";
+              url = "https://i.imgur.com/a5LsAgq.jpg";
               break;
             case "scavengr-clue-2":
               url = "https://youtu.be/rEUxlwb2uFI";
               break;
             case "scavengr-clue-3":
-              url = "https://i.imgur.com/a5LsAgq.jpg";
+              url = "https://youtu.be/nqNqE0QiMPE";
               break;
             case "scavengr-clue-4":
               url = "https://soundcloud.com/overwerk/afterhours-medley";
@@ -182,7 +184,7 @@ public class CurrentClueFragment extends Fragment {
           }
 
           if (!url.isEmpty()) {
-//              createWebView(url);
+              scanned = true;
             String finalUrl = url;
             getActivity().runOnUiThread(() -> createWebView(finalUrl));
 
@@ -216,6 +218,7 @@ public class CurrentClueFragment extends Fragment {
 //          e.printStackTrace();
 //        }
         dialog.dismiss();
+        scanned = false;
       }
     });
     alert.show();
