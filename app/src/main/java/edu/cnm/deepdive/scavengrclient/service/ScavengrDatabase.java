@@ -8,6 +8,7 @@ import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 import edu.cnm.deepdive.scavengrclient.ScavengerApplication;
 import edu.cnm.deepdive.scavengrclient.model.dao.ClueDao;
+import edu.cnm.deepdive.scavengrclient.model.dao.HuntActivityDao;
 import edu.cnm.deepdive.scavengrclient.model.dao.HuntDao;
 import edu.cnm.deepdive.scavengrclient.model.dao.UserDao;
 import edu.cnm.deepdive.scavengrclient.model.entity.Clue;
@@ -59,6 +60,14 @@ public abstract class ScavengrDatabase extends RoomDatabase {
    * @return a {@link ClueDao} interface
    */
   public abstract ClueDao getClueDao();
+
+  /**
+   * Retrieves an Instance of the Data Access Object that handles queries to the local {@link HuntActivity}
+   * database
+   *
+   * @return a {@link HuntActivityDao} interface
+   */
+  public abstract HuntActivityDao getHuntActivityDao();
 
   /**
    * Retrieves an Instance of the Data Access Object that handles queries to the local {@link User}

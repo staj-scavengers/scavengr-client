@@ -8,11 +8,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import edu.cnm.deepdive.scavengrclient.model.entity.Clue;
 import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
+import edu.cnm.deepdive.scavengrclient.model.entity.HuntActivity;
 import edu.cnm.deepdive.scavengrclient.model.entity.User;
 import edu.cnm.deepdive.scavengrclient.model.pojo.HuntActivityWithStats;
 import edu.cnm.deepdive.scavengrclient.repository.ScavengrRepository;
 import edu.cnm.deepdive.scavengrclient.service.GoogleSignInService;
 import io.reactivex.Maybe;
+import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import java.util.List;
 import java.util.UUID;
@@ -46,6 +48,7 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
   }
 
   public LiveData<Hunt> getHunt() {
+    clues.postValue(hunt.getValue().getClues());
     return hunt;
   }
 
@@ -99,15 +102,23 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
 
   // local database methods
 
-  public void resumeHunt(long localHuntId) {
+  public void loadLocalHunt(long localHuntId) {
     throwable.setValue(null);
     pending.add(
-        repository.resumeHunt(localHuntId)
+        repository.loadLocalHunt(localHuntId)
             .subscribe(
                 hunt::postValue,
                 throwable::postValue
             )
     );
+  }
+
+  public Single<HuntActivity> beginOrResume(long localHuntId) {
+    return repository.huntActivity(localHuntId);
+  }
+
+  public void saveHuntProgress (HuntActivity huntActivity) {
+    repository.saveHuntProgress(huntActivity);
   }
 
   // user account interactions

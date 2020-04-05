@@ -5,22 +5,21 @@ import android.content.SharedPreferences;
 import androidx.lifecycle.LiveData;
 import androidx.preference.PreferenceManager;
 import edu.cnm.deepdive.scavengrclient.ScavengerApplication;
+import edu.cnm.deepdive.scavengrclient.model.dao.HuntActivityDao;
 import edu.cnm.deepdive.scavengrclient.model.dao.HuntDao;
 import edu.cnm.deepdive.scavengrclient.model.entity.Clue;
 import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
+import edu.cnm.deepdive.scavengrclient.model.entity.HuntActivity;
 import edu.cnm.deepdive.scavengrclient.model.entity.User;
 import edu.cnm.deepdive.scavengrclient.model.pojo.HuntActivityWithStats;
 import edu.cnm.deepdive.scavengrclient.service.ScavengrDatabase;
 import edu.cnm.deepdive.scavengrclient.service.ScavengrService;
-import edu.cnm.deepdive.scavengrclient.repository.ScavengrRepository;
 import edu.cnm.deepdive.scavengrclient.viewmodel.MainViewModel;
-import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -77,7 +76,8 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
    *
    * @param token  is for user authentication
    * @param search is the String to search by
-   * @return a {@link List}<{@link Hunt}> collection wrapped in a {@link Single} for the {@link MainViewModel}.
+   * @return a {@link List}<{@link Hunt}> collection wrapped in a {@link Single} for the {@link
+   * MainViewModel}.
    */
   public Single<List<Hunt>> searchHunts(String token, String search) {
     return scavengr.searchHuntsByName(token, search)
@@ -95,7 +95,8 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
    *
    * @param token  from Oauth service, used to check User privileges
    * @param huntId identifies the Hunt to be downloaded.
-   * @return the Hunt, modified from the server for the local database and wrapped in a {@link Single} for the {@link MainViewModel}.
+   * @return the Hunt, modified from the server for the local database and wrapped in a {@link
+   * Single} for the {@link MainViewModel}.
    */
   public Single<Hunt> downloadHunt(String token, UUID huntId) {
     return scavengr.getHunt(token, huntId)
@@ -130,7 +131,7 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
    * This method adds a new {@link Hunt} to the server.
    *
    * @param token is for user authentication.
-   * @param hunt is the new Hunt to be added.
+   * @param hunt  is the new Hunt to be added.
    * @return the new Hunt on success, wrapped in a {@link Single} for the {@link MainViewModel}
    */
   public Single<Hunt> uploadHunt(String token, Hunt hunt) {
@@ -146,11 +147,25 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
 
   //endregion
 
+  // local database operations
 
-  public Single<Hunt> resumeHunt(long localHuntId) {
+  public Single<Hunt> loadLocalHunt(long localHuntId) {
     HuntDao dao = database.getHuntDao();
     return dao.getOne(localHuntId)
         .subscribeOn(Schedulers.io());
+  }
+
+  public Single<HuntActivity> huntActivity(long localHuntId) {
+    HuntActivityDao dao = database.getHuntActivityDao();
+    return dao.getByHunt(localHuntId)
+        .subscribeOn(Schedulers.io());
+  }
+
+  public void saveHuntProgress(HuntActivity huntActivity) {
+    HuntActivityDao dao = database.getHuntActivityDao();
+      dao.insert(huntActivity)
+          .doOnError(throwable -> dao.update(huntActivity))
+          .subscribe();
   }
 
   public Maybe<User> checkLocalUser(String token) {

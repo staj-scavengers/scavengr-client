@@ -33,6 +33,7 @@ import edu.cnm.deepdive.scavengrclient.R;
 import edu.cnm.deepdive.scavengrclient.controller.MainActivity;
 import edu.cnm.deepdive.scavengrclient.model.entity.Clue;
 import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
+import edu.cnm.deepdive.scavengrclient.model.entity.HuntActivity;
 import edu.cnm.deepdive.scavengrclient.viewmodel.MainViewModel;
 import java.io.IOException;
 import java.util.List;
@@ -44,6 +45,7 @@ public class CurrentClueFragment extends Fragment {
   private TextView clueDescription;
   private CameraSource cameraSource;
   private Hunt hunt;
+  private HuntActivity huntActivity;
   private List<Clue> clues;
   private Clue activeClue;
   private static final int RC_HANDLE_CAMERA_PERM = 2;
@@ -61,6 +63,11 @@ public class CurrentClueFragment extends Fragment {
     viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
     hunt = viewModel.getHunt().getValue();
     clues = hunt.getClues();
+
+    viewModel.beginOrResume(hunt.getLocalId())
+        .doOnSuccess((huntActivity) -> this.huntActivity = huntActivity)
+        .doOnError((throwable) -> newHuntActivity())
+        .subscribe();
     return inflater.inflate(R.layout.fragment_current_clue, container, false);
   }
 
@@ -83,14 +90,25 @@ public class CurrentClueFragment extends Fragment {
     });
   }
 
+  private void newHuntActivity() {
+    huntActivity = new HuntActivity();
+    huntActivity.setHuntId(hunt.getId().toString());
+    huntActivity.setLocalId(hunt.getLocalId());
+    huntActivity.setUserId("user UUID");
+    huntActivity.setLocalId(0);
+    huntActivity.setCluesCompleted(0);
+  }
+
   private void setActiveClue() {
     activeClue = clues.get(0);
   }
 
-  private void updateActiveClue() {
+  private void updateActivity() {
     if (clues.size() > 1) {
       clues.remove(0);
       setActiveClue();
+      huntActivity.setCluesCompleted(huntActivity.getCluesCompleted() + 1);
+      viewModel.saveHuntProgress(huntActivity);
     } else {
       finishHunt();
     }
