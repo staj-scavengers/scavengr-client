@@ -102,7 +102,7 @@ public interface ScavengrService {
    */
   @GET("hunts/search")
   Single<List<Hunt>> searchHunts(@Header("Authorization") String oauthHeader,
-      @Query("name") String huntName, @Query("open") Boolean open, @Query("active") Boolean active);
+      @Query("name") String huntName, @Query("isOpen") Boolean open, @Query("active") Boolean active);
 //endregion
 
 //region Clue CRUD methods

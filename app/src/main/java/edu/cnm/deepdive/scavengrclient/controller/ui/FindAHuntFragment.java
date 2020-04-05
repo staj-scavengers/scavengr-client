@@ -101,7 +101,7 @@ public class FindAHuntFragment extends Fragment {
       Hunt hunt = (Hunt) parent.getItemAtPosition(position);
       Bundle args = new Bundle();
       args.putSerializable("remoteId", hunt.getId());
-      NavHostFragment.findNavController(this).navigate(R.id.nav_hunt, args);
+      NavHostFragment.findNavController(this).navigate(R.id.nav_join_hunt, args);
     });
   }
 }

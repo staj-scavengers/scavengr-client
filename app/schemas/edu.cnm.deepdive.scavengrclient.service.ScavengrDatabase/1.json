@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5e378e9a9a3768dc2cc42b2b50483af8",
+    "identityHash": "2151ef03344c97ec846d1e485c03874c",
     "entities": [
       {
         "tableName": "Clue",
@@ -286,7 +286,7 @@
       },
       {
         "tableName": "User",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`local_user_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_id` TEXT NOT NULL, `oauth_token` TEXT NOT NULL, `user_name` TEXT NOT NULL COLLATE NOCASE, `organizer_id` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`local_user_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_id` TEXT, `oauth_token` TEXT NOT NULL, `user_name` TEXT NOT NULL COLLATE NOCASE, `organizer_id` TEXT)",
         "fields": [
           {
             "fieldPath": "localId",
@@ -298,7 +298,7 @@
             "fieldPath": "id",
             "columnName": "user_id",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "oauthToken",
@@ -341,7 +341,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5e378e9a9a3768dc2cc42b2b50483af8')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2151ef03344c97ec846d1e485c03874c')"
     ]
   }
 }
