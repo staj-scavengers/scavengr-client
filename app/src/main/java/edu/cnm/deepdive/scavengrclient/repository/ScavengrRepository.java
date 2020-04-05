@@ -2,6 +2,7 @@ package edu.cnm.deepdive.scavengrclient.repository;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.text.BoringLayout;
 import androidx.lifecycle.LiveData;
 import androidx.preference.PreferenceManager;
 import edu.cnm.deepdive.scavengrclient.ScavengerApplication;
@@ -80,8 +81,8 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
    * @return a {@link List}<{@link Hunt}> collection wrapped in a {@link Single} for the {@link
    * MainViewModel}.
    */
-  public Single<List<Hunt>> searchHunts(String token, String search) {
-    return scavengr.searchHuntsByName(token, search)
+  public Single<List<Hunt>> searchHunts(String token, String search, Boolean open, Boolean active) {
+    return scavengr.searchHunts(token, search, open, active)
         .subscribeOn(Schedulers.from(networkPool));
   }
 
