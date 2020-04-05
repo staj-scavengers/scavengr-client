@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.scavengrclient.viewmodel;
 
 import android.app.Application;
+import android.text.BoringLayout;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LifecycleObserver;
@@ -45,6 +46,11 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
 
   }
 
+
+  public LiveData<List<Hunt>> getHunts() {
+    return hunts;
+  }
+
   public LiveData<Hunt> getHunt() {
     return hunt;
   }
@@ -67,12 +73,12 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
 
 
   // Server methods
-  public void searchHunts(String search) {
+  public void searchHunts(String search, Boolean open, Boolean active) {
     throwable.setValue(null);
     GoogleSignInService.getInstance().refresh()
         .addOnSuccessListener((account) -> {
           pending.add(
-              repository.searchHunts(account.getIdToken(), search)
+              repository.searchHunts(account.getIdToken(), search, open, active)
                   .subscribe(
                       hunts::postValue,
                       throwable::postValue

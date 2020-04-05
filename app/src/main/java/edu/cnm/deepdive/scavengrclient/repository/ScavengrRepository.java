@@ -2,6 +2,7 @@ package edu.cnm.deepdive.scavengrclient.repository;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.text.BoringLayout;
 import androidx.lifecycle.LiveData;
 import androidx.preference.PreferenceManager;
 import edu.cnm.deepdive.scavengrclient.ScavengerApplication;
@@ -12,15 +13,12 @@ import edu.cnm.deepdive.scavengrclient.model.entity.User;
 import edu.cnm.deepdive.scavengrclient.model.pojo.HuntActivityWithStats;
 import edu.cnm.deepdive.scavengrclient.service.ScavengrDatabase;
 import edu.cnm.deepdive.scavengrclient.service.ScavengrService;
-import edu.cnm.deepdive.scavengrclient.repository.ScavengrRepository;
 import edu.cnm.deepdive.scavengrclient.viewmodel.MainViewModel;
-import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -79,8 +77,8 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
    * @param search is the String to search by
    * @return a {@link List}<{@link Hunt}> collection wrapped in a {@link Single} for the {@link MainViewModel}.
    */
-  public Single<List<Hunt>> searchHunts(String token, String search) {
-    return scavengr.searchHuntsByName(token, search)
+  public Single<List<Hunt>> searchHunts(String token, String search, Boolean open, Boolean active) {
+    return scavengr.searchHunts(token, search, open, active)
         .subscribeOn(Schedulers.from(networkPool));
   }
 

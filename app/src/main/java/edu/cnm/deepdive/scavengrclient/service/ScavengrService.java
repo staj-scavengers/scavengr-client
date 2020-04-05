@@ -92,6 +92,7 @@ public interface ScavengrService {
   Single<List<Hunt>> getHuntsByOrganizer(@Header("Authorization") String oauthHeader,
       @Query("organizer") Organizer organizer);
 
+  //TODO Add Parameters to controller search method and check for null values.
   /**
    * This method {@link List}s all {@link Hunt}s based on a search of the huntName field.
    *
@@ -100,8 +101,8 @@ public interface ScavengrService {
    * @return any Hunts that match.
    */
   @GET("hunts/search")
-  Single<List<Hunt>> searchHuntsByName(@Header("Authorization") String oauthHeader,
-      @Query("name") String huntName);
+  Single<List<Hunt>> searchHunts(@Header("Authorization") String oauthHeader,
+      @Query("name") String huntName, @Query("open") Boolean open, @Query("active") Boolean active);
 //endregion
 
 //region Clue CRUD methods
