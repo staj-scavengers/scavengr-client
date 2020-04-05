@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.scavengrclient;
+package edu.cnm.deepdive.scavengrclient.view;
 
 import android.content.Context;
 import androidx.annotation.NonNull;
