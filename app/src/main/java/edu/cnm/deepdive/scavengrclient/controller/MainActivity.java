@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
     // TODO remove this:
-    navController.navigate(R.id.nav_current_clue);
+//    navController.navigate(R.id.nav_current_clue);
   }
 
 
@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     } else {
       navController.navigate(R.id.nav_find_ahunt);
     }
+
   }
 
   private void setupViewModel() {
@@ -101,7 +102,10 @@ public class MainActivity extends AppCompatActivity {
     toast.setGravity(Gravity.BOTTOM, 0,
         getResources().getDimensionPixelOffset(R.dimen.toast_vertical_margin));
     toast.show();
+
+
   }
+
 
 }
 

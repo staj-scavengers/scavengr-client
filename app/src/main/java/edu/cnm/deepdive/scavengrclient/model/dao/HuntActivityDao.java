@@ -31,10 +31,10 @@ public interface HuntActivityDao {
   Single<HuntActivity> getOne(long id);
 
   @Query("SELECT * FROM HuntActivity WHERE local_hunt_id = :id")
-  LiveData<List<Hunt>> getByHunt(long id);
+  Single<HuntActivity> getByHunt(long id);
 
   @Query("SELECT * FROM HuntActivity WHERE local_user_id = :id")
-  LiveData<List<Hunt>> getByUser(long id);
+  LiveData<List<HuntActivity>> getByUser(long id);
 
   @Query("SELECT * FROM HuntActivity")
   LiveData<List<HuntActivity>> list();
