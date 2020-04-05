@@ -57,7 +57,7 @@ public class CurrentClueFragment extends Fragment {
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState){
+      Bundle savedInstanceState) {
     viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
     hunt = viewModel.getHunt().getValue();
     clues = hunt.getClues();
@@ -172,52 +172,8 @@ public class CurrentClueFragment extends Fragment {
       ((MainActivity) getActivity()).makeToast(getString(R.string.qr_dependencies_downloading));
     }
 
-    qrDetector.setProcessor(new Processor<Barcode>() {
-      @Override
-      public void release() {
-      }
-
-      @Override
-      public void receiveDetections(Detections<Barcode> detections) {
-
-        final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-
-        if (barcodes.size() != 0 && !scanned) {
-//          cameraSource.stop();
-          String url = "";
-          switch (barcodes.valueAt(0).rawValue) {
-            case "scavengr-clue-1":
-              url = "http://3.bp.blogspot.com/_pM1ifV7g5qs/SaIDBfjlvXI/AAAAAAAAAg8/IAx6u3tsg6w/s1600-h/turnip_murder.jpg";
-              break;
-            case "scavengr-clue-2":
-              url = "https://youtu.be/rEUxlwb2uFI";
-              break;
-            case "scavengr-clue-3":
-              url = "https://youtu.be/nqNqE0QiMPE";
-              break;
-            case "scavengr-clue-4":
-              url = "https://soundcloud.com/overwerk/afterhours-medley";
-              break;
-            case "scavengr-clue-5":
-              url = "https://en.wikipedia.org/wiki/Wikipedia:On_this_day/Today";
-              break;
-            default:
-              ((MainActivity) getActivity())
-                  .makeToast("Invalid code:" + (barcodes.valueAt(0).displayValue));
-              break;
-          }
-
-          if (!url.isEmpty()) {
-              scanned = true;
-            String finalUrl = url;
-            getActivity().runOnUiThread(() -> createWebView(finalUrl));
-
-          }
-          // TODO send value to MainViewModel
-
-        }
-      }
-    });
+    // TODO switch Processor to qrLiveProcessor to process a live Clue.
+    qrDetector.setProcessor(qrTestProcessor);
   }
 
   private void createWebView(String url) {
@@ -248,8 +204,82 @@ public class CurrentClueFragment extends Fragment {
     alert.show();
   }
 
-  private void showMedia(String url) {
-    new ClueMediaFragment(url)
-        .show(getChildFragmentManager(), ClueMediaFragment.class.getName());
-  }
+  Processor<Barcode> qrLiveProcessor = new Processor<Barcode>() {
+
+    @Override
+    public void release() {
+
+    }
+
+    @Override
+    public void receiveDetections(Detections<Barcode> detections) {
+
+      final SparseArray<Barcode> barcodes = detections.getDetectedItems();
+
+      if (barcodes.size() != 0 && !scanned) {
+        String url = "";
+
+        if (barcodes.valueAt(0).rawValue == activeClue.getMediaTag()) {
+          url = activeClue.getMedia();
+        } else {
+          ((MainActivity) getActivity())
+              .makeToast("Invalid code:" + (barcodes.valueAt(0).displayValue));
+        }
+
+        if (!url.isEmpty()) {
+          scanned = true;
+          String finalUrl = url;
+          getActivity().runOnUiThread(() -> createWebView(finalUrl));
+
+        }
+
+      }
+    }
+  };
+
+  Processor<Barcode> qrTestProcessor = new Processor<Barcode>() {
+    @Override
+    public void release() {
+    }
+
+    @Override
+    public void receiveDetections(Detections<Barcode> detections) {
+
+      final SparseArray<Barcode> barcodes = detections.getDetectedItems();
+
+      if (barcodes.size() != 0 && !scanned) {
+//          cameraSource.stop();
+        String url = "";
+        switch (barcodes.valueAt(0).rawValue) {
+          case "scavengr-clue-1":
+            url = "http://3.bp.blogspot.com/_pM1ifV7g5qs/SaIDBfjlvXI/AAAAAAAAAg8/IAx6u3tsg6w/s1600-h/turnip_murder.jpg";
+            break;
+          case "scavengr-clue-2":
+            url = "https://youtu.be/rEUxlwb2uFI";
+            break;
+          case "scavengr-clue-3":
+            url = "https://youtu.be/nqNqE0QiMPE";
+            break;
+          case "scavengr-clue-4":
+            url = "https://soundcloud.com/overwerk/afterhours-medley";
+            break;
+          case "scavengr-clue-5":
+            url = "https://en.wikipedia.org/wiki/Wikipedia:On_this_day/Today";
+            break;
+          default:
+            ((MainActivity) getActivity())
+                .makeToast("Invalid code:" + (barcodes.valueAt(0).displayValue));
+            break;
+        }
+
+        if (!url.isEmpty()) {
+          scanned = true;
+          String finalUrl = url;
+          getActivity().runOnUiThread(() -> createWebView(finalUrl));
+
+        }
+
+      }
+    }
+  };
 }
