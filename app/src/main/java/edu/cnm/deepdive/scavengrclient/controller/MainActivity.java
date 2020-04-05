@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     } else {
       navController.navigate(R.id.nav_find_ahunt);
     }
+
   }
 
   private void setupViewModel() {
@@ -101,7 +102,10 @@ public class MainActivity extends AppCompatActivity {
     toast.setGravity(Gravity.BOTTOM, 0,
         getResources().getDimensionPixelOffset(R.dimen.toast_vertical_margin));
     toast.show();
+
+
   }
+
 
 }
 
