@@ -3,20 +3,19 @@ package edu.cnm.deepdive.scavengrclient.controller.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import androidx.fragment.app.FragmentManager;
-import edu.cnm.deepdive.scavengrclient.ui.main.MainFragment;
+import android.widget.Button;
+import androidx.fragment.app.Fragment;
+import edu.cnm.deepdive.scavengrclient.R;
+import edu.cnm.deepdive.scavengrclient.controller.MainActivity;
+
+public class EditHuntFragment extends Fragment implements OnClickListener {
 
 
-public class FindAHuntFragment extends Fragment implements OnClickListener {
-
-
-  public FindAHuntFragment() {
+  public EditHuntFragment() {
     // Required empty public constructor
   }
 

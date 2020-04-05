@@ -1,22 +1,12 @@
 package edu.cnm.deepdive.scavengrclient.controller;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.os.Bundle;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import edu.cnm.deepdive.scavengrclient.MainActivity;
-import edu.cnm.deepdive.scavengrclient.NewUserFragment;
 import edu.cnm.deepdive.scavengrclient.R;
 import edu.cnm.deepdive.scavengrclient.service.GoogleSignInService;
-import edu.cnm.deepdive.scavengrclient.ui.main.MainFragment;
-import java.util.zip.Inflater;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -42,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
   protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
     if (requestCode == LOGIN_REQUEST_CODE) {
       repository.completeSignIn(data)
-          .addOnSuccessListener((account) -> switchToCorrectView())
+          .addOnSuccessListener((account) -> switchToMain())
           .addOnFailureListener((ex) ->
               Toast.makeText(this, R.string.login_failure, Toast.LENGTH_LONG).show());
     } else {

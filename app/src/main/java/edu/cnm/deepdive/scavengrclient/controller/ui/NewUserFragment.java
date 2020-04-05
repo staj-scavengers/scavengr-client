@@ -3,6 +3,7 @@ package edu.cnm.deepdive.scavengrclient.controller.ui;
 
 import android.os.Bundle;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
