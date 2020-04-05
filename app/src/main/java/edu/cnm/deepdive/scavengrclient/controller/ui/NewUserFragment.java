@@ -41,8 +41,8 @@ public class NewUserFragment extends Fragment implements OnClickListener {
   @Override
   public void onClick(View view) {
     MainViewModel viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
-    // TODO correctly implement registration using HTTPS
-    //    viewModel.register(inputUserName.getText().toString());
+    // TODO correctly implement registration downstream in this method:
+        viewModel.register(inputUserName.getText().toString());
     Navigation.findNavController(view).navigate(R.id.nav_find_ahunt);
   }
 }

@@ -7,6 +7,7 @@ import androidx.preference.PreferenceManager;
 import edu.cnm.deepdive.scavengrclient.ScavengerApplication;
 import edu.cnm.deepdive.scavengrclient.model.dao.HuntActivityDao;
 import edu.cnm.deepdive.scavengrclient.model.dao.HuntDao;
+import edu.cnm.deepdive.scavengrclient.model.dao.UserDao;
 import edu.cnm.deepdive.scavengrclient.model.entity.Clue;
 import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
 import edu.cnm.deepdive.scavengrclient.model.entity.HuntActivity;
@@ -138,11 +139,16 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
     return scavengr.postHunt(token, hunt).subscribeOn(Schedulers.from(networkPool));
   }
 
-  public Single<User> registerUser(String token, String name) {
+  public Single<Long> registerUser(String token, String name) {
     User user = new User();
     user.setOauthToken(token);
     user.setUserName(name);
-    return scavengr.postUser(token, user).subscribeOn(Schedulers.from(networkPool));
+    UserDao dao = database.getUserDao();
+    return dao.insert(user)
+        .subscribeOn(Schedulers.io());
+
+    // TODO fix server registration.
+//    return scavengr.postUser(token, user).subscribeOn(Schedulers.from(networkPool));
   }
 
   //endregion
@@ -163,9 +169,9 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
 
   public void saveHuntProgress(HuntActivity huntActivity) {
     HuntActivityDao dao = database.getHuntActivityDao();
-      dao.insert(huntActivity)
-          .doOnError(throwable -> dao.update(huntActivity))
-          .subscribe();
+    dao.insert(huntActivity)
+        .doOnError(throwable -> dao.update(huntActivity))
+        .subscribe();
   }
 
   public Maybe<User> checkLocalUser(String token) {

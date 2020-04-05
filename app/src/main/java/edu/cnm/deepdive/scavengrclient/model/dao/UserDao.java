@@ -7,12 +7,10 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 import edu.cnm.deepdive.scavengrclient.model.entity.User;
-import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @Dao
 public interface UserDao {
