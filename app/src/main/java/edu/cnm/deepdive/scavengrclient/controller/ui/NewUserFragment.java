@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import edu.cnm.deepdive.scavengrclient.R;
+import edu.cnm.deepdive.scavengrclient.controller.MainActivity;
 import edu.cnm.deepdive.scavengrclient.viewmodel.MainViewModel;
 
 public class NewUserFragment extends Fragment implements OnClickListener {
@@ -29,6 +30,7 @@ public class NewUserFragment extends Fragment implements OnClickListener {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     // Inflate the layout for this fragment
+    ((MainActivity)getActivity()).getActionBar().setDisplayHomeAsUpEnabled(false);
     View view = inflater.inflate(R.layout.fragment_new_user, container, false);
     ImageView imageView = view.findViewById(R.id.welcome_app_icon);
     imageView.setImageResource(R.drawable.ic_launcher_foreground);
