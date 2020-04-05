@@ -22,7 +22,6 @@ public class User {
   @ColumnInfo(name = "local_user_id")
   private long localId;
 
-  @NonNull
   @Expose
   @ColumnInfo(name = "user_id")
   private UUID id;

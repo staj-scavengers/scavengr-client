@@ -36,6 +36,7 @@ import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
 import edu.cnm.deepdive.scavengrclient.model.entity.HuntActivity;
 import edu.cnm.deepdive.scavengrclient.viewmodel.MainViewModel;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 public class CurrentClueFragment extends Fragment {
@@ -96,6 +97,7 @@ public class CurrentClueFragment extends Fragment {
     huntActivity.setLocalId(hunt.getLocalId());
     huntActivity.setUserId("user UUID");
     huntActivity.setLocalId(0);
+    huntActivity.setStarted(new Date());
     huntActivity.setCluesCompleted(0);
   }
 
@@ -116,6 +118,8 @@ public class CurrentClueFragment extends Fragment {
 
   private void finishHunt() {
     // TODO write this method.
+    huntActivity.setCompleted(new Date());
+    viewModel.saveHuntProgress(huntActivity);
   }
 
   //region Camera Setup & Permissions
@@ -216,6 +220,7 @@ public class CurrentClueFragment extends Fragment {
 //          e.printStackTrace();
 //        }
         dialog.dismiss();
+        updateActivity();
         scanned = false;
       }
     });
