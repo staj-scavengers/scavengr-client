@@ -41,6 +41,7 @@ public class FindAHuntFragment extends Fragment implements OnClickListener {
   private Boolean isOrganizer;
 
   public FindAHuntFragment() {
+    this.isOrganizer = isOrganizer;
     // Required empty public constructor
   }
 
