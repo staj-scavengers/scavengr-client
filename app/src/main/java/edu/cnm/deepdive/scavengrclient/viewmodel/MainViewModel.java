@@ -135,7 +135,7 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
   // user account interactions
 
 
-  public Maybe<User> checkUser(String token) {
+  public Single<User> checkUser(String token) {
     return repository.checkLocalUser(token);
   }
 

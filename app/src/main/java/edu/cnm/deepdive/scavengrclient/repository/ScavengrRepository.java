@@ -175,7 +175,7 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
         .subscribe();
   }
 
-  public Maybe<User> checkLocalUser(String token) {
+  public Single<User> checkLocalUser(String token) {
     return database.getUserDao().check(token).subscribeOn(Schedulers.io());
   }
 
