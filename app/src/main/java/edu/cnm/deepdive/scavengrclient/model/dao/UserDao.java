@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 import edu.cnm.deepdive.scavengrclient.model.entity.User;
@@ -15,7 +16,7 @@ import java.util.List;
 @Dao
 public interface UserDao {
 
-  @Insert
+  @Insert(onConflict = OnConflictStrategy.IGNORE)
   Single<Long> insert(User user);
 
   @Insert
@@ -34,6 +35,6 @@ public interface UserDao {
   Single<User> select(long id);
 
   @Query("SELECT * FROM User WHERE oauth_token = :token")
-  Maybe<User> check(String token);
+  Single<User> check(String token);
 
 }

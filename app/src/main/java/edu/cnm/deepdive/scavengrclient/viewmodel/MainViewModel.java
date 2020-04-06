@@ -2,6 +2,7 @@ package edu.cnm.deepdive.scavengrclient.viewmodel;
 
 import android.app.Application;
 import android.text.BoringLayout;
+import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LifecycleObserver;
@@ -54,7 +55,6 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
   }
 
   public LiveData<Hunt> getHunt() {
-    clues.postValue(hunt.getValue().getClues());
     return hunt;
   }
 
@@ -77,13 +77,17 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
 
   // Server methods
   public void searchHunts(String search, Boolean open, Boolean active) {
+    Log.d("FIND", "MVM.searchHunts");
     throwable.setValue(null);
     GoogleSignInService.getInstance().refresh()
         .addOnSuccessListener((account) -> {
           pending.add(
               repository.searchHunts(account.getIdToken(), search, open, active)
                   .subscribe(
-                      hunts::postValue,
+                      value -> {
+                        Log.d("FIND", "Posting hunts");
+                        hunts.postValue(value);
+                      },
                       throwable::postValue
                   )
           );
@@ -92,7 +96,9 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
   }
 
   public void downloadHunt(UUID huntId) {
+    Log.d("Find -> Join", "call MVM.downloadHunt");
     throwable.setValue(null);
+    hunt.setValue(null);
     GoogleSignInService.getInstance().refresh()
         .addOnSuccessListener((account) -> {
           pending.add(
@@ -130,7 +136,7 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
   // user account interactions
 
 
-  public Maybe<User> checkUser(String token) {
+  public Single<User> checkUser(String token) {
     return repository.checkLocalUser(token);
   }
 

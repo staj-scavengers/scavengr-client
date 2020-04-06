@@ -3,6 +3,7 @@ package edu.cnm.deepdive.scavengrclient.repository;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.text.BoringLayout;
+import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.preference.PreferenceManager;
 import edu.cnm.deepdive.scavengrclient.ScavengerApplication;
@@ -101,24 +102,37 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
    * Single} for the {@link MainViewModel}.
    */
   public Single<Hunt> downloadHunt(String token, UUID huntId) {
+    Log.d("Find -> Join", "call SR.downloadHunt");
     return scavengr.getHunt(token, huntId)
         .subscribeOn(Schedulers.from(networkPool))
         .flatMap((Hunt hunt) -> { // add organizer name
-              hunt.setOrganizerName(hunt.getOrganizer().getUser().getUserName());
+          Log.d("Find -> Join", "Set organizer");
+          hunt.setOrganizerName(
+              "STAJ"
+              // TODO enable when users & organizers are corrected
+//              hunt.getOrganizer().getUser().getUserName()
+          );
               return database.getHuntDao().insert(hunt) // save hunt, get id
                   .map((id) -> {
+                    Log.d("Find -> Join", "Set local id: " + id);
+                    Log.d("Find -> Join", "Hunt has " + hunt.getClues().size()+ " clues.");
                     hunt.setLocalId(id); // write new id from database into Clues
                     for (Clue clue : hunt.getClues()) {
                       clue.setLocalHuntId(id);
+                      clue.setHuntId(hunt.getId().toString());
+                      database.getClueDao().insert(clue)
+                          .doOnSuccess(clueId -> clue.setLocalId(clueId))
+                          .subscribe();
                     }
                     return hunt;
                   });
             }
-        )
+        )/*
         .flatMap((hunt) -> // save all the clues
             database.getClueDao().insert(hunt.getClues())
                 .subscribeOn(Schedulers.io())
                 .map((ids) -> { // take the list of ids
+                  Log.d("Find -> Join", "insert clues");
                   Iterator<Long> idIterator = ids.iterator();
                   Iterator<Clue> clueIterator = hunt.getClues().iterator();
                   while (idIterator.hasNext()) { // add ids to clues in order
@@ -126,7 +140,7 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
                   }
                   return hunt;
                 })
-        );
+        )*/;
   }//        .subscribe in ViewModel will return a Hunt with Clues;
 
   /**
@@ -175,7 +189,7 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
         .subscribe();
   }
 
-  public Maybe<User> checkLocalUser(String token) {
+  public Single<User> checkLocalUser(String token) {
     return database.getUserDao().check(token).subscribeOn(Schedulers.io());
   }
 

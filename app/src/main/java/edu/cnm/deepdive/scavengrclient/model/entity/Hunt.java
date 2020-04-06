@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.Index;
+import androidx.room.OnConflictStrategy;
 import androidx.room.PrimaryKey;
 import com.google.gson.annotations.Expose;
 import java.util.LinkedList;
@@ -18,7 +19,8 @@ import java.util.UUID;
  */
 @Entity(
     indices = {
-        @Index(value = {"hunt_name"})
+        @Index(value = {"hunt_name"}),
+        @Index(value = {"hunt_id"}, unique = true)
     }
 )
 public class Hunt {
@@ -101,6 +103,6 @@ public class Hunt {
   @NonNull
   @Override
   public String toString() {
-    return (huntName + "by: " + organizerName);
+    return (huntName + " | by: " + organizerName);
   }
 }

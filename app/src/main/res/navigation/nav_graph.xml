@@ -41,6 +41,10 @@
     android:label="Scavengr"
     android:name="edu.cnm.deepdive.scavengrclient.controller.ui.JoinHuntFragment"
     tools:layout="@layout/fragment_join_hunt">
+    <argument
+      android:name="remoteId"
+      app:argType="java.util.UUID"/>
+
   </fragment>
 
   <fragment

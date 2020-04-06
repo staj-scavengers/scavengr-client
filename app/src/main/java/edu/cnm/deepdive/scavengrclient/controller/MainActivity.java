@@ -75,8 +75,12 @@ public class MainActivity extends AppCompatActivity {
     signInService.refresh()
         .addOnSuccessListener(
             account -> viewModel.checkUser(account.getIdToken())
-                .doOnSuccess((user) -> registered = true)
-                .subscribe()
+//                .doOnSuccess((user) -> navController.navigate(R.id.nav_find_ahunt))
+//                .doOnError(error -> navController.navigate(R.id.nav_new_user))
+                .subscribe(
+                    (user) -> navController.navigate(R.id.nav_find_ahunt),
+                    error -> navController.navigate(R.id.nav_new_user)
+                )
         )
         .addOnFailureListener(
             account -> makeToast(getString(R.string.google_account_problem))
@@ -106,6 +110,10 @@ public class MainActivity extends AppCompatActivity {
 
   }
 
+  private void preloaderOfShame() {
+
+
+  }
 
 }
 

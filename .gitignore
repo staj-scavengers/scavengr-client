@@ -1,5 +1,6 @@
 *.iml
-.gradle
+build.gradle
+/app/src/build.gradle
 /local.properties
 /.idea/caches
 /.idea/libraries
@@ -13,3 +14,5 @@
 .externalNativeBuild
 .cxx
 /app/schemas/edu.cnm.deepdive.scavengrclient.service.ScavengrDatabase/1.json
+/app/build.gradle
+/.gradle/

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5e378e9a9a3768dc2cc42b2b50483af8",
+    "identityHash": "63a16b3714a64cc189f9cdc5b8f90147",
     "entities": [
       {
         "tableName": "Clue",
@@ -148,6 +148,14 @@
               "hunt_name"
             ],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_Hunt_hunt_name` ON `${TABLE_NAME}` (`hunt_name`)"
+          },
+          {
+            "name": "index_Hunt_hunt_id",
+            "unique": true,
+            "columnNames": [
+              "hunt_id"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_Hunt_hunt_id` ON `${TABLE_NAME}` (`hunt_id`)"
           }
         ],
         "foreignKeys": []
@@ -286,7 +294,7 @@
       },
       {
         "tableName": "User",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`local_user_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_id` TEXT NOT NULL, `oauth_token` TEXT NOT NULL, `user_name` TEXT NOT NULL COLLATE NOCASE, `organizer_id` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`local_user_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_id` TEXT, `oauth_token` TEXT NOT NULL, `user_name` TEXT NOT NULL COLLATE NOCASE, `organizer_id` TEXT)",
         "fields": [
           {
             "fieldPath": "localId",
@@ -298,7 +306,7 @@
             "fieldPath": "id",
             "columnName": "user_id",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "oauthToken",
@@ -341,7 +349,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5e378e9a9a3768dc2cc42b2b50483af8')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '63a16b3714a64cc189f9cdc5b8f90147')"
     ]
   }
 }
