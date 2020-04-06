@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.scavengrclient.controller.ui;
 
 
+import android.graphics.Paint.Join;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +16,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.SearchView.OnQueryTextListener;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavArgs;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import edu.cnm.deepdive.scavengrclient.R;
+import edu.cnm.deepdive.scavengrclient.controller.MainActivity;
 import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
 import edu.cnm.deepdive.scavengrclient.viewmodel.MainViewModel;
 
@@ -39,10 +42,7 @@ public class FindAHuntFragment extends Fragment {
     // Required empty public constructor
   }
 
-  // TODO complete search: get text from EditText field, call viewModel.SearchHunts(string).
-  // TODO next, get the contents of "hunts" mutable live data (List<Hunt>).
-  // TODO then send the list of hunts to a recycler adapter.
-  // TODO tap on a recycler item should call viewModel.downloadHunt with that id, and load that Hunt in the JoinHuntFragment.
+  // TODO Get HuntDetails instead of Hunts from MVM.
 
 
   @Override
@@ -99,9 +99,25 @@ public class FindAHuntFragment extends Fragment {
     });
     huntList.setOnItemClickListener((parent, v, position, id) -> {
       Hunt hunt = (Hunt) parent.getItemAtPosition(position);
-      Bundle args = new Bundle();
-      args.putSerializable("remoteId", hunt.getId());
-      NavHostFragment.findNavController(this).navigate(R.id.nav_join_hunt, args);
+if (hunt.getLocalId() != 0) {
+  viewModel.loadLocalHunt(hunt.getLocalId());
+} else{
+  viewModel.downloadHunt(hunt.getId());
+}
+      viewModel.getHunt().observe(getViewLifecycleOwner(), new Observer<Hunt>() {
+        @Override
+        public void onChanged(Hunt hunt) {
+          if (hunt == null) {
+          } else {
+            NavHostFragment.findNavController(getParentFragment()).navigate(R.id.nav_join_hunt);
+          }
+        }
+      });
+
+//
+//      Bundle args = new Bundle();
+//      args.putSerializable("remoteId", hunt.getId());
+//      NavHostFragment.findNavController(this).navigate(R.id.nav_join_hunt, args);
     });
   }
 }

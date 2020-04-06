@@ -55,7 +55,6 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
   }
 
   public LiveData<Hunt> getHunt() {
-    clues.postValue(hunt.getValue().getClues());
     return hunt;
   }
 
@@ -97,7 +96,9 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
   }
 
   public void downloadHunt(UUID huntId) {
+    Log.d("Find -> Join", "call MVM.downloadHunt");
     throwable.setValue(null);
+    hunt.setValue(null);
     GoogleSignInService.getInstance().refresh()
         .addOnSuccessListener((account) -> {
           pending.add(
