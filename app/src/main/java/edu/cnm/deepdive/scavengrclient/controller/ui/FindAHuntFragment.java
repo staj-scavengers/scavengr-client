@@ -5,12 +5,14 @@ import android.graphics.Paint.Join;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -18,8 +20,7 @@ import androidx.appcompat.widget.SearchView.OnQueryTextListener;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavArgs;
-import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import edu.cnm.deepdive.scavengrclient.R;
 import edu.cnm.deepdive.scavengrclient.controller.MainActivity;
@@ -27,7 +28,7 @@ import edu.cnm.deepdive.scavengrclient.model.entity.Hunt;
 import edu.cnm.deepdive.scavengrclient.viewmodel.MainViewModel;
 
 
-public class FindAHuntFragment extends Fragment {
+public class FindAHuntFragment extends Fragment implements OnClickListener {
 
   private RadioGroup filterMethod;
   private RadioButton methodSearch;
@@ -37,6 +38,7 @@ public class FindAHuntFragment extends Fragment {
   private ListView huntList;
   private Button createHunt;
   private MainViewModel viewModel;
+  private Boolean isOrganizer;
 
   public FindAHuntFragment() {
     // Required empty public constructor
@@ -67,6 +69,7 @@ public class FindAHuntFragment extends Fragment {
     searchFilter = view.findViewById(R.id.search_filter);
     huntList = view.findViewById(R.id.hunt_list);
     createHunt = view.findViewById(R.id.create_hunt);
+    createHunt.setOnClickListener(this);
     filterMethod = view.findViewById(R.id.filter_method);
     methodSearch = view.findViewById(R.id.method_search);
     methodPopular = view.findViewById(R.id.method_popular);
@@ -97,6 +100,7 @@ public class FindAHuntFragment extends Fragment {
         return false;
       }
     });
+
     huntList.setOnItemClickListener((parent, v, position, id) -> {
       Hunt hunt = (Hunt) parent.getItemAtPosition(position);
 if (hunt.getLocalId() != 0) {
@@ -119,5 +123,11 @@ if (hunt.getLocalId() != 0) {
 //      args.putSerializable("remoteId", hunt.getId());
 //      NavHostFragment.findNavController(this).navigate(R.id.nav_join_hunt, args);
     });
+  }
+
+  @Override
+  public void onClick(View view) {
+//    MainViewModel viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
+//    Navigation.findNavController(view).navigate(R.id.create_hunt);
   }
 }
