@@ -18,8 +18,6 @@ import androidx.appcompat.widget.SearchView.OnQueryTextListener;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavArgs;
-import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import edu.cnm.deepdive.scavengrclient.R;
 import edu.cnm.deepdive.scavengrclient.controller.MainActivity;
@@ -97,6 +95,7 @@ public class FindAHuntFragment extends Fragment {
         return false;
       }
     });
+
     huntList.setOnItemClickListener((parent, v, position, id) -> {
       Hunt hunt = (Hunt) parent.getItemAtPosition(position);
 if (hunt.getLocalId() != 0) {
