@@ -44,6 +44,8 @@ public class CurrentClueFragment extends Fragment {
   private SurfaceView cameraFrame;
   private BarcodeDetector qrDetector;
   private TextView clueDescription;
+  private TextView clueNumber;
+  private TextView clueName;
   private CameraSource cameraSource;
   private Hunt hunt;
   private HuntActivity huntActivity;
@@ -61,6 +63,7 @@ public class CurrentClueFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
+
     View view = inflater.inflate(R.layout.fragment_current_clue, container, false);
     viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
     hunt = viewModel.getHunt().getValue();
@@ -80,6 +83,9 @@ public class CurrentClueFragment extends Fragment {
     super.onViewCreated(view, savedInstanceState);
     scanned = false;
     cameraFrame = view.findViewById(R.id.camera_frame);
+    clueNumber = view.findViewById(R.id.clue_number);
+    clueName = view.findViewById(R.id.clue_name);
+    setActiveClue();
     clueDescription = view.findViewById(R.id.clue_description);
     confirmCameraPermissions(view);
     Button clueButton = view.findViewById(R.id.clue_button);
@@ -89,6 +95,7 @@ public class CurrentClueFragment extends Fragment {
         clueButton.setText(R.string.show_clue);
       } else {
         clueDescription.setVisibility(View.VISIBLE);
+        setActiveClue();
         clueButton.setText(R.string.hide_clue);
       }
     });
@@ -106,14 +113,16 @@ public class CurrentClueFragment extends Fragment {
 
   private void setActiveClue() {
     activeClue = clues.get(0);
+    clueName.setText(activeClue.getClueName());
+    clueNumber.setText(Integer.toString(activeClue.getHuntOrder()));
   }
 
   private void updateActivity() {
     if (clues.size() > 1) {
       clues.remove(0);
       setActiveClue();
-      huntActivity.setCluesCompleted(huntActivity.getCluesCompleted() + 1);
-      viewModel.saveHuntProgress(huntActivity);
+//      huntActivity.setCluesCompleted(huntActivity.getCluesCompleted() + 1);
+//      viewModel.saveHuntProgress(huntActivity);
     } else {
       finishHunt();
     }

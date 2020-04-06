@@ -37,13 +37,23 @@
 
       <!--  Text is place holder for input from database-->
       <TextView
+        android:id="@+id/clue_number_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:text="Clue Number"
+        app:layout_constraintBottom_toTopOf="@id/clue_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+      <TextView
         android:id="@+id/clue_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="4dp"
-        android:text="Clue Number #"
+        android:text="#"
         app:layout_constraintBottom_toTopOf="@id/clue_name"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/clue_number_label"
         app:layout_constraintEnd_toEndOf="parent"/>
 
       <!--  Text is place holder for input from database-->
