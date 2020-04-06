@@ -1,3 +1,4 @@
+
 package edu.cnm.deepdive.scavengrclient.controller;
 
 import android.content.Intent;
@@ -116,5 +117,3 @@ public class MainActivity extends AppCompatActivity {
   }
 
 }
-
-
