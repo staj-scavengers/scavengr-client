@@ -101,6 +101,6 @@ public class Hunt {
   @NonNull
   @Override
   public String toString() {
-    return (huntName + "by: " + organizerName);
+    return (huntName + " | by: " + organizerName);
   }
 }
