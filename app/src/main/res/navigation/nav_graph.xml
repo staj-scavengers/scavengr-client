@@ -61,4 +61,11 @@
     tools:layout="@layout/fragment_new_user">
   </fragment>
 
+  <fragment
+    android:id="@+id/nav_create_new_hunt"
+    android:label="New Hunt"
+    android:name="edu.cnm.deepdive.scavengrclient.controller.ui.CreateNewHuntFragment"
+    tools:layout="@layout/fragment_create_new_hunt">
+  </fragment>
+
 </navigation>

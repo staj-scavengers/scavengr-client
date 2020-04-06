@@ -3,6 +3,6 @@
   <color name="colorPrimary">#568ea6</color>
   <color name="colorPrimaryDark">#305f72</color>
   <color name="colorAccent">#f26627</color>
-
+  <color name="NewHuntBackground">#FFFFFF</color>
   <color name="HuntListBackground">#FFE0E0E0</color>
 </resources>
