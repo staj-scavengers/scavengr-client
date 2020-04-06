@@ -61,15 +61,18 @@ public class CurrentClueFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
+    View view = inflater.inflate(R.layout.fragment_current_clue, container, false);
     viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
     hunt = viewModel.getHunt().getValue();
     clues = hunt.getClues();
 
-    viewModel.beginOrResume(hunt.getLocalId())
-        .doOnSuccess((huntActivity) -> this.huntActivity = huntActivity)
-        .doOnError((throwable) -> newHuntActivity())
-        .subscribe();
-    return inflater.inflate(R.layout.fragment_current_clue, container, false);
+    // TODO fix huntActivity retrieval ("Query returned empty result set: SELECT * FROM HuntActivity WHERE local_hunt_id = ?")
+//    viewModel.beginOrResume(hunt.getLocalId())
+//        .doOnSuccess((huntActivity) -> this.huntActivity = huntActivity)
+//        .doOnError((throwable) -> newHuntActivity())
+//        .subscribe();
+
+    return view;
   }
 
   @Override
