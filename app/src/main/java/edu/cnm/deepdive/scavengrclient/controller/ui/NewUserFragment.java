@@ -6,6 +6,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import edu.cnm.deepdive.scavengrclient.viewmodel.MainViewModel;
 public class NewUserFragment extends Fragment implements OnClickListener {
 
   private EditText inputUserName;
+  static ActionBar actionBar;
 
   public NewUserFragment() {
     // Required empty public constructor
@@ -30,7 +33,8 @@ public class NewUserFragment extends Fragment implements OnClickListener {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     // Inflate the layout for this fragment
-    ((MainActivity)getActivity()).getActionBar().setDisplayHomeAsUpEnabled(false);
+    ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+    actionBar.setDisplayHomeAsUpEnabled(true);
     View view = inflater.inflate(R.layout.fragment_new_user, container, false);
     ImageView imageView = view.findViewById(R.id.welcome_app_icon);
     imageView.setImageResource(R.drawable.ic_launcher_foreground);
