@@ -24,6 +24,10 @@
     android:label="Scavengr"
     android:name="edu.cnm.deepdive.scavengrclient.controller.ui.FindAHuntFragment"
     tools:layout="@layout/fragment_find_ahunt">
+    <argument
+      android:name="isOrganizer"
+      app:argType="boolean"
+      android:defaultValue="false"/>
   </fragment>
 
   <fragment

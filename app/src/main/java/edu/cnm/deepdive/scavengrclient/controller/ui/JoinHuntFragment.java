@@ -45,7 +45,7 @@ public class JoinHuntFragment extends Fragment {
       Bundle savedInstanceState) {
     viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
 
-    View view =  inflater.inflate(R.layout.fragment_join_hunt, container, false);
+    View view = inflater.inflate(R.layout.fragment_join_hunt, container, false);
 
     Button join = view.findViewById(R.id.join_hunt_button);
     join.setOnClickListener(new OnClickListener() {
@@ -66,14 +66,12 @@ public class JoinHuntFragment extends Fragment {
 
     viewModel.getHunt().observe(getViewLifecycleOwner(), (value) -> {
 
-      if (value != null){
-      activeHunt = viewModel.getHunt().getValue();
+      if (value != null) {
+        activeHunt = viewModel.getHunt().getValue();
 
         huntName.setText(activeHunt.getHuntName());
         creatorName.setText(activeHunt.getOrganizerName());
         clueCount.setText(Integer.toString(activeHunt.getClues().size()));
-} else {
-        ((MainActivity)getActivity()).makeToast("Error loading hunt");
       }
     });
 

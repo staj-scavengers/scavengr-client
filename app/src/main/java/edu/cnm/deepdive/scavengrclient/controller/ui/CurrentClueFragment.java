@@ -69,7 +69,13 @@ public class CurrentClueFragment extends Fragment {
     hunt = viewModel.getHunt().getValue();
     clues = hunt.getClues();
 
-    // TODO fix huntActivity retrieval ("Query returned empty result set: SELECT * FROM HuntActivity WHERE local_hunt_id = ?")
+    scanned = false;
+    cameraFrame = view.findViewById(R.id.camera_frame);
+    clueNumber = view.findViewById(R.id.clue_number);
+    clueName = view.findViewById(R.id.clue_name);
+    confirmCameraPermissions(view);
+
+    // TODO fix huntActivity retrieval/creation ("Query returned empty result set: SELECT * FROM HuntActivity WHERE local_hunt_id = ?")
 //    viewModel.beginOrResume(hunt.getLocalId())
 //        .doOnSuccess((huntActivity) -> this.huntActivity = huntActivity)
 //        .doOnError((throwable) -> newHuntActivity())
@@ -81,13 +87,9 @@ public class CurrentClueFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    scanned = false;
-    cameraFrame = view.findViewById(R.id.camera_frame);
-    clueNumber = view.findViewById(R.id.clue_number);
-    clueName = view.findViewById(R.id.clue_name);
+
     setActiveClue();
     clueDescription = view.findViewById(R.id.clue_description);
-    confirmCameraPermissions(view);
     Button clueButton = view.findViewById(R.id.clue_button);
     clueButton.setOnClickListener(v -> {
       if (clueDescription.getVisibility() == View.VISIBLE) {

@@ -1,6 +1,8 @@
 package edu.cnm.deepdive.scavengrclient.controller.ui;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Paint.Join;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -48,9 +50,18 @@ public class FindAHuntFragment extends Fragment implements OnClickListener {
 
 
   @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+    isOrganizer = sharedPref.getBoolean("isOrganizer", false);
+  }
+
+  @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.fragment_find_ahunt, container, false);
+    View view = inflater.inflate(R.layout.fragment_find_ahunt, container, false);
+//    isOrganizer = getArguments().getBoolean("isOrganizer");
+    return view;
   }
 
   @Override
@@ -69,7 +80,11 @@ public class FindAHuntFragment extends Fragment implements OnClickListener {
     searchFilter = view.findViewById(R.id.search_filter);
     huntList = view.findViewById(R.id.hunt_list);
     createHunt = view.findViewById(R.id.create_hunt);
-    createHunt.setOnClickListener(this);
+    if (isOrganizer) {
+      createHunt.setOnClickListener(this);
+    } else {
+      createHunt.setVisibility(View.INVISIBLE);
+    }
     filterMethod = view.findViewById(R.id.filter_method);
     methodSearch = view.findViewById(R.id.method_search);
     methodPopular = view.findViewById(R.id.method_popular);
@@ -103,11 +118,11 @@ public class FindAHuntFragment extends Fragment implements OnClickListener {
 
     huntList.setOnItemClickListener((parent, v, position, id) -> {
       Hunt hunt = (Hunt) parent.getItemAtPosition(position);
-if (hunt.getLocalId() != 0) {
-  viewModel.loadLocalHunt(hunt.getLocalId());
-} else{
-  viewModel.downloadHunt(hunt.getId());
-}
+      if (hunt.getLocalId() != 0) {
+        viewModel.loadLocalHunt(hunt.getLocalId());
+      } else {
+        viewModel.downloadHunt(hunt.getId());
+      }
       viewModel.getHunt().observe(getViewLifecycleOwner(), new Observer<Hunt>() {
         @Override
         public void onChanged(Hunt hunt) {
@@ -118,10 +133,10 @@ if (hunt.getLocalId() != 0) {
         }
       });
 
-//
-//      Bundle args = new Bundle();
-//      args.putSerializable("remoteId", hunt.getId());
-//      NavHostFragment.findNavController(this).navigate(R.id.nav_join_hunt, args);
+
+      Bundle args = new Bundle();
+      args.putSerializable("remoteId", hunt.getId());
+      NavHostFragment.findNavController(this).navigate(R.id.nav_join_hunt, args);
     });
   }
 

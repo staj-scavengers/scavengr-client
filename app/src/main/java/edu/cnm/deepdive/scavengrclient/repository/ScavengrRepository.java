@@ -142,7 +142,7 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
                   return hunt;
                 })
         )*/;
-  }//        .subscribe in ViewModel will return a Hunt with Clues;
+  }
 
   /**
    * This method adds a new {@link Hunt} to the server.

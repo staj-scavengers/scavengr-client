@@ -1,18 +1,23 @@
 
 package edu.cnm.deepdive.scavengrclient.controller;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import com.google.android.material.snackbar.Snackbar;
 import edu.cnm.deepdive.scavengrclient.R;
 import edu.cnm.deepdive.scavengrclient.service.GoogleSignInService;
 import edu.cnm.deepdive.scavengrclient.viewmodel.MainViewModel;
@@ -23,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
   private GoogleSignInService signInService;
   private MainViewModel viewModel;
   static ActionBar actionBar;
+  private static final int RC_HANDLE_CAMERA_PERM = 2;
   private boolean registered;
 
   @Override
@@ -34,8 +40,39 @@ public class MainActivity extends AppCompatActivity {
     setupNavigation();
     actionBar = getSupportActionBar();
     actionBar.setDisplayHomeAsUpEnabled(true);
-    // TODO remove this:
-//    navController.navigate(R.id.nav_current_clue);
+    checkCameraPermissions(getCurrentFocus());
+
+  }
+
+  private void checkCameraPermissions(View view) {
+    int rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+    if (rc != PackageManager.PERMISSION_GRANTED) {
+      requestCameraPermission(view);
+    }
+  }
+
+  private void requestCameraPermission(View view) {
+    final String[] permissions = new String[]{Manifest.permission.CAMERA};
+
+    if (!ActivityCompat.shouldShowRequestPermissionRationale(this,
+        Manifest.permission.CAMERA)) {
+      ActivityCompat.requestPermissions(this, permissions, RC_HANDLE_CAMERA_PERM);
+      return;
+    }
+
+    View.OnClickListener listener = new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        ActivityCompat.requestPermissions(getParent(), permissions,
+            RC_HANDLE_CAMERA_PERM);
+      }
+    };
+
+    view.setOnClickListener(listener);
+    Snackbar.make(view, R.string.permission_camera_rationale,
+        Snackbar.LENGTH_INDEFINITE)
+        .setAction(R.string.ok, listener)
+        .show();
   }
 
 
@@ -76,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
     signInService.refresh()
         .addOnSuccessListener(
             account -> viewModel.checkUser(account.getIdToken())
-//                .doOnSuccess((user) -> navController.navigate(R.id.nav_find_ahunt))
-//                .doOnError(error -> navController.navigate(R.id.nav_new_user))
                 .subscribe(
                     (user) -> navController.navigate(R.id.nav_find_ahunt),
                     error -> navController.navigate(R.id.nav_new_user)
