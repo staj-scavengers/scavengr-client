@@ -50,6 +50,13 @@ public class FindAHuntFragment extends Fragment implements OnClickListener {
 
 
   @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+    isOrganizer = sharedPref.getBoolean("isOrganizer", false);
+  }
+
+  @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_find_ahunt, container, false);
@@ -66,19 +73,17 @@ public class FindAHuntFragment extends Fragment implements OnClickListener {
       ArrayAdapter<Hunt> adapter =
           new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, hunts);
       huntList.setAdapter(adapter);
-
-      SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-      isOrganizer = sharedPref.getBoolean("isOrganizer", false);
     });
   }
 
   private void setupView(@NonNull View view) {
     searchFilter = view.findViewById(R.id.search_filter);
     huntList = view.findViewById(R.id.hunt_list);
-    // TODO wrap button in if statement.
-    if (!isOrganizer) {
-      createHunt = view.findViewById(R.id.create_hunt);
+    createHunt = view.findViewById(R.id.create_hunt);
+    if (isOrganizer) {
       createHunt.setOnClickListener(this);
+    } else {
+      createHunt.setVisibility(View.INVISIBLE);
     }
     filterMethod = view.findViewById(R.id.filter_method);
     methodSearch = view.findViewById(R.id.method_search);
