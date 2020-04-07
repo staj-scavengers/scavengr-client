@@ -12,7 +12,7 @@
     android:id="@+id/welcome_app_icon"
     android:layout_width="125dp"
     android:layout_height="125dp"
-    android:src="@drawable/scavengr_logo"
+    android:src="@drawable/red_logo"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintBottom_toTopOf="@id/new_user_prompt"
     app:layout_constraintStart_toStartOf="parent"
