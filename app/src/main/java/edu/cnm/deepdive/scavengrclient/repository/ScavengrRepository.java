@@ -2,7 +2,6 @@ package edu.cnm.deepdive.scavengrclient.repository;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-import android.text.BoringLayout;
 import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.preference.PreferenceManager;
@@ -19,10 +18,8 @@ import edu.cnm.deepdive.scavengrclient.model.pojo.HuntActivityWithStats;
 import edu.cnm.deepdive.scavengrclient.service.ScavengrDatabase;
 import edu.cnm.deepdive.scavengrclient.service.ScavengrService;
 import edu.cnm.deepdive.scavengrclient.viewmodel.MainViewModel;
-import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Executor;
