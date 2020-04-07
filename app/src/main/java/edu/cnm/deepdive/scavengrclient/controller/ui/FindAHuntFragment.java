@@ -118,10 +118,10 @@ if (hunt.getLocalId() != 0) {
         }
       });
 
-//
-//      Bundle args = new Bundle();
-//      args.putSerializable("remoteId", hunt.getId());
-//      NavHostFragment.findNavController(this).navigate(R.id.nav_join_hunt, args);
+
+      Bundle args = new Bundle();
+      args.putSerializable("remoteId", hunt.getId());
+      NavHostFragment.findNavController(this).navigate(R.id.nav_join_hunt, args);
     });
   }
 
