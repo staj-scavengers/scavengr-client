@@ -29,6 +29,7 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
 
   private final MutableLiveData<Hunt> hunt;
   private final MutableLiveData<List<Hunt>> hunts;
+  private final MutableLiveData<Clue> clue;
   private final MutableLiveData<List<Clue>> clues;
   private final MutableLiveData<String> mediaTag;
   private final MutableLiveData<String> media;
@@ -44,6 +45,7 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
     media = new MutableLiveData<>();
     mediaTag = new MutableLiveData<>();
     clues = new MutableLiveData<>();
+    clue = new MutableLiveData<>();
     hunts = new MutableLiveData<>();
     hunt = new MutableLiveData<>();
 
@@ -60,6 +62,10 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
 
   public LiveData<List<Clue>> getClues() {
     return clues;
+  }
+
+  public LiveData<Clue> getClue() {
+    return clue;
   }
 
   public LiveData<String> getMediaTag() {
@@ -120,6 +126,17 @@ public class MainViewModel extends AndroidViewModel implements LifecycleObserver
         repository.loadLocalHunt(localHuntId)
             .subscribe(
                 hunt::postValue,
+                throwable::postValue
+            )
+    );
+  }
+
+  public void loadClue(Long localClueId) {
+    throwable.setValue(null);
+    pending.add(
+        repository.loadClue(localClueId)
+            .subscribe(
+                clue::postValue,
                 throwable::postValue
             )
     );

@@ -37,7 +37,7 @@ public class NewUserFragment extends Fragment implements OnClickListener {
     actionBar.setDisplayHomeAsUpEnabled(false);
     View view = inflater.inflate(R.layout.fragment_new_user, container, false);
     ImageView imageView = view.findViewById(R.id.welcome_app_icon);
-    imageView.setImageResource(R.drawable.ic_launcher_foreground);
+//    imageView.setImageResource(R.drawable.ic_launcher_foreground);
     inputUserName = view.findViewById(R.id.input_username);
     Button register = view.findViewById(R.id.register_button);
     register.setOnClickListener(this);

@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.preference.PreferenceManager;
 import edu.cnm.deepdive.scavengrclient.ScavengerApplication;
+import edu.cnm.deepdive.scavengrclient.model.dao.ClueDao;
 import edu.cnm.deepdive.scavengrclient.model.dao.HuntActivityDao;
 import edu.cnm.deepdive.scavengrclient.model.dao.HuntDao;
 import edu.cnm.deepdive.scavengrclient.model.dao.UserDao;
@@ -173,6 +174,12 @@ public class ScavengrRepository implements SharedPreferences.OnSharedPreferenceC
   public Single<Hunt> loadLocalHunt(long localHuntId) {
     HuntDao dao = database.getHuntDao();
     return dao.getOne(localHuntId)
+        .subscribeOn(Schedulers.io());
+  }
+
+  public Single<Clue> loadClue(long localClueId) {
+    ClueDao dao = database.getClueDao();
+    return dao.getOne(localClueId)
         .subscribeOn(Schedulers.io());
   }
 
