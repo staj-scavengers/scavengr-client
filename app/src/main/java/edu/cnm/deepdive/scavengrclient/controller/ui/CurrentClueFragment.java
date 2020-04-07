@@ -214,6 +214,9 @@ public class CurrentClueFragment extends Fragment {
     AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
     alert.setTitle("Success!");
     WebView wv = new WebView(getContext());
+    wv.canGoBackOrForward(0);
+    wv.getSettings().setLoadWithOverviewMode(true);
+    wv.getSettings().setUseWideViewPort(true);
     wv.loadUrl(url);
     wv.setWebViewClient(new WebViewClient() {
       @Override
