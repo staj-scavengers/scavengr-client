@@ -127,7 +127,6 @@ if (hunt.getLocalId() != 0) {
 
   @Override
   public void onClick(View view) {
-//    MainViewModel viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
-//    Navigation.findNavController(view).navigate(R.id.create_hunt);
+    Navigation.findNavController(view).navigate(R.id.nav_create_new_hunt);
   }
 }
