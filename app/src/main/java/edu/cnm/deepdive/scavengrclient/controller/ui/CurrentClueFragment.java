@@ -12,6 +12,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -90,6 +91,7 @@ public class CurrentClueFragment extends Fragment {
 
     setActiveClue();
     clueDescription = view.findViewById(R.id.clue_description);
+
     Button clueButton = view.findViewById(R.id.clue_button);
     clueButton.setOnClickListener(v -> {
       if (clueDescription.getVisibility() == View.VISIBLE) {
@@ -101,6 +103,17 @@ public class CurrentClueFragment extends Fragment {
         clueButton.setText(R.string.hide_clue);
       }
     });
+
+    Button skipButton = view.findViewById(R.id.skip_clue_button);
+    skipButton.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        clues.add(clues.get(0));
+        clues.remove(0);
+        setActiveClue();
+      }
+    });
+
   }
 
   private void newHuntActivity() {
@@ -114,6 +127,7 @@ public class CurrentClueFragment extends Fragment {
   }
 
   private void setActiveClue() {
+    activeClue = null;
     activeClue = clues.get(0);
     clueName.setText(activeClue.getClueName());
     clueNumber.setText(Integer.toString(activeClue.getHuntOrder()));
@@ -209,7 +223,7 @@ public class CurrentClueFragment extends Fragment {
     }
 
     // TODO switch Processor to qrLiveProcessor to process a live Clue.
-    qrDetector.setProcessor(qrTestProcessor);
+    qrDetector.setProcessor(qrLiveProcessor);
   }
 
   private void createWebView(String url) {
@@ -259,11 +273,11 @@ public class CurrentClueFragment extends Fragment {
       if (barcodes.size() != 0 && !scanned) {
         String url = "";
 
-        if (barcodes.valueAt(0).rawValue == activeClue.getMediaTag()) {
+        if (barcodes.valueAt(0).rawValue.equals(activeClue.getMediaTag())) {
           url = activeClue.getMedia();
         } else {
-          ((MainActivity) getActivity())
-              .makeToast("Invalid code:" + (barcodes.valueAt(0).displayValue));
+          getActivity().runOnUiThread(() -> ((MainActivity) getActivity())
+              .makeToast("Invalid code:" + (barcodes.valueAt(0).displayValue)));
         }
 
         if (!url.isEmpty()) {
